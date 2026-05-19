@@ -1,0 +1,1402 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dream Life Business Workshop | Chad Nicely</title>
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;0,700;1,400&family=Montserrat:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        
+        :root {
+            --gold: #d4af37;
+            --gold-light: #f4e4a6;
+            --dark: #0f0f0f;
+            --dark-lighter: #1a1a1a;
+            --text: #e0e0e0;
+            --text-muted: #888;
+            --accent: #c9a227;
+        }
+        
+        body {
+            font-family: 'Cormorant Garamond', Georgia, serif;
+            line-height: 1.8;
+            color: var(--text);
+            background: var(--dark);
+            overflow-x: hidden;
+        }
+        
+        .countdown-bar {
+            background: #000000;
+            border-bottom: 1px solid rgba(212,175,55,0.3);
+            padding: 15px 30px;
+            text-align: center;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 1000;
+        }
+        
+        .countdown-label {
+            font-family: 'Montserrat', sans-serif;
+            font-size: 10px;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            letter-spacing: 3px;
+            margin-bottom: 8px;
+        }
+        
+        .countdown-timer {
+            font-family: 'Montserrat', sans-serif;
+            font-size: 24px;
+            font-weight: 700;
+            color: var(--gold);
+            letter-spacing: 2px;
+        }
+        
+        .countdown-timer span {
+            display: inline-block;
+            min-width: 50px;
+        }
+        
+        .countdown-timer .unit {
+            font-size: 10px;
+            font-weight: 400;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-left: 2px;
+            min-width: auto;
+        }
+        
+        .hero {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            padding: 140px 30px 80px;
+            position: relative;
+            background: linear-gradient(-45deg, #0f0f0f, #1a1a2e, #16213e, #0f0f0f);
+            background-size: 400% 400%;
+            animation: gradientShift 15s ease infinite;
+            overflow: hidden;
+        }
+        
+        @keyframes gradientShift {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+        
+        .particles {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            overflow: hidden;
+            pointer-events: none;
+        }
+        
+        .particle {
+            position: absolute;
+            width: 4px;
+            height: 4px;
+            background: var(--gold);
+            border-radius: 50%;
+            opacity: 0.3;
+            animation: float 20s infinite;
+        }
+        
+        .particle:nth-child(1) { left: 10%; animation-delay: 0s; }
+        .particle:nth-child(2) { left: 20%; animation-delay: 2s; }
+        .particle:nth-child(3) { left: 30%; animation-delay: 4s; }
+        .particle:nth-child(4) { left: 40%; animation-delay: 6s; }
+        .particle:nth-child(5) { left: 50%; animation-delay: 8s; }
+        .particle:nth-child(6) { left: 60%; animation-delay: 10s; }
+        .particle:nth-child(7) { left: 70%; animation-delay: 12s; }
+        .particle:nth-child(8) { left: 80%; animation-delay: 14s; }
+        .particle:nth-child(9) { left: 90%; animation-delay: 16s; }
+        
+        @keyframes float {
+            0%, 100% { transform: translateY(100vh) rotate(0deg); opacity: 0; }
+            10% { opacity: 0.3; }
+            90% { opacity: 0.3; }
+            100% { transform: translateY(-100vh) rotate(720deg); opacity: 0; }
+        }
+        
+        .hero-content {
+            max-width: 900px;
+            margin: 0 auto;
+            position: relative;
+            z-index: 1;
+            text-align: center;
+        }
+        
+        .hero-callout {
+            display: inline-block;
+            border: 1px solid var(--gold);
+            color: var(--gold);
+            padding: 10px 25px;
+            font-family: 'Montserrat', sans-serif;
+            font-size: 10px;
+            font-weight: 600;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            margin-bottom: 35px;
+        }
+        
+        .hero-badge {
+            display: inline-block;
+            border: 1px solid var(--gold);
+            color: var(--gold);
+            padding: 12px 30px;
+            font-family: 'Montserrat', sans-serif;
+            font-size: 11px;
+            font-weight: 600;
+            letter-spacing: 4px;
+            text-transform: uppercase;
+            margin-bottom: 50px;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .hero-badge::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(212,175,55,0.2), transparent);
+            animation: shimmer 3s infinite;
+        }
+        
+        @keyframes shimmer {
+            0% { left: -100%; }
+            100% { left: 100%; }
+        }
+        
+        .hero h1 {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: clamp(3rem, 7vw, 5.5rem);
+            font-weight: 300;
+            color: white;
+            line-height: 1.2;
+            margin-bottom: 30px;
+            letter-spacing: -1px;
+        }
+        
+
+        
+        .hero h1 strong {
+            font-weight: 600;
+            background: linear-gradient(135deg, var(--gold) 0%, var(--gold-light) 50%, var(--gold) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        
+        .hero-post-headline {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: clamp(1.1rem, 2vw, 1.4rem);
+            color: var(--text-muted);
+            font-weight: 400;
+            margin-bottom: 10px;
+            font-style: italic;
+            line-height: 1.6;
+        }
+        
+        .hero-subtitle {
+            font-family: 'Montserrat', sans-serif;
+            font-size: 0.9rem;
+            color: var(--text-muted);
+            font-weight: 300;
+            margin-bottom: 25px;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            line-height: 1.0;
+        }
+        
+        .hero-date {
+            background: rgba(212,175,55,0.1);
+            border: 1px solid rgba(212,175,55,0.3);
+            color: var(--gold);
+            padding: 25px 40px;
+            display: inline-block;
+            font-family: 'Montserrat', sans-serif;
+            font-weight: 500;
+            font-size: 0.9rem;
+            margin-bottom: 50px;
+            letter-spacing: 1px;
+        }
+        
+        .cta-button {
+            display: inline-block;
+            background: linear-gradient(135deg, var(--gold) 0%, #b8941f 100%);
+            color: var(--dark);
+            padding: 22px 60px;
+            font-family: 'Montserrat', sans-serif;
+            font-size: 13px;
+            font-weight: 700;
+            text-decoration: none;
+            text-transform: uppercase;
+            letter-spacing: 3px;
+            transition: all 0.4s ease;
+            position: relative;
+            overflow: hidden;
+            box-shadow: 0 10px 40px rgba(212,175,55,0.3);
+        }
+        
+        .cta-button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 20px 60px rgba(212,175,55,0.4);
+        }
+        
+        .scroll-indicator {
+            position: absolute;
+            bottom: 40px;
+            left: 50%;
+            transform: translateX(-50%);
+            animation: bounce 2s infinite;
+        }
+        
+        .scroll-indicator::before {
+            content: '↓';
+            color: var(--gold);
+            font-size: 2rem;
+            opacity: 0.5;
+        }
+        
+        @keyframes bounce {
+            0%, 100% { transform: translateX(-50%) translateY(0); }
+            50% { transform: translateX(-50%) translateY(10px); }
+        }
+        
+        .section {
+            padding: 120px 30px;
+            max-width: 800px;
+            margin: 0 auto;
+            position: relative;
+        }
+        
+        .section-dark {
+            background: var(--dark-lighter);
+        }
+        
+        .section-title {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 2.8rem;
+            font-weight: 300;
+            color: white;
+            margin-bottom: 50px;
+            line-height: 1.2;
+            position: relative;
+            padding-bottom: 30px;
+        }
+        
+        .section-title::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100px;
+            height: 2px;
+            background: linear-gradient(90deg, var(--gold), transparent);
+        }
+        
+        .intro-text {
+            font-size: 1.7rem;
+            line-height: 2;
+            color: var(--text);
+            margin-bottom: 30px;
+            font-weight: 300;
+        }
+        
+        .bullet-list {
+            list-style: none;
+            margin: 40px 0;
+            padding: 0;
+        }
+        
+        .bullet-list li {
+            padding: 18px 0 18px 50px;
+            position: relative;
+            font-size: 1.4rem;
+            line-height: 1.8;
+            color: var(--text);
+            border-bottom: 1px solid rgba(255,255,255,0.05);
+            transition: all 0.3s ease;
+        }
+        
+        .bullet-list li:hover {
+            padding-left: 60px;
+            color: white;
+        }
+        
+        .bullet-list li::before {
+            content: '◆';
+            position: absolute;
+            left: 0;
+            color: var(--gold);
+            font-size: 0.8rem;
+            transition: all 0.3s ease;
+        }
+        
+        .bullet-list li:hover::before {
+            transform: scale(1.5);
+            text-shadow: 0 0 20px var(--gold);
+        }
+        
+        .highlight-box {
+            background: linear-gradient(135deg, rgba(212,175,55,0.1) 0%, rgba(212,175,55,0.05) 100%);
+            border-left: 3px solid var(--gold);
+            padding: 50px;
+            margin: 60px 0;
+            position: relative;
+        }
+        
+        .highlight-box p {
+            font-style: italic;
+            font-size: 1.4rem;
+            color: white;
+            line-height: 1.9;
+        }
+        
+        .quote-box {
+            text-align: center;
+            padding: 80px 40px;
+            margin: 80px 0;
+            position: relative;
+            background: radial-gradient(ellipse at center, rgba(212,175,55,0.1) 0%, transparent 70%);
+        }
+        
+        .quote-box::before {
+            content: '"';
+            font-size: 10rem;
+            color: var(--gold);
+            opacity: 0.2;
+            position: absolute;
+            top: -20px;
+            left: 50%;
+            transform: translateX(-50%);
+            font-family: 'Cormorant Garamond', serif;
+        }
+        
+        .quote-text {
+            font-size: 1.8rem;
+            font-style: italic;
+            color: white;
+            position: relative;
+            z-index: 1;
+            line-height: 1.6;
+            font-weight: 300;
+        }
+        
+        .value-stack {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 30px;
+            margin: 60px 0;
+        }
+        
+        .value-card {
+            background: rgba(255,255,255,0.02);
+            border: 1px solid rgba(212,175,55,0.2);
+            padding: 40px;
+            text-align: center;
+            transition: all 0.4s ease;
+        }
+        
+        .value-card:hover {
+            border-color: var(--gold);
+            transform: translateY(-5px);
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+        }
+        
+        .value-number {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 3.5rem;
+            font-weight: 300;
+            color: var(--gold);
+            display: block;
+            margin-bottom: 15px;
+        }
+        
+        .value-label {
+            font-family: 'Montserrat', sans-serif;
+            font-size: 0.85rem;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
+        
+        .days-grid {
+            display: grid;
+            gap: 40px;
+            margin: 60px 0;
+        }
+        
+        .day-card {
+            background: linear-gradient(135deg, rgba(255,255,255,0.03) 0%, rgba(255,255,255,0.01) 100%);
+            border: 1px solid rgba(212,175,55,0.15);
+            padding: 50px;
+            position: relative;
+            transition: all 0.4s ease;
+        }
+        
+        .day-image {
+            grid-column: 1 / -1;
+            margin: 20px 0;
+            position: relative;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 0 30px rgba(212,175,55,0.1), 0 0 60px rgba(212,175,55,0.05);
+            animation: fadeInUp 0.8s ease-out forwards;
+            opacity: 0;
+            transform: translateY(30px);
+        }
+        
+        .day-image:nth-child(1) { animation-delay: 0.1s; }
+        .day-image:nth-child(2) { animation-delay: 0.2s; }
+        .day-image:nth-child(3) { animation-delay: 0.3s; }
+        .day-image:nth-child(4) { animation-delay: 0.4s; }
+        .day-image:nth-child(5) { animation-delay: 0.5s; }
+        
+        @keyframes fadeInUp {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        .day-image::before {
+            content: '';
+            position: absolute;
+            top: -2px;
+            left: -2px;
+            right: -2px;
+            bottom: -2px;
+            background: linear-gradient(45deg, var(--gold), transparent, var(--gold), transparent);
+            border-radius: 10px;
+            z-index: -1;
+            opacity: 0.3;
+            animation: glowPulse 3s ease-in-out infinite;
+        }
+        
+        @keyframes glowPulse {
+            0%, 100% { opacity: 0.2; }
+            50% { opacity: 0.5; }
+        }
+        
+        .day-image img {
+            width: 100%;
+            max-width: 100%;
+            height: auto;
+            border-radius: 8px;
+            display: block;
+            transition: transform 0.5s ease;
+        }
+        
+        .day-image:hover img {
+            transform: scale(1.02);
+        }
+        
+        .day-image:hover {
+            box-shadow: 0 0 40px rgba(212,175,55,0.2), 0 0 80px rgba(212,175,55,0.1);
+        }
+        
+        .day-card:hover {
+            border-color: rgba(212,175,55,0.4);
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+        }
+        
+        .day-number {
+            font-family: 'Montserrat', sans-serif;
+            font-size: 0.75rem;
+            font-weight: 700;
+            color: var(--gold);
+            text-transform: uppercase;
+            letter-spacing: 3px;
+            margin-bottom: 20px;
+        }
+        
+        .day-title {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 1.8rem;
+            font-weight: 600;
+            color: white;
+            margin-bottom: 25px;
+        }
+        
+        .day-bullets {
+            list-style: none;
+            padding: 0;
+        }
+        
+        .day-bullets li {
+            padding: 12px 0 12px 30px;
+            position: relative;
+            font-size: 1.05rem;
+            color: var(--text-muted);
+            line-height: 1.6;
+        }
+        
+        .day-bullets li::before {
+            content: '›';
+            position: absolute;
+            left: 0;
+            color: var(--gold);
+            font-size: 1.2rem;
+        }
+        
+        .guarantee-section {
+            background: linear-gradient(135deg, rgba(212,175,55,0.1) 0%, transparent 100%);
+            border: 1px solid rgba(212,175,55,0.3);
+            padding: 80px 50px;
+            text-align: center;
+            margin: 80px 0;
+            position: relative;
+        }
+        
+        .guarantee-section::before {
+            content: '◆';
+            position: absolute;
+            top: -15px;
+            left: 50%;
+            transform: translateX(-50%);
+            color: var(--gold);
+            font-size: 2rem;
+            background: var(--dark);
+            padding: 0 20px;
+        }
+        
+        .guarantee-title {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 2.2rem;
+            font-weight: 300;
+            color: white;
+            margin-bottom: 30px;
+        }
+        
+        .guarantee-text {
+            font-size: 1.15rem;
+            color: var(--text);
+            line-height: 1.9;
+            max-width: 700px;
+            margin: 0 auto;
+        }
+        
+        .price-reveal {
+            text-align: center;
+            padding: 60px;
+            margin: 60px 0;
+            border: 2px dashed rgba(212,175,55,0.3);
+            background: rgba(212,175,55,0.05);
+        }
+        
+        .price-label {
+            font-family: 'Montserrat', sans-serif;
+            font-size: 0.85rem;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            letter-spacing: 3px;
+            margin-bottom: 15px;
+        }
+        
+        .price-value {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 5rem;
+            font-weight: 300;
+            color: var(--gold);
+            text-shadow: 0 0 40px rgba(212,175,55,0.3);
+        }
+        
+        .price-note {
+            font-family: 'Montserrat', sans-serif;
+            font-size: 0.8rem;
+            color: var(--text-muted);
+            margin-top: 15px;
+            letter-spacing: 1px;
+        }
+        
+        .cta-final {
+            background: linear-gradient(180deg, var(--dark-lighter) 0%, var(--dark) 100%);
+            padding: 120px 30px;
+            text-align: center;
+            position: relative;
+        }
+        
+        .cta-final::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 1px;
+            background: linear-gradient(90deg, transparent, var(--gold), transparent);
+        }
+        
+        .cta-final h2 {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 3rem;
+            font-weight: 300;
+            color: white;
+            margin-bottom: 20px;
+        }
+        
+        .cta-final h2 strong {
+            color: var(--gold);
+            font-weight: 600;
+        }
+        
+        .cta-final p {
+            color: var(--text-muted);
+            font-size: 1.2rem;
+            margin-bottom: 50px;
+        }
+        
+        .cta-button-large {
+            display: inline-block;
+            background: linear-gradient(135deg, var(--gold) 0%, #b8941f 100%);
+            color: var(--dark);
+            padding: 28px 80px;
+            font-family: 'Montserrat', sans-serif;
+            font-size: 14px;
+            font-weight: 700;
+            text-decoration: none;
+            text-transform: uppercase;
+            letter-spacing: 4px;
+            transition: all 0.4s ease;
+            box-shadow: 0 15px 50px rgba(212,175,55,0.4);
+        }
+        
+        .cta-button-large:hover {
+            transform: translateY(-5px) scale(1.02);
+            box-shadow: 0 25px 80px rgba(212,175,55,0.5);
+        }
+        
+        .trust-section {
+            background: linear-gradient(180deg, var(--dark) 0%, var(--dark-lighter) 100%);
+            padding: 80px 30px;
+            text-align: center;
+            border-top: 1px solid rgba(212,175,55,0.1);
+            border-bottom: 1px solid rgba(212,175,55,0.1);
+        }
+        
+        .trust-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 15px;
+            margin-bottom: 40px;
+        }
+        
+        .trust-logo {
+            font-family: 'Montserrat', sans-serif;
+            font-size: 24px;
+            font-weight: 700;
+            color: white;
+        }
+        
+        .trust-logo span {
+            color: #00b67a;
+        }
+        
+        .trust-rating {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 30px;
+            justify-content: center;
+        }
+        
+        .trust-stars {
+            display: flex;
+            gap: 3px;
+        }
+        
+        .trust-star {
+            width: 30px;
+            height: 30px;
+            background: #00b67a;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 16px;
+        }
+        
+        .trust-score {
+            font-family: 'Montserrat', sans-serif;
+            font-size: 32px;
+            font-weight: 700;
+            color: white;
+        }
+        
+        .trust-score span {
+            font-size: 16px;
+            color: var(--text-muted);
+            font-weight: 400;
+        }
+        
+        .trust-reviews {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+            max-width: 1000px;
+            margin: 0 auto;
+            text-align: left;
+        }
+        
+        .trust-review-card {
+            background: rgba(255,255,255,0.02);
+            border: 1px solid rgba(212,175,55,0.1);
+            padding: 30px;
+            border-radius: 8px;
+        }
+        
+        .trust-review-header {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            margin-bottom: 15px;
+        }
+        
+        .trust-avatar {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, var(--gold), #b8941f);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-family: 'Montserrat', sans-serif;
+            font-weight: 700;
+            color: var(--dark);
+            font-size: 14px;
+        }
+        
+        .trust-review-meta {
+            flex: 1;
+        }
+        
+        .trust-name {
+            font-family: 'Montserrat', sans-serif;
+            font-size: 14px;
+            font-weight: 600;
+            color: white;
+            margin-bottom: 3px;
+        }
+        
+        .trust-verified {
+            font-size: 12px;
+            color: #00b67a;
+        }
+        
+        .trust-review-stars {
+            display: flex;
+            gap: 2px;
+            margin-bottom: 15px;
+        }
+        
+        .trust-review-star {
+            width: 16px;
+            height: 16px;
+            background: #00b67a;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 10px;
+        }
+        
+        .trust-review-text {
+            font-size: 1rem;
+            line-height: 1.7;
+            color: var(--text);
+            font-style: italic;
+        }
+        
+        .trust-cta {
+            margin-top: 40px;
+        }
+        
+        .trust-cta a {
+            color: var(--gold);
+            font-family: 'Montserrat', sans-serif;
+            font-size: 12px;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            text-decoration: none;
+            border-bottom: 1px solid var(--gold);
+            padding-bottom: 3px;
+        }
+        
+        @media (max-width: 768px) {
+            .section { padding: 80px 20px; }
+            .highlight-box { padding: 30px; }
+            .quote-box { padding: 60px 20px; }
+            .day-card { padding: 30px; }
+            .guarantee-section { padding: 60px 30px; }
+            .price-value { font-size: 3.5rem; }
+        }
+    </style>
+</head>
+<body>
+    <!-- Countdown Timer Bar -->
+    <div class="countdown-bar">
+        <div class="countdown-label">Event Starts In</div>
+        <div class="countdown-timer" id="countdown">
+            <span id="days">00</span><span class="unit">Days</span>
+            <span id="hours">00</span><span class="unit">Hrs</span>
+            <span id="minutes">00</span><span class="unit">Min</span>
+            <span id="seconds">00</span><span class="unit">Sec</span>
+        </div>
+    </div>
+
+    <section class="hero">
+        <div class="particles">
+            <div class="particle"></div>
+            <div class="particle"></div>
+            <div class="particle"></div>
+            <div class="particle"></div>
+            <div class="particle"></div>
+            <div class="particle"></div>
+            <div class="particle"></div>
+            <div class="particle"></div>
+            <div class="particle"></div>
+        </div>
+        <div class="hero-content">
+            <div class="hero-callout">Dream Life Business Workshop</div>
+            <h1>Build A Business That Fits <strong>Your Dream Life</strong><br><span style="font-size: 0.65em; font-weight: 300; line-height: 1.1; display: block; margin-top: 15px;">Create Multiple Income Streams<br>And Finally Take Control Of Your Future</span></h1>
+            <p class="hero-post-headline">Get Clear On What To Build, Who To Serve, And How To Create The Life You Actually Want.</p>
+            <a href="#join" class="cta-button">Secure Your Spot Now</a>
+        </div>
+        <div class="scroll-indicator"></div>
+    </section>
+
+    <!-- Trustpilot Reviews Section -->
+    <section class="trust-section">
+        <div class="trust-badge">
+            <div class="trust-logo">Trust<span>pilot</span></div>
+        </div>
+        <div class="trust-rating">
+            <div class="trust-stars">
+                <div class="trust-star">★</div>
+                <div class="trust-star">★</div>
+                <div class="trust-star">★</div>
+                <div class="trust-star">★</div>
+                <div class="trust-star">★</div>
+            </div>
+            <div class="trust-score">4.8 <span>/ 5</span></div>
+        </div>
+        <div class="trust-reviews">
+            <div class="trust-review-card">
+                <div class="trust-review-header">
+                    <div class="trust-avatar">JD</div>
+                    <div class="trust-review-meta">
+                        <div class="trust-name">John D.</div>
+                        <div class="trust-verified">✓ Verified</div>
+                    </div>
+                </div>
+                <div class="trust-review-stars">
+                    <div class="trust-review-star">★</div>
+                    <div class="trust-review-star">★</div>
+                    <div class="trust-review-star">★</div>
+                    <div class="trust-review-star">★</div>
+                    <div class="trust-review-star">★</div>
+                </div>
+                <p class="trust-review-text">"Chad's training completely changed how I think about business. Finally someone who explains things in plain English without all the guru fluff."</p>
+            </div>
+            <div class="trust-review-card">
+                <div class="trust-review-header">
+                    <div class="trust-avatar">SM</div>
+                    <div class="trust-review-meta">
+                        <div class="trust-name">Sarah M.</div>
+                        <div class="trust-verified">✓ Verified</div>
+                    </div>
+                </div>
+                <div class="trust-review-stars">
+                    <div class="trust-review-star">★</div>
+                    <div class="trust-review-star">★</div>
+                    <div class="trust-review-star">★</div>
+                    <div class="trust-review-star">★</div>
+                    <div class="trust-review-star">★</div>
+                </div>
+                <p class="trust-review-text">"Went from confused to clear in 5 days. Chad breaks down business building into simple steps anyone can follow. Highly recommend!"</p>
+            </div>
+            <div class="trust-review-card">
+                <div class="trust-review-header">
+                    <div class="trust-avatar">RK</div>
+                    <div class="trust-review-meta">
+                        <div class="trust-name">Robert K.</div>
+                        <div class="trust-verified">✓ Verified</div>
+                    </div>
+                </div>
+                <div class="trust-review-stars">
+                    <div class="trust-review-star">★</div>
+                    <div class="trust-review-star">★</div>
+                    <div class="trust-review-star">★</div>
+                    <div class="trust-review-star">★</div>
+                    <div class="trust-review-star">★</div>
+                </div>
+                <p class="trust-review-text">"30+ years of experience shows. Chad knows what works and what doesn't. Saved me years of trial and error."</p>
+            </div>
+        </div>
+        <div class="trust-cta">
+            <a href="https://www.trustpilot.com/review/chadnicely.com" target="_blank">See All Reviews on Trustpilot →</a>
+        </div>
+    </section>
+
+    <section class="section">
+        <h2 class="section-title">The World Is Changing Fast</h2>
+        <p class="intro-text">Jobs are changing. Income is changing. AI is starting to replace certain jobs and change how businesses operate. And over the next few years, millions of people are going to start looking for:</p>
+        
+        <ul class="bullet-list">
+            <li>Extra income</li>
+            <li>Side businesses</li>
+            <li>Freedom</li>
+            <li>Security</li>
+            <li>New opportunities</li>
+        </ul>
+        
+        <p class="intro-text">The people who start <strong style="color: var(--gold);">EARLY</strong> will have the advantage.</p>
+        
+        <div class="countdown-bar" style="position: relative; margin: 50px 0; background: rgba(212,175,55,0.1); border: 1px solid rgba(212,175,55,0.3);">
+            <div class="countdown-label">Event Starts In</div>
+            <div class="countdown-timer" id="countdown-inline-1"></div>
+        </div>
+        
+        <div style="text-align: center; margin-top: 40px;">
+            <a href="#join" class="cta-button">Secure Your Spot Now — $297</a>
+        </div>
+    </section>
+
+    <section class="section section-dark">
+        <h2 class="section-title">Hi, I'm Chad Nicely</h2>
+        <div style="text-align: center; margin-bottom: 40px;">
+            <img src="/dlbusiness/chad-nicely.jpg" alt="Chad Nicely" style="width: 200px; height: 200px; object-fit: cover; border-radius: 50%; border: 3px solid var(--gold); box-shadow: 0 0 40px rgba(212,175,55,0.3);">
+        </div>
+        <p class="intro-text">For the last <strong style="color: var(--gold);">30+ years</strong> I've been building businesses in both the physical and digital world. I've:</p>
+        
+        <ul class="bullet-list">
+            <li>Opened restaurants</li>
+            <li>Opened coffee houses</li>
+            <li>Built local businesses</li>
+            <li>Opened and sold businesses</li>
+            <li>Created online businesses</li>
+            <li>Built software companies</li>
+            <li>Generated millions and millions of dollars in sales</li>
+            <li>Spoken internationally</li>
+            <li>Coached and mentored over 100,000 students</li>
+            <li>Helped thousands of people build successful businesses of their own</li>
+        </ul>
+        
+        <div class="value-stack">
+            <div class="value-card">
+                <span class="value-number">30+</span>
+                <div class="value-label">Years Experience</div>
+            </div>
+            <div class="value-card">
+                <span class="value-number">100K+</span>
+                <div class="value-label">Students Mentored</div>
+            </div>
+            <div class="value-card">
+                <span class="value-number">Millions</span>
+                <div class="value-label">In Sales Generated</div>
+            </div>
+        </div>
+        
+        <div style="text-align: center; margin-top: 50px;">
+            <a href="#join" class="cta-button">Join The Workshop — $297</a>
+        </div>
+        
+        <div class="highlight-box">
+            <p>Now I help people like you understand how to build real businesses in today's changing world. Not with confusing theories. Not with complicated tech talk. And definitely not by telling you to quit your job tomorrow and become a millionaire by next Tuesday.</p>
+        </div>
+        
+        <p class="intro-text">I'm talking about <strong style="color: white;">REAL business</strong>. Practical business. The kind of business that can actually support your life.</p>
+    </section>
+
+    <section class="section">
+        <h2 class="section-title">The Fundamentals</h2>
+        <p class="intro-text">Because at the end of the day… If you have:</p>
+        
+        <ul class="bullet-list">
+            <li><strong style="color: var(--gold);">Something To Sell</strong></li>
+            <li><strong style="color: var(--gold);">Somebody To Sell It To</strong></li>
+        </ul>
+        
+        <p class="intro-text">…you can build a business. That's true whether you own:</p>
+        
+        <ul class="bullet-list">
+            <li>A restaurant</li>
+            <li>A coffee shop</li>
+            <li>A local service business</li>
+            <li>A software company</li>
+            <li>A coaching business</li>
+            <li>A newsletter</li>
+            <li>A course business</li>
+            <li>Or even a hot dog cart outside a football stadium</li>
+        </ul>
+        
+        <p class="intro-text">Business is still business. The tools change. The world changes. The opportunities change. But the fundamentals stay the same. You need:</p>
+        
+        <ul class="bullet-list">
+            <li>An offer</li>
+            <li>Customers</li>
+            <li>Marketing</li>
+            <li>Systems</li>
+            <li>Profit</li>
+            <li>A plan</li>
+        </ul>
+        
+        <p class="intro-text">That's what we're going to work on together.</p>
+    </section>
+
+    <section class="section section-dark">
+        <h2 class="section-title">Why This Matters Right Now</h2>
+        <p class="intro-text">For years, people were told:</p>
+        
+        <ul class="bullet-list">
+            <li>"Go to school."</li>
+            <li>"Get a good job."</li>
+            <li>"Work hard."</li>
+            <li>"Everything will work out."</li>
+        </ul>
+        
+        <p class="intro-text">But the world is changing. Companies are cutting costs. Technology is moving faster than ever. And more people are realizing they cannot depend on one paycheck forever.</p>
+        
+        <p class="intro-text">That does NOT mean the world is ending. It means this is the time to learn how to build something of your own.</p>
+        
+        <div class="quote-box">
+            <p class="quote-text">The best time to start was years ago. The second-best time is now. Before everybody else shows up with the same idea and a Canva logo they made in 14 minutes.</p>
+        </div>
+    </section>
+
+    <section class="section">
+        <h2 class="section-title">Who This Is REALLY For</h2>
+        <p class="intro-text">This is for the person who just got fired and is sitting in their car wondering: <em style="color: var(--gold);">"How am I going to support my family?"</em></p>
+        
+        <p class="intro-text">This is for the person going through a divorce who realizes: <em style="color: var(--gold);">"I need to figure out how to stand on my own."</em></p>
+        
+        <p class="intro-text">This is for the woman who just lost her husband and suddenly has to think about income, bills, and survival in a completely different way.</p>
+        
+        <p class="intro-text">This is for the person who:</p>
+        
+        <ul class="bullet-list">
+            <li>Wakes up every Monday morning already exhausted before they even get to work</li>
+            <li>Feels stuck</li>
+            <li>KNOWS they were meant for more</li>
+            <li>Is tired of building somebody else's dream while their own dreams sit on the back burner year after year</li>
+            <li>Is laying awake at night thinking: "There has to be another way."</li>
+            <li>Wants more freedom</li>
+            <li>Wants more ownership</li>
+            <li>Wants more control over their future</li>
+            <li>Is scared… but also knows deep down it's time to start building something of their own</li>
+        </ul>
+        
+        <p class="intro-text">And no… that does not mean you need to become some business expert overnight.</p>
+        
+        <div class="highlight-box">
+            <p style="font-style: normal; font-weight: 600;">You do NOT need:</p>
+        </div>
+        
+        <ul class="bullet-list">
+            <li>Coding skills</li>
+            <li>Business experience</li>
+            <li>A fancy website</li>
+            <li>A giant audience</li>
+            <li>Expensive equipment</li>
+            <li>A 97-page business plan</li>
+        </ul>
+        
+        <p class="intro-text">And no… you do not need to wake up at 4am, sit in an ice bath, journal for 3 hours, and scream affirmations at yourself while drinking mushroom coffee.</p>
+        
+        <div class="highlight-box">
+            <p style="font-style: normal; font-weight: 600;">You simply need:</p>
+        </div>
+        
+        <ul class="bullet-list">
+            <li>A willingness to learn</li>
+            <li>An open mind</li>
+            <li>A desire to create a better future</li>
+        </ul>
+        
+        <div style="text-align: center; margin-top: 50px;">
+            <a href="#join" class="cta-button">Reserve Your Spot — $297</a>
+        </div>
+    </section>
+
+    <section class="section section-dark">
+        <h2 class="section-title">My Story</h2>
+        <p class="intro-text">I did not start as some business genius. Honestly, I was a C student if I was lucky. If there was a class called: <em>"Creative daydreaming and avoiding homework…"</em> I probably would've graduated top of the class.</p>
+        
+        <p class="intro-text">I originally went to college to become a cop. In my 20s, I even did security work for Michael Jackson.</p>
+        
+        <p class="intro-text">Then life slowly pulled me toward business. I:</p>
+        
+        <ul class="bullet-list">
+            <li>Ran my father's business</li>
+            <li>Started an industrial supply company</li>
+            <li>Opened a gift shop</li>
+            <li>Opened restaurants</li>
+            <li>Opened a coffee house</li>
+        </ul>
+        
+        <p class="intro-text">I've opened businesses. Scaled businesses. And sold businesses.</p>
+        
+        <p class="intro-text">I learned about:</p>
+        
+        <ul class="bullet-list">
+            <li>Rent</li>
+            <li>Inventory</li>
+            <li>Payroll</li>
+            <li>Employees</li>
+            <li>Food costs</li>
+            <li>Customer service</li>
+            <li>And what it feels like when bills are due and the business actually has to make money</li>
+        </ul>
+        
+        <p class="intro-text">Then I moved into online business. I created my first online business in 1998. Back when the internet still sounded like a fax machine trying to contact outer space.</p>
+        
+        <p class="intro-text">I became one of the early internet marketers. I became certified in SEO very early. I learned:</p>
+        
+        <ul class="bullet-list">
+            <li>Traffic</li>
+            <li>Marketing</li>
+            <li>Sales</li>
+            <li>Launches</li>
+            <li>Software</li>
+            <li>Communities</li>
+            <li>Digital products</li>
+            <li>Funnels</li>
+            <li>Email marketing</li>
+        </ul>
+        
+        <p class="intro-text">And over the years, I've generated millions and millions of dollars in sales across physical businesses, digital businesses, software, launches, affiliate promotions, marketing campaigns, and education.</p>
+        
+        <p class="intro-text">I'm not telling you that to impress you. I'm telling you that because I've seen business from <strong style="color: white;">BOTH sides</strong>. The physical side. And the digital side. And today those worlds are coming together.</p>
+        
+        <div class="countdown-bar" style="position: relative; margin: 50px 0; background: rgba(212,175,55,0.1); border: 1px solid rgba(212,175,55,0.3);">
+            <div class="countdown-label">Join Us In</div>
+            <div class="countdown-timer" id="countdown-inline-3"></div>
+        </div>
+        
+        <div style="text-align: center; margin-top: 40px;">
+            <a href="#join" class="cta-button">Get Started Now — $297</a>
+        </div>
+    </section>
+
+    <section class="section">
+        <h2 class="section-title">The Big Mistake Most People Make</h2>
+        <p class="intro-text">Most people start with the wrong question. They ask: <em>"What business should I start?"</em></p>
+        
+        <p class="intro-text">But that's not the first question.</p>
+        
+        <p class="intro-text">The first question is: <strong style="color: var(--gold);">"What kind of life do I actually want?"</strong></p>
+        
+        <p class="intro-text">Because your business should support your life. Not destroy it.</p>
+        
+        <p class="intro-text">Some people build businesses that make money… but they never see their family.</p>
+        
+        <p class="intro-text">Some people build businesses that look successful online… but behind the scenes they are stressed out of their minds.</p>
+        
+        <p class="intro-text">Some people chase revenue… without understanding profit.</p>
+        
+        <p class="intro-text">Some people get customers… but have no systems.</p>
+        
+        <p class="intro-text">Some people create a business… and accidentally create a job that pays less and steals all their weekends.</p>        
+        <p class="intro-text"><strong style="color: white;">We are NOT doing that.</strong></p>
+        
+        <p class="intro-text">We are starting with your dream life first. Then we reverse engineer the business needed to support it.</p>
+        
+        <div style="text-align: center; margin-top: 50px;">
+            <a href="#join" class="cta-button">Join The Workshop — $297</a>
+        </div>
+    </section>
+
+    <section class="section section-dark">
+        <h2 class="section-title">The Dream Life Formula</h2>
+        <p class="intro-text">This is one of the most important parts of what we're going to cover.</p>
+        
+        <p class="intro-text">Most people say things like: <em>"I want to make $10,000 a month."</em></p>
+        
+        <p class="intro-text">Okay… But what does that ACTUALLY mean?</p>
+        
+        <p class="intro-text">Because businesses have:</p>
+        
+        <ul class="bullet-list">
+            <li>Taxes</li>
+            <li>Expenses</li>
+            <li>Software</li>
+            <li>Payroll</li>
+            <li>Marketing</li>
+            <li>Merchant fees</li>
+            <li>Cost of goods</li>
+            <li>Growth costs</li>
+        </ul>
+        
+        <p class="intro-text">Your business does not just need to pay YOU. It also has to survive.</p>
+        
+        <p class="intro-text">That's why I'm going to show you how to calculate:</p>
+        
+        <ul class="bullet-list">
+            <li>Your dream life number</li>
+            <li>Your real income goal</li>
+            <li>Business expenses</li>
+            <li>Profit targets</li>
+            <li>Reinvestment</li>
+            <li>How much revenue the business actually needs to produce</li>
+        </ul>
+        
+        <p class="intro-text">This alone can save you YEARS of confusion. And probably several emotional breakdowns while staring at spreadsheets.</p>
+        
+        <div class="countdown-bar" style="position: relative; margin: 50px 0; background: rgba(212,175,55,0.1); border: 1px solid rgba(212,175,55,0.3);">
+            <div class="countdown-label">Workshop Begins In</div>
+            <div class="countdown-timer" id="countdown-inline-2"></div>
+        </div>
+        
+        <div style="text-align: center; margin-top: 40px;">
+            <a href="#join" class="cta-button">Claim Your Spot — $297</a>
+        </div>
+    </section>
+
+    <section class="section">
+        <h2 class="section-title">Here's What We're Going To Cover Together</h2>
+        
+        <div class="days-grid">
+            <div class="day-image">
+                <picture>
+                    <source media="(max-width: 767px)" srcset="/dlbusiness/day1-mobile.jpg">
+                    <!-- <img src="/dlbusiness/day1-image.jpg" alt="Day 1: Dream Life & Business Foundations"> -->
+                </picture>
+            </div>
+            <div class="day-image">
+                <picture>
+                    <source media="(max-width: 767px)" srcset="/dlbusiness/day2-mobile.jpg">
+                    <img src="/dlbusiness/day2-image.jpg" alt="Workshop Schedule">
+                </picture>
+            </div>
+            <div class="day-image">
+                <picture>
+                    <source media="(max-width: 767px)" srcset="/dlbusiness/day3-mobile.jpg">
+                    <img src="/dlbusiness/day2-bottom-image.jpg" alt="Day 2 Details">
+                </picture>
+            </div>
+            <div class="day-image">
+                <picture>
+                    <source media="(max-width: 767px)" srcset="/dlbusiness/day4-mobile.jpg">
+                    <img src="/dlbusiness/day2-third-image.jpg" alt="Day 2 Additional Content">
+                </picture>
+            </div>
+            <div class="day-image">
+                <img src="/dlbusiness/day2-fourth-image.jpg" alt="Day 2 More Content">
+            </div>
+            <div class="day-image">
+                <img src="/dlbusiness/day2-fifth-image.jpg" alt="Day 2 Final Content">
+            </div>
+        </div>
+        
+        <p class="intro-text" style="text-align: center; font-style: italic; margin-top: 40px; color: var(--text-muted);">Because a business without customers is basically a very expensive hobby with a logo.</p>
+        
+        <p class="intro-text" style="text-align: center;">And no… you do not need robots running your kitchen while drones deliver sandwiches to customers.</p>
+        
+        <div class="countdown-bar" style="position: relative; margin: 50px 0; background: rgba(212,175,55,0.1); border: 1px solid rgba(212,175,55,0.3);">
+            <div class="countdown-label">Event Starts In</div>
+            <div class="countdown-timer" id="countdown-inline-4"></div>
+        </div>
+        
+        <div style="text-align: center; margin-top: 40px;">
+            <a href="#join" class="cta-button">Save Your Seat — $297</a>
+        </div>
+    </section>
+
+    <section class="section section-dark">
+        <h2 class="section-title">The Big Picture</h2>
+        <p class="intro-text">The world is changing whether we are ready or not. More people are going to look for:</p>
+        
+        <ul class="bullet-list">
+            <li>Additional income</li>
+            <li>Side businesses</li>
+            <li>Freedom</li>
+            <li>Ownership</li>
+            <li>Opportunities</li>
+        </ul>
+        
+        <p class="intro-text">The people who start building <strong style="color: var(--gold);">NOW</strong> will have the advantage later.</p>
+        
+        <p class="intro-text">You do not need to build everything overnight. You just need to start moving in the right direction. And that is exactly what this is designed to help you do.</p>
+    </section>
+
+    <section class="section">
+        <div class="guarantee-section">
+            <div class="guarantee-title">100% Money-Back Guarantee</div>
+            <div class="guarantee-text">
+                <p style="margin-bottom: 20px;">I want this to be one of the easiest decisions you make.</p>
+                <p style="margin-bottom: 20px;">That's why this is backed by a full 100% money-back guarantee.</p>
+                <p style="margin-bottom: 20px;">Even if you:</p>
+                <ul class="bullet-list" style="text-align: left; max-width: 500px; margin: 0 auto 20px;">
+                    <li>Attend all 5 days</li>
+                    <li>Map out your dream life</li>
+                    <li>Figure out exactly how much your business needs to make</li>
+                    <li>Create your plan</li>
+                    <li>Understand your numbers</li>
+                    <li>And walk away thinking… "Wow… this is actually way simpler than I thought."</li>
+                </ul>
+                <p>…I'll still give you your money back. Seriously.</p>
+            </div>
+        </div>
+    </section>
+
+    <section class="cta-final" id="join">
+        <h2 style="line-height: 1.05; margin-bottom: 20px;">Dream Life <strong>Business Workshop</strong></h2>
+        <p style="margin-bottom: 15px; font-size: 1.2rem;">Join me live May 25 – 29 and let's build your future together.</p>
+        <p style="margin-bottom: 40px; font-size: 1.5rem; color: var(--gold); font-weight: 600;">Normally <span style="text-decoration: line-through; opacity: 0.7;">$997</span> — Today Just $297</p>
+        <a href="#" class="cta-button-large">Secure Your Spot Now — $297</a>
+        <p style="margin-top: 20px; font-size: 0.95rem; color: var(--text-muted);">Save Over 70% Off During This Special Launch</p>
+        <p style="margin-top: 40px; font-size: 0.95rem; color: var(--text-muted); font-style: italic;">P.S. — You do NOT need to have everything figured out before joining this. Most people start way too late because they think they need the perfect idea, perfect timing, perfect website, or perfect plan. You don't. You just need to start moving in the right direction.</p>
+        <p style="margin-top: 20px; font-size: 0.95rem; color: var(--text-muted); font-style: italic;">P.P.S. — Five years from now, you probably won't regret learning how business works… but you might regret waiting while everybody else started building.</p>
+    </section>
+    <script>
+        // Countdown to May 25, 2026 at 10:00 AM PST
+        const eventDate = new Date('2026-05-25T10:00:00-07:00').getTime();
+        
+        function updateCountdown() {
+            const now = new Date().getTime();
+            const distance = eventDate - now;
+            
+            if (distance < 0) {
+                document.getElementById('countdown').innerHTML = '<span>EVENT STARTED</span>';
+                return;
+            }
+            
+            const days = Math.floor(distance / (1000 * 60 * 60 * 24));
+            const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+            const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+            const seconds = Math.floor((distance % (1000 * 60)) / 1000);
+            
+            document.getElementById('days').textContent = String(days).padStart(2, '0');
+            document.getElementById('hours').textContent = String(hours).padStart(2, '0');
+            document.getElementById('minutes').textContent = String(minutes).padStart(2, '0');
+            document.getElementById('seconds').textContent = String(seconds).padStart(2, '0');
+            
+            // Update inline countdowns
+            const inlineHTML = `<span>${String(days).padStart(2, '0')}</span><span class="unit">days</span> <span>${String(hours).padStart(2, '0')}</span><span class="unit">hrs</span> <span>${String(minutes).padStart(2, '0')}</span><span class="unit">min</span> <span>${String(seconds).padStart(2, '0')}</span><span class="unit">sec</span>`;
+            
+            const inline1 = document.getElementById('countdown-inline-1');
+            const inline2 = document.getElementById('countdown-inline-2');
+            const inline3 = document.getElementById('countdown-inline-3');
+            const inline4 = document.getElementById('countdown-inline-4');
+            
+            if (inline1) inline1.innerHTML = inlineHTML;
+            if (inline2) inline2.innerHTML = inlineHTML;
+            if (inline3) inline3.innerHTML = inlineHTML;
+            if (inline4) inline4.innerHTML = inlineHTML;
+        }
+        
+        updateCountdown();
+        setInterval(updateCountdown, 1000);
+    </script>
+</body>
+</html>

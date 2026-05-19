@@ -1,0 +1,1186 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Build A Business That Funds Your Dream Lifestyle | Chad Nicely</title>
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;0,700;1,400&family=Montserrat:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        :root {
+            --gold: #d4af37;
+            --gold-light: #f4e4a6;
+            --dark: #0f0f0f;
+            --dark-lighter: #1a1a1a;
+            --text: #e0e0e0;
+            --text-muted: #888;
+            --accent: #c9a227;
+        }
+
+        body {
+            font-family: 'Cormorant Garamond', Georgia, serif;
+            line-height: 1.8;
+            color: var(--text);
+            background: var(--dark);
+            overflow-x: hidden;
+        }
+
+        .countdown-bar {
+            background: #000000;
+            border-bottom: 1px solid rgba(212,175,55,0.3);
+            padding: 8px 20px;
+            text-align: center;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 1000;
+        }
+
+        .countdown-label {
+            font-family: 'Montserrat', sans-serif;
+            font-size: 8px;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            margin-bottom: 4px;
+        }
+
+        .countdown-timer {
+            font-family: 'Montserrat', sans-serif;
+            font-size: 16px;
+            font-weight: 700;
+            color: var(--gold);
+            letter-spacing: 1px;
+        }
+
+        .countdown-timer span {
+            display: inline-block;
+            min-width: 50px;
+        }
+
+        .countdown-timer .unit {
+            font-size: 10px;
+            font-weight: 400;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-left: 2px;
+            min-width: auto;
+        }
+
+        .hero {
+            min-height: 100vh;
+            display: flex;
+            align-items: flex-start;
+            padding: 80px 30px 40px;
+            position: relative;
+            background: linear-gradient(-45deg, #0f0f0f, #1a1a2e, #16213e, #0f0f0f);
+            background-size: 400% 400%;
+            animation: gradientShift 15s ease infinite;
+            overflow: hidden;
+        }
+
+        @keyframes gradientShift {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        .particles {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            overflow: hidden;
+            pointer-events: none;
+        }
+
+        .particle {
+            position: absolute;
+            width: 4px;
+            height: 4px;
+            background: var(--gold);
+            border-radius: 50%;
+            opacity: 0.3;
+            animation: float 20s infinite;
+        }
+
+        .particle:nth-child(1) { left: 10%; animation-delay: 0s; }
+        .particle:nth-child(2) { left: 20%; animation-delay: 2s; }
+        .particle:nth-child(3) { left: 30%; animation-delay: 4s; }
+        .particle:nth-child(4) { left: 40%; animation-delay: 6s; }
+        .particle:nth-child(5) { left: 50%; animation-delay: 8s; }
+        .particle:nth-child(6) { left: 60%; animation-delay: 10s; }
+        .particle:nth-child(7) { left: 70%; animation-delay: 12s; }
+        .particle:nth-child(8) { left: 80%; animation-delay: 14s; }
+        .particle:nth-child(9) { left: 90%; animation-delay: 16s; }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(100vh) rotate(0deg); opacity: 0; }
+            10% { opacity: 0.3; }
+            90% { opacity: 0.3; }
+            100% { transform: translateY(-100vh) rotate(720deg); opacity: 0; }
+        }
+
+        .hero-content {
+            max-width: 900px;
+            margin: 20px auto 0;
+            position: relative;
+            z-index: 1;
+            text-align: center;
+        }
+
+        .hero-badge {
+            display: inline-block;
+            border: 1px solid var(--gold);
+            color: var(--gold);
+            padding: 6px 18px;
+            font-family: 'Montserrat', sans-serif;
+            font-size: 9px;
+            font-weight: 600;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            margin-bottom: 15px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero-badge::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(212,175,55,0.2), transparent);
+            animation: shimmer 3s infinite;
+        }
+
+        @keyframes shimmer {
+            0% { left: -100%; }
+            100% { left: 100%; }
+        }
+
+        .hero h1 {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: clamp(3rem, 7vw, 6rem);
+            font-weight: 600;
+            color: white;
+            line-height: 1.05;
+            margin-bottom: 15px;
+            letter-spacing: -1px;
+        }
+
+        .hero h1 strong {
+            font-weight: 600;
+            background: linear-gradient(135deg, var(--gold) 0%, var(--gold-light) 50%, var(--gold) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .hero-subtitle {
+            font-family: 'Montserrat', sans-serif;
+            font-size: 1.1rem;
+            color: var(--text-muted);
+            font-weight: 400;
+            margin-bottom: 15px;
+            letter-spacing: 1px;
+            line-height: 1.4;
+        }
+
+        .hero-date {
+            background: rgba(212,175,55,0.1);
+            border: 1px solid rgba(212,175,55,0.3);
+            color: var(--gold);
+            padding: 15px 25px;
+            display: inline-block;
+            font-family: 'Montserrat', sans-serif;
+            font-weight: 500;
+            font-size: 0.95rem;
+            margin-bottom: 20px;
+            letter-spacing: 0.5px;
+            line-height: 1.5;
+        }
+
+        .cta-button {
+            display: inline-block;
+            background: linear-gradient(135deg, var(--gold) 0%, #b8941f 100%);
+            color: var(--dark);
+            padding: 22px 60px;
+            font-family: 'Montserrat', sans-serif;
+            font-size: 13px;
+            font-weight: 700;
+            text-decoration: none;
+            text-transform: uppercase;
+            letter-spacing: 3px;
+            transition: all 0.4s ease;
+            position: relative;
+            overflow: hidden;
+            box-shadow: 0 10px 40px rgba(212,175,55,0.3);
+        }
+
+        .cta-button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 20px 60px rgba(212,175,55,0.4);
+        }
+
+        .scroll-indicator {
+            position: absolute;
+            bottom: 40px;
+            left: 50%;
+            transform: translateX(-50%);
+            animation: bounce 2s infinite;
+        }
+
+        .scroll-indicator::before {
+            content: '↓';
+            color: var(--gold);
+            font-size: 2rem;
+            opacity: 0.5;
+        }
+
+        @keyframes bounce {
+            0%, 100% { transform: translateX(-50%) translateY(0); }
+            50% { transform: translateX(-50%) translateY(10px); }
+        }
+
+        .section {
+            padding: 120px 30px;
+            max-width: 800px;
+            margin: 0 auto;
+            position: relative;
+        }
+
+        .section-dark {
+            background: var(--dark-lighter);
+        }
+
+        .section-title {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 2.8rem;
+            font-weight: 300;
+            color: white;
+            margin-bottom: 50px;
+            line-height: 1.2;
+            position: relative;
+            padding-bottom: 30px;
+        }
+
+        .section-title::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100px;
+            height: 2px;
+            background: linear-gradient(90deg, var(--gold), transparent);
+        }
+
+        .intro-text {
+            font-size: 1.5rem;
+            line-height: 2;
+            color: var(--text);
+            margin-bottom: 30px;
+            font-weight: 300;
+        }
+
+        .divider {
+            text-align: center;
+            margin: 60px 0;
+            color: var(--text-muted);
+            font-size: 1.2rem;
+        }
+
+        .module-grid {
+            display: grid;
+            gap: 40px;
+            margin: 60px 0;
+        }
+
+        .module-card {
+            background: #000000;
+            border: 1px solid rgba(212,175,55,0.15);
+            padding: 50px;
+            position: relative;
+            transition: all 0.4s ease;
+            overflow: hidden;
+        }
+
+        .module-card::before {
+            content: '';
+            position: absolute;
+            top: -2px;
+            left: -2px;
+            right: -2px;
+            bottom: -2px;
+            background: linear-gradient(45deg, transparent 30%, rgba(212,175,55,0.1), transparent 70%);
+            opacity: 0;
+            transition: opacity 0.4s ease;
+            pointer-events: none;
+            z-index: -1;
+        }
+
+        .module-card:hover {
+            border-color: rgba(212,175,55,0.4);
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+        }
+
+        .module-card:hover::before {
+            opacity: 1;
+        }
+
+        .module-title {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 2rem;
+            font-weight: 600;
+            color: white;
+            margin-bottom: 20px;
+        }
+
+        .module-subtitle {
+            font-family: 'Montserrat', sans-serif;
+            font-size: 1.1rem;
+            font-weight: 600;
+            color: var(--gold);
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            margin-bottom: 25px;
+        }
+
+        .module-description {
+            font-size: 1.3rem;
+            color: var(--text-muted);
+            line-height: 1.8;
+        }
+
+        .about-section {
+            background: radial-gradient(ellipse at center, rgba(212,175,55,0.05) 0%, transparent 70%);
+        }
+
+        .cta-section {
+            text-align: center;
+            padding: 100px 30px;
+            background: linear-gradient(135deg, rgba(212,175,55,0.1) 0%, rgba(212,175,55,0.05) 100%);
+        }
+
+        .cta-section h2 {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 3rem;
+            font-weight: 300;
+            color: white;
+            margin-bottom: 30px;
+        }
+
+        .cta-section p {
+            font-family: 'Montserrat', sans-serif;
+            font-size: 1.1rem;
+            color: var(--text-muted);
+            margin-bottom: 50px;
+            letter-spacing: 1px;
+        }
+
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 2000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.85);
+            backdrop-filter: blur(10px);
+        }
+
+        .modal.active {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            animation: fadeIn 0.3s ease;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        .modal-content {
+            background: linear-gradient(135deg, var(--dark-lighter) 0%, var(--dark) 100%);
+            border: 2px solid var(--gold);
+            padding: 50px;
+            max-width: 500px;
+            width: 90%;
+            position: relative;
+            animation: slideUp 0.4s ease;
+            box-shadow: 0 30px 90px rgba(212,175,55,0.3);
+        }
+
+        @keyframes slideUp {
+            from { transform: translateY(50px); opacity: 0; }
+            to { transform: translateY(0); opacity: 1; }
+        }
+
+        .modal-close {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            font-size: 2rem;
+            color: var(--text-muted);
+            cursor: pointer;
+            transition: all 0.3s ease;
+            background: none;
+            border: none;
+            line-height: 1;
+        }
+
+        .modal-close:hover {
+            color: var(--gold);
+            transform: rotate(90deg);
+        }
+
+        .modal-title {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 2.2rem;
+            font-weight: 600;
+            color: white;
+            margin-bottom: 15px;
+            text-align: center;
+        }
+
+        .modal-subtitle {
+            font-family: 'Montserrat', sans-serif;
+            font-size: 0.9rem;
+            color: var(--text-muted);
+            text-align: center;
+            margin-bottom: 25px;
+            letter-spacing: 1px;
+        }
+
+        .modal-countdown {
+            background: rgba(212,175,55,0.1);
+            border: 1px solid rgba(212,175,55,0.3);
+            padding: 20px;
+            margin-bottom: 25px;
+            text-align: center;
+        }
+
+        .modal-countdown-label {
+            font-family: 'Montserrat', sans-serif;
+            font-size: 0.7rem;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            margin-bottom: 10px;
+        }
+
+        .modal-countdown-timer {
+            font-family: 'Montserrat', sans-serif;
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--gold);
+            letter-spacing: 2px;
+        }
+
+        .modal-countdown-timer span {
+            display: inline-block;
+            min-width: 35px;
+        }
+
+        .modal-countdown-timer .modal-unit {
+            font-size: 0.7rem;
+            font-weight: 400;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-left: 2px;
+            min-width: auto;
+        }
+
+        .recent-registrations {
+            background: rgba(212,175,55,0.05);
+            border: 1px solid rgba(212,175,55,0.2);
+            padding: 15px 20px;
+            margin-bottom: 20px;
+            font-family: 'Montserrat', sans-serif;
+            font-size: 0.75rem;
+            color: var(--text-muted);
+            text-align: center;
+            animation: slideIn 0.5s ease;
+        }
+
+        @keyframes slideIn {
+            from { opacity: 0; transform: translateY(-10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .recent-registrations strong {
+            color: var(--gold);
+            font-weight: 600;
+        }
+
+        .page-notification {
+            position: fixed;
+            bottom: 20px;
+            left: 20px;
+            background: linear-gradient(135deg, rgba(0,0,0,0.95) 0%, rgba(26,26,26,0.95) 100%);
+            border: 1px solid rgba(212,175,55,0.4);
+            padding: 15px 20px;
+            border-radius: 8px;
+            font-family: 'Montserrat', sans-serif;
+            font-size: 0.85rem;
+            color: var(--text);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+            z-index: 999;
+            max-width: 300px;
+            animation: slideInLeft 0.5s ease;
+            display: none;
+        }
+
+        @keyframes slideInLeft {
+            from { opacity: 0; transform: translateX(-50px); }
+            to { opacity: 1; transform: translateX(0); }
+        }
+
+        .page-notification strong {
+            color: var(--gold);
+            font-weight: 600;
+        }
+
+        .form-group {
+            margin-bottom: 25px;
+        }
+
+        .form-label {
+            font-family: 'Montserrat', sans-serif;
+            font-size: 0.85rem;
+            color: var(--gold);
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            margin-bottom: 10px;
+            display: block;
+        }
+
+        .form-input {
+            width: 100%;
+            padding: 15px;
+            background: rgba(255,255,255,0.05);
+            border: 1px solid rgba(212,175,55,0.3);
+            color: white;
+            font-family: 'Montserrat', sans-serif;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+        }
+
+        .form-input:focus {
+            outline: none;
+            border-color: var(--gold);
+            background: rgba(255,255,255,0.08);
+            box-shadow: 0 0 20px rgba(212,175,55,0.2);
+        }
+
+        .form-submit {
+            width: 100%;
+            padding: 18px;
+            background: linear-gradient(135deg, var(--gold) 0%, #b8941f 100%);
+            color: var(--dark);
+            font-family: 'Montserrat', sans-serif;
+            font-size: 0.9rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 3px;
+            border: none;
+            cursor: pointer;
+            transition: all 0.4s ease;
+            box-shadow: 0 10px 30px rgba(212,175,55,0.3);
+        }
+
+        .form-submit:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 15px 40px rgba(212,175,55,0.4);
+        }
+
+        .form-submit:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+
+        .success-message {
+            text-align: center;
+            padding: 40px 20px;
+        }
+
+        .success-message h3 {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 2rem;
+            color: var(--gold);
+            margin-bottom: 20px;
+        }
+
+        .success-message p {
+            font-size: 1.1rem;
+            color: var(--text-muted);
+            line-height: 1.8;
+        }
+
+        .module-image {
+            width: 100%;
+            height: auto;
+            margin-bottom: 30px;
+            border-radius: 8px;
+            cursor: pointer;
+            display: block;
+            object-fit: cover;
+            transition: all 0.4s ease;
+            position: relative;
+        }
+
+        .module-image-mobile {
+            display: none;
+        }
+
+        .module-image:hover {
+            transform: translateY(-5px);
+            opacity: 0.9;
+        }
+
+        @media (max-width: 768px) {
+            .hero h1 {
+                font-size: 2.2rem;
+            }
+            
+            .section-title {
+                font-size: 2rem;
+            }
+            
+            .module-card {
+                padding: 30px;
+            }
+
+            .modal-content {
+                padding: 20px;
+                max-height: 90vh;
+                overflow-y: auto;
+            }
+
+            .modal-title {
+                font-size: 1.5rem;
+            }
+
+            .modal-countdown {
+                padding: 12px;
+            }
+
+            .modal-countdown-timer {
+                font-size: 1.2rem;
+            }
+
+            .form-group {
+                margin-bottom: 15px;
+            }
+
+            .form-input {
+                padding: 12px;
+            }
+
+            .form-submit {
+                padding: 15px;
+            }
+
+            .module-image-desktop {
+                display: none;
+            }
+
+            .module-image-mobile {
+                display: block;
+            }
+
+            .page-notification {
+                left: 10px;
+                right: 10px;
+                max-width: calc(100% - 20px);
+                font-size: 0.75rem;
+            }
+
+            .hero {
+                padding: 50px 25px 30px;
+                min-height: 100vh;
+                align-items: center;
+            }
+
+            .hero-content {
+                margin: 0 auto;
+                width: 100%;
+            }
+
+            .hero-badge {
+                padding: 8px 18px;
+                font-size: 9px;
+                margin-bottom: 25px;
+            }
+
+            .hero h1 {
+                font-size: 3.2rem;
+                margin-bottom: 25px;
+                line-height: 1.05;
+            }
+
+            .hero-subtitle {
+                font-size: 1.25rem;
+                margin-bottom: 25px;
+                line-height: 1.4;
+            }
+
+            .hero-date {
+                font-size: 1rem;
+                padding: 18px 25px;
+                margin-bottom: 30px;
+                white-space: normal;
+                line-height: 1.5;
+            }
+
+            .cta-button {
+                padding: 20px 50px;
+                font-size: 12px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="countdown-bar">
+        <div class="countdown-label">Training Starts In</div>
+        <div class="countdown-timer" id="countdown">
+            <span id="days">00</span><span class="unit">d</span> : 
+            <span id="hours">00</span><span class="unit">h</span> : 
+            <span id="minutes">00</span><span class="unit">m</span> : 
+            <span id="seconds">00</span><span class="unit">s</span>
+        </div>
+    </div>
+
+    <section class="hero">
+        <div class="particles">
+            <div class="particle"></div>
+            <div class="particle"></div>
+            <div class="particle"></div>
+            <div class="particle"></div>
+            <div class="particle"></div>
+            <div class="particle"></div>
+            <div class="particle"></div>
+            <div class="particle"></div>
+            <div class="particle"></div>
+        </div>
+        
+        <div class="hero-content">
+            <div class="hero-badge">
+                Special Training for the SMC Community
+            </div>
+            
+            <h1>
+                Build A Business That Funds<br>Your <strong>Dream Lifestyle</strong>
+            </h1>
+            
+            <div class="hero-subtitle">
+                Take Back Control Of Your Time, Income & Future
+            </div>
+
+            <div class="hero-date">
+                <div>Free Special 90 Minute Live Training</div>
+                <div style="white-space: nowrap;">Friday, May 23rd • 2:00 PM PST / 5:00 PM EST</div>
+            </div>
+
+            <button class="cta-button" onclick="openModal()">Reserve Your Seat Now</button>
+        </div>
+
+        <div class="scroll-indicator"></div>
+    </section>
+
+    <section class="section">
+        <p class="intro-text">
+            If you've been feeling overwhelmed, stuck, burned out, or uncertain about the future… you are not alone.
+        </p>
+        
+        <p class="intro-text">
+            The world is changing fast. Traditional jobs no longer feel secure. Most people are working harder than ever while feeling further behind.
+        </p>
+        
+        <p class="intro-text">
+            But at the same time…
+        </p>
+        
+        <p class="intro-text">
+            A new opportunity has opened for ordinary people to build simple lifestyle businesses designed around freedom, flexibility, and multiple income streams.
+        </p>
+        
+        <p class="intro-text">
+            And that's exactly what this training is about.
+        </p>
+        
+        <p class="intro-text">
+            This is NOT another complicated business webinar filled with hype, confusing tech, or unrealistic promises.
+        </p>
+        
+        <p class="intro-text">
+            This training is about creating a business that actually supports your LIFE.
+        </p>
+    </section>
+
+    <section class="section section-dark">
+        <h2 class="section-title">Here's What You'll Discover Inside This FREE Training</h2>
+        
+        <div class="module-grid">
+            <div class="module-card">
+                <img src="/dlbizreg/pillar1.jpg" alt="The Dream Life Blueprint" class="module-image module-image-desktop" onclick="openModal()">
+                <img src="/dlbizreg/pillar1-mobile.jpg" alt="The Dream Life Blueprint" class="module-image module-image-mobile" onclick="openModal()">
+                <div class="module-title">The Dream Life Blueprint™</div>
+                <div class="module-subtitle">Stop Chasing Random Income Goals</div>
+                <p class="module-description">
+                    And Finally Build A Business Around The Life You Actually Want To Live
+                </p>
+                <div class="divider">⸻</div>
+                <p class="module-description">
+                    Discover the exact process that helps you reverse engineer your dream lifestyle into a clear income target and a realistic business plan built around freedom, flexibility, and long-term stability.
+                </p>
+                <button class="cta-button" onclick="openModal()" style="margin-top: 30px;">Reserve Your Seat</button>
+            </div>
+
+            <div class="module-card">
+                <img src="/dlbizreg/pillar2.jpg" alt="The Lifestyle Wealth Engine" class="module-image module-image-desktop" onclick="openModal()">
+                <img src="/dlbizreg/pillar2-mobile.jpg" alt="The Lifestyle Wealth Engine" class="module-image module-image-mobile" onclick="openModal()">
+                <div class="module-title">The Lifestyle Wealth Engine™</div>
+                <div class="module-subtitle">Discover The Modern Business Model</div>
+                <p class="module-description">
+                    Designed To Create Multiple Income Streams Without Burning Yourself Out
+                </p>
+                <div class="divider">⸻</div>
+                <p class="module-description">
+                    Discover the modern business strategy that's helping ordinary people create recurring revenue, leverage their knowledge, and build simple lifestyle businesses without complicated tech, huge audiences, or endless hustle.
+                </p>
+                <button class="cta-button" onclick="openModal()" style="margin-top: 30px;">Reserve Your Seat</button>
+            </div>
+
+            <div class="module-card">
+                <img src="/dlbizreg/pillar3.jpg" alt="The Freedom Scale Method" class="module-image module-image-desktop" onclick="openModal()">
+                <img src="/dlbizreg/pillar3-mobile.jpg" alt="The Freedom Scale Method" class="module-image module-image-mobile" onclick="openModal()">
+                <div class="module-title">The Freedom Scale Method™</div>
+                <div class="module-subtitle">Learn How To Grow Your Income</div>
+                <p class="module-description">
+                    While Protecting Your Time, Energy, Freedom & Lifestyle
+                </p>
+                <div class="divider">⸻</div>
+                <p class="module-description">
+                    Discover the scaling principles that allow you to increase income, simplify operations, and create more freedom without building another stressful full-time job for yourself.
+                </p>
+                <button class="cta-button" onclick="openModal()" style="margin-top: 30px;">Reserve Your Seat</button>
+            </div>
+        </div>
+    </section>
+
+    <section class="section about-section">
+        <h2 class="section-title">Meet Your Host: Chad Nicely</h2>
+        
+        <div style="text-align: center; margin-bottom: 40px;">
+            <img src="/dlbizreg/chad-photo.jpg" alt="Chad Nicely" style="width: 250px; height: 250px; border-radius: 50%; border: 4px solid var(--gold); object-fit: cover; object-position: center 20%; box-shadow: 0 10px 30px rgba(212,175,55,0.3);">
+        </div>
+        
+        <p class="intro-text">
+            For over 15 years, Chad Nicely has helped entrepreneurs all around the world build businesses, launch products, grow communities, and create income online.
+        </p>
+        
+        <p class="intro-text">
+            He has taught over 100,000 students globally, generated millions of dollars in online sales, built multiple companies, and helped countless people create businesses designed around freedom and lifestyle.
+        </p>
+        
+        <p class="intro-text">
+            But the truth is…
+        </p>
+        
+        <p class="intro-text">
+            This training is not about becoming some "internet guru."
+        </p>
+        
+        <p class="intro-text">
+            It's about helping ordinary people simplify the process, create clarity, and finally build a business that gives them more control over their future.
+        </p>
+        
+        <p class="intro-text">
+            Because most people don't need more confusion.
+        </p>
+        
+        <p class="intro-text">
+            They need a real plan.
+        </p>
+        
+        <p class="intro-text">
+            And that's exactly what this training was designed to provide.
+        </p>
+    </section>
+
+    <section class="cta-section" id="register">
+        <h2>FREE LIVE TRAINING</h2>
+        <p>Reserve Your Seat Below</p>
+        
+        <div class="hero-date" style="margin-bottom: 30px;">
+            Friday, May 23rd • 2:00 PM PST / 5:00 PM EST
+        </div>
+        
+        <p style="font-size: 0.9rem; margin-bottom: 40px;">
+            Limited Spots Available Due To Live Training Capacity
+        </p>
+        
+        <button class="cta-button" onclick="openModal()">Reserve Your Seat Now</button>
+    </section>
+
+    <!-- Page Notification -->
+    <div id="pageNotification" class="page-notification">
+        <strong id="pageNotifName"></strong> just registered from <strong id="pageNotifLocation"></strong>
+    </div>
+
+    <!-- Registration Modal -->
+    <div id="registrationModal" class="modal">
+        <div class="modal-content">
+            <button class="modal-close" onclick="closeModal()">&times;</button>
+            
+            <div id="formContainer">
+                <h2 class="modal-title">Reserve Your Seat</h2>
+                <p class="modal-subtitle">Friday, May 23rd • 2:00 PM PST / 5:00 PM EST</p>
+                
+                <div class="modal-countdown" id="modalCountdown">
+                    <div class="modal-countdown-label">Training Starts In</div>
+                    <div class="modal-countdown-timer">
+                        <span id="modalDays">00</span><span class="modal-unit">d</span> : 
+                        <span id="modalHours">00</span><span class="modal-unit">h</span> : 
+                        <span id="modalMinutes">00</span><span class="modal-unit">m</span> : 
+                        <span id="modalSeconds">00</span><span class="modal-unit">s</span>
+                    </div>
+                </div>
+                
+                <div id="recentRegistrations" class="recent-registrations" style="display: none;">
+                    <strong id="recentName"></strong> just registered from <strong id="recentLocation"></strong>
+                </div>
+                
+                <form id="registrationForm" onsubmit="handleSubmit(event)">
+                    <div class="form-group">
+                        <label class="form-label">First Name</label>
+                        <input type="text" class="form-input" id="firstName" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label class="form-label">Last Name</label>
+                        <input type="text" class="form-input" id="lastName" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label class="form-label">Email Address</label>
+                        <input type="email" class="form-input" id="email" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label class="form-label">Phone (Optional)</label>
+                        <input type="tel" class="form-input" id="phone">
+                    </div>
+                    
+                    <button type="submit" class="form-submit" id="submitBtn">Reserve My Seat</button>
+                </form>
+            </div>
+            
+            <div id="successContainer" class="success-message" style="display: none;">
+                <h3>🎉 You're Registered!</h3>
+                <p>Check your email for webinar details and access link.</p>
+                <p style="margin-top: 20px;">See you on <strong>Friday, May 23rd at 2:00 PM PST</strong>!</p>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Modal Functions
+        function openModal() {
+            document.getElementById('registrationModal').classList.add('active');
+            document.body.style.overflow = 'hidden';
+            updateModalCountdown();
+        }
+        
+        // Modal Countdown
+        function updateModalCountdown() {
+            const now = new Date().getTime();
+            const distance = countdownDate - now;
+            
+            const days = Math.floor(distance / (1000 * 60 * 60 * 24));
+            const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+            const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+            const seconds = Math.floor((distance % (1000 * 60)) / 1000);
+            
+            document.getElementById("modalDays").innerHTML = String(days).padStart(2, '0');
+            document.getElementById("modalHours").innerHTML = String(hours).padStart(2, '0');
+            document.getElementById("modalMinutes").innerHTML = String(minutes).padStart(2, '0');
+            document.getElementById("modalSeconds").innerHTML = String(seconds).padStart(2, '0');
+            
+            if (distance > 0) {
+                setTimeout(updateModalCountdown, 1000);
+            }
+        }
+        
+        function closeModal() {
+            document.getElementById('registrationModal').classList.remove('active');
+            document.body.style.overflow = 'auto';
+        }
+        
+        // Close on outside click
+        document.getElementById('registrationModal').addEventListener('click', function(e) {
+            if (e.target === this) {
+                closeModal();
+            }
+        });
+        
+        // Handle Form Submission
+        async function handleSubmit(event) {
+            event.preventDefault();
+            
+            const submitBtn = document.getElementById('submitBtn');
+            submitBtn.disabled = true;
+            submitBtn.textContent = 'Registering...';
+            
+            const formData = {
+                firstName: document.getElementById('firstName').value,
+                lastName: document.getElementById('lastName').value,
+                email: document.getElementById('email').value,
+                phone: document.getElementById('phone').value || ''
+            };
+            
+            try {
+                const response = await fetch('https://api.globalcontrol.io/api/ai/contacts', {
+                    method: 'POST',
+                    headers: {
+                        'X-API-KEY': '14a90d89c27094ee877bfdade90256d86bd1e4f51912698da36ed075c90bed72',
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(formData)
+                });
+                
+                if (response.ok) {
+                    const contactData = await response.json();
+                    
+                    // Fire tag for webinar registration
+                    // You'll need to replace TAG_ID with actual tag ID from GC
+                    // await fetch('https://api.globalcontrol.io/api/ai/tags/fire-tag/TAG_ID', {
+                    //     method: 'POST',
+                    //     headers: {
+                    //         'X-API-KEY': '14a90d89c27094ee877bfdade90256d86bd1e4f51912698da36ed075c90bed72',
+                    //         'Content-Type': 'application/json'
+                    //     },
+                    //     body: JSON.stringify({ contactId: contactData.id })
+                    // });
+                    
+                    // Redirect to thank you page
+                    window.location.href = '/dlbizreg-conf';
+                } else {
+                    throw new Error('Registration failed');
+                }
+            } catch (error) {
+                alert('Registration failed. Please try again or contact support.');
+                submitBtn.disabled = false;
+                submitBtn.textContent = 'Reserve My Seat';
+            }
+        }
+        
+        // Recent Registrations Popup
+        const names = [
+            'Sarah M.', 'Michael T.', 'Jennifer L.', 'David R.', 'Amanda K.',
+            'Chris P.', 'Jessica W.', 'Ryan B.', 'Michelle S.', 'Brandon H.',
+            'Emily C.', 'James D.', 'Nicole F.', 'Kevin G.', 'Rachel N.',
+            'Tyler M.', 'Ashley P.', 'Jordan L.', 'Stephanie V.', 'Marcus J.'
+        ];
+        
+        const locations = [
+            'Los Angeles, CA', 'New York, NY', 'Austin, TX', 'Miami, FL',
+            'Seattle, WA', 'Denver, CO', 'Atlanta, GA', 'Phoenix, AZ',
+            'San Diego, CA', 'Portland, OR', 'Chicago, IL', 'Boston, MA',
+            'Dallas, TX', 'Las Vegas, NV', 'San Francisco, CA', 'Nashville, TN'
+        ];
+        
+        function showRecentRegistration() {
+            const recentDiv = document.getElementById('recentRegistrations');
+            const randomName = names[Math.floor(Math.random() * names.length)];
+            const randomLocation = locations[Math.floor(Math.random() * locations.length)];
+            
+            document.getElementById('recentName').textContent = randomName;
+            document.getElementById('recentLocation').textContent = randomLocation;
+            
+            recentDiv.style.display = 'block';
+            
+            setTimeout(() => {
+                recentDiv.style.display = 'none';
+            }, 5000);
+        }
+        
+        // Show registration notification in modal when open
+        setInterval(() => {
+            const modal = document.getElementById('registrationModal');
+            if (modal.classList.contains('active') && Math.random() > 0.3) {
+                showRecentRegistration();
+            }
+        }, Math.random() * 7000 + 8000);
+        
+        // Show page notifications
+        function showPageNotification() {
+            const notification = document.getElementById('pageNotification');
+            const randomName = names[Math.floor(Math.random() * names.length)];
+            const randomLocation = locations[Math.floor(Math.random() * locations.length)];
+            
+            document.getElementById('pageNotifName').textContent = randomName;
+            document.getElementById('pageNotifLocation').textContent = randomLocation;
+            
+            notification.style.display = 'block';
+            
+            setTimeout(() => {
+                notification.style.display = 'none';
+            }, 6000);
+        }
+        
+        // Show page notification every 10-20 seconds
+        setInterval(() => {
+            if (Math.random() > 0.2) {
+                showPageNotification();
+            }
+        }, Math.random() * 10000 + 10000);
+        
+        // Countdown Timer
+        const countdownDate = new Date("May 23, 2026 14:00:00 PST").getTime();
+        
+        const countdownTimer = setInterval(function() {
+            const now = new Date().getTime();
+            const distance = countdownDate - now;
+            
+            const days = Math.floor(distance / (1000 * 60 * 60 * 24));
+            const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+            const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+            const seconds = Math.floor((distance % (1000 * 60)) / 1000);
+            
+            document.getElementById("days").innerHTML = String(days).padStart(2, '0');
+            document.getElementById("hours").innerHTML = String(hours).padStart(2, '0');
+            document.getElementById("minutes").innerHTML = String(minutes).padStart(2, '0');
+            document.getElementById("seconds").innerHTML = String(seconds).padStart(2, '0');
+            
+            if (distance < 0) {
+                clearInterval(countdownTimer);
+                document.getElementById("countdown").innerHTML = "LIVE NOW";
+            }
+        }, 1000);
+
+        // Smooth scroll for anchor links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+    </script>
+</body>
+</html>

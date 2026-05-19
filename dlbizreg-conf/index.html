@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Thank You | Lifestyle Business Training</title>
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;0,700;1,400&family=Montserrat:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        :root {
+            --gold: #d4af37;
+            --gold-light: #f4e4a6;
+            --dark: #0f0f0f;
+            --dark-lighter: #1a1a1a;
+            --text: #e0e0e0;
+            --text-muted: #888;
+            --accent: #c9a227;
+        }
+
+        body {
+            font-family: 'Cormorant Garamond', Georgia, serif;
+            line-height: 1.8;
+            color: var(--text);
+            background: var(--dark);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 40px 20px;
+        }
+
+        .thank-you-container {
+            max-width: 800px;
+            text-align: center;
+            animation: fadeIn 1s ease-out;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(30px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .success-icon {
+            width: 100px;
+            height: 100px;
+            border: 3px solid var(--gold);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 40px;
+            animation: scaleIn 0.5s ease-out 0.3s both;
+        }
+
+        @keyframes scaleIn {
+            from { transform: scale(0); }
+            to { transform: scale(1); }
+        }
+
+        .success-icon::after {
+            content: '✓';
+            color: var(--gold);
+            font-size: 50px;
+            font-weight: 300;
+        }
+
+        h1 {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: clamp(2.5rem, 6vw, 4rem);
+            font-weight: 300;
+            color: white;
+            margin-bottom: 20px;
+            line-height: 1.2;
+        }
+
+        h1 strong {
+            color: var(--gold);
+            font-weight: 600;
+        }
+
+        .subtitle {
+            font-size: 1.4rem;
+            color: var(--text-muted);
+            margin-bottom: 50px;
+            font-style: italic;
+        }
+
+        .zoom-section {
+            background: linear-gradient(135deg, rgba(212,175,55,0.1) 0%, rgba(212,175,55,0.05) 100%);
+            border: 1px solid rgba(212,175,55,0.3);
+            border-radius: 15px;
+            padding: 50px 40px;
+            margin-bottom: 40px;
+        }
+
+        .zoom-label {
+            font-family: 'Montserrat', sans-serif;
+            font-size: 12px;
+            color: var(--gold);
+            text-transform: uppercase;
+            letter-spacing: 3px;
+            margin-bottom: 20px;
+        }
+
+        .zoom-button {
+            display: inline-block;
+            background: linear-gradient(135deg, var(--gold) 0%, #b8941f 100%);
+            color: var(--dark);
+            padding: 25px 60px;
+            font-family: 'Montserrat', sans-serif;
+            font-size: 16px;
+            font-weight: 700;
+            text-decoration: none;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            border-radius: 10px;
+            transition: all 0.4s ease;
+            box-shadow: 0 10px 40px rgba(212,175,55,0.3);
+            margin-bottom: 20px;
+        }
+
+        .zoom-button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 15px 50px rgba(212,175,55,0.5);
+        }
+
+        .zoom-note {
+            font-size: 1rem;
+            color: var(--text-muted);
+            font-style: italic;
+        }
+
+        .details-box {
+            background: rgba(255,255,255,0.02);
+            border-left: 3px solid var(--gold);
+            padding: 30px 40px;
+            text-align: left;
+            margin-bottom: 40px;
+        }
+
+        .details-box h3 {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 1.5rem;
+            color: var(--gold);
+            margin-bottom: 15px;
+        }
+
+        .details-box p {
+            font-size: 1.1rem;
+            line-height: 1.8;
+            margin-bottom: 10px;
+        }
+
+        .details-box strong {
+            color: white;
+        }
+
+        .back-link {
+            color: var(--gold);
+            font-family: 'Montserrat', sans-serif;
+            font-size: 12px;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            text-decoration: none;
+            border-bottom: 1px solid var(--gold);
+            padding-bottom: 3px;
+            transition: all 0.3s ease;
+        }
+
+        .back-link:hover {
+            color: white;
+            border-color: white;
+        }
+
+        @media (max-width: 768px) {
+            .zoom-section { padding: 30px 20px; }
+            .details-box { padding: 20px 25px; }
+            .zoom-button { padding: 20px 40px; font-size: 14px; }
+        }
+    </style>
+</head>
+<body>
+    <div class="thank-you-container">
+        <div class="success-icon"></div>
+
+        <h1>You're <strong>In!</strong></h1>
+        <p class="subtitle">Your seat is reserved for the live training</p>
+
+        <div class="details-box">
+            <h3>What Happens Next:</h3>
+            <p><strong>📅 Date:</strong> Friday, May 23rd, 2026</p>
+            <p><strong>🕐 Time:</strong> 2:00 PM PST / 5:00 PM EST</p>
+            <p><strong>📍 Where:</strong> Live Online Training</p>
+            <p><strong>📧 Check your email</strong> for the access link and calendar invite</p>
+        </div>
+
+        <div class="zoom-section">
+            <div class="zoom-label">Mark Your Calendar</div>
+            <p class="zoom-note">We'll send you the live training link via email before the event</p>
+        </div>
+
+        <a href="/dlbizreg" class="back-link">← Back to Registration Page</a>
+    </div>
+</body>
+</html>
