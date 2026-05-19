@@ -22,47 +22,32 @@ export default async function handler(req, res) {
   const TAG_ID = '6a0ce7aa923e61233052f9ba'; // web-dream tag
 
   try {
-    // 1. Create/update contact in Global Control
-    const contactResponse = await fetch('https://api.globalcontrol.io/api/ai/contacts', {
-      method: 'POST',
-      headers: {
-        'X-API-KEY': GC_API_KEY,
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify({
-        firstName,
-        lastName,
-        email,
-        phone: phone || ''
-      })
-    });
-
-    if (!contactResponse.ok) {
-      throw new Error(`Failed to create contact: ${contactResponse.status}`);
-    }
-
-    const contactData = await contactResponse.json();
-    const contactId = contactData.data?._id || contactData._id;
-
-    // 2. Fire the web-dream tag
+    // Fire tag - this automatically creates/updates the contact
     const tagResponse = await fetch(`https://api.globalcontrol.io/api/ai/tags/fire-tag/${TAG_ID}`, {
       method: 'POST',
       headers: {
         'X-API-KEY': GC_API_KEY,
         'Content-Type': 'application/json'
       },
-      body: JSON.stringify({ contactId })
+      body: JSON.stringify({
+        email,
+        firstName,
+        lastName,
+        phone: phone || ''
+      })
     });
 
     if (!tagResponse.ok) {
-      console.error('Tag fire failed:', tagResponse.status);
-      // Don't fail the whole request if tag fails
+      const errorData = await tagResponse.json();
+      throw new Error(`Tag fire failed: ${tagResponse.status} - ${JSON.stringify(errorData)}`);
     }
+
+    const result = await tagResponse.json();
 
     return res.status(200).json({ 
       success: true,
       message: 'Registration successful',
-      contactId 
+      data: result
     });
 
   } catch (error) {
