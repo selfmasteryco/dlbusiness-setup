@@ -1049,28 +1049,23 @@
                 phone: document.getElementById('phone').value || ''
             };
             
-            // For now, just redirect to thank you page
-            // TODO: Implement proper backend API to handle CORS
-            setTimeout(() => {
-                window.location.href = '/dlbizreg-conf';
-            }, 1000);
-            
-            /* 
-            // Original API call - commented out due to CORS
             try {
-                const response = await fetch('https://api.globalcontrol.io/api/ai/contacts', {
+                // Call serverless function to register in Global Control
+                const response = await fetch('/api/register', {
                     method: 'POST',
                     headers: {
-                        'X-API-KEY': '14a90d89c27094ee877bfdade90256d86bd1e4f51912698da36ed075c90bed72',
                         'Content-Type': 'application/json'
                     },
                     body: JSON.stringify(formData)
                 });
                 
-                if (response.ok) {
+                const result = await response.json();
+                
+                if (response.ok && result.success) {
+                    // Success - redirect to thank you page
                     window.location.href = '/dlbizreg-conf';
                 } else {
-                    throw new Error('Registration failed');
+                    throw new Error(result.message || 'Registration failed');
                 }
             } catch (error) {
                 console.error('Registration error:', error);
@@ -1078,7 +1073,6 @@
                 submitBtn.disabled = false;
                 submitBtn.textContent = 'Reserve My Seat';
             }
-            */
         }
 
         
