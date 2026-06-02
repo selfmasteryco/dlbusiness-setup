@@ -963,10 +963,25 @@
                 
                 const position = positions[Math.floor(Math.random() * positions.length)];
                 
-                if (position.bottom) notification.style.bottom = position.bottom;
-                if (position.top) notification.style.top = position.top;
-                if (position.left) notification.style.left = position.left;
-                if (position.right) notification.style.right = position.right;
+                // Use setProperty with important flag to override CSS
+                if (position.bottom) {
+                    notification.style.setProperty('bottom', position.bottom, 'important');
+                    notification.style.setProperty('top', 'auto', 'important');
+                }
+                if (position.top) {
+                    notification.style.setProperty('top', position.top, 'important');
+                    notification.style.setProperty('bottom', 'auto', 'important');
+                }
+                if (position.left) {
+                    notification.style.setProperty('left', position.left, 'important');
+                    notification.style.setProperty('right', 'auto', 'important');
+                    notification.style.setProperty('transform', 'none', 'important');
+                }
+                if (position.right) {
+                    notification.style.setProperty('right', position.right, 'important');
+                    notification.style.setProperty('left', 'auto', 'important');
+                    notification.style.setProperty('transform', 'none', 'important');
+                }
             }
             // Mobile positioning is handled by CSS
             
