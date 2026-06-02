@@ -1,0 +1,682 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Become The Person Capable Of Creating The Life You Truly Want - Self Mastery Company</title>
+    <meta name="description" content="Free 90-Minute Live Training - Gain More Clarity, Confidence, Purpose, Resilience & Meaning In A Rapidly Changing World">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+            background: #0a0a0a;
+            color: #ffffff;
+            line-height: 1.6;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        .header {
+            text-align: center;
+            padding: 40px 20px 30px;
+            background: linear-gradient(180deg, #1a1a1a 0%, #0a0a0a 100%);
+        }
+
+        .event-label {
+            display: inline-block;
+            background: linear-gradient(135deg, #d4af37 0%, #f4d03f 100%);
+            color: #000;
+            padding: 8px 20px;
+            font-size: 13px;
+            font-weight: 700;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            border-radius: 4px;
+            margin-bottom: 20px;
+        }
+
+        h1 {
+            font-size: 36px;
+            line-height: 1.2;
+            margin-bottom: 15px;
+            font-weight: 700;
+        }
+
+        .subtitle {
+            font-size: 22px;
+            color: #d4af37;
+            margin-bottom: 25px;
+            font-weight: 600;
+        }
+
+        .event-details {
+            font-size: 18px;
+            color: #cccccc;
+            margin-bottom: 30px;
+        }
+
+        .event-date {
+            font-size: 20px;
+            color: #fff;
+            font-weight: 600;
+            margin: 10px 0;
+        }
+
+        .cta-button {
+            display: inline-block;
+            background: linear-gradient(135deg, #d4af37 0%, #f4d03f 100%);
+            color: #000;
+            padding: 18px 40px;
+            font-size: 18px;
+            font-weight: 700;
+            text-decoration: none;
+            border-radius: 6px;
+            border: none;
+            cursor: pointer;
+            transition: transform 0.2s, box-shadow 0.2s;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .cta-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 30px rgba(212, 175, 55, 0.3);
+        }
+
+        .content-section {
+            background: #1a1a1a;
+            border-radius: 8px;
+            padding: 40px 30px;
+            margin: 30px 0;
+        }
+
+        .problem-list {
+            list-style: none;
+            margin: 20px 0;
+        }
+
+        .problem-list li {
+            padding: 10px 0;
+            font-size: 20px;
+            color: #d4af37;
+            font-weight: 500;
+        }
+
+        .question-list {
+            list-style: none;
+            margin: 20px 0;
+        }
+
+        .question-list li {
+            padding: 8px 0 8px 20px;
+            font-size: 18px;
+            color: #cccccc;
+            position: relative;
+        }
+
+        .question-list li:before {
+            content: '"';
+            position: absolute;
+            left: 0;
+            color: #d4af37;
+            font-size: 24px;
+        }
+
+        .artifact {
+            background: #0a0a0a;
+            border: 2px solid #d4af37;
+            border-radius: 8px;
+            padding: 30px;
+            margin: 30px 0;
+            text-align: center;
+        }
+
+        .artifact-number {
+            display: inline-block;
+            background: #d4af37;
+            color: #000;
+            padding: 6px 16px;
+            font-size: 14px;
+            font-weight: 700;
+            border-radius: 20px;
+            margin-bottom: 15px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .artifact h3 {
+            font-size: 28px;
+            margin-bottom: 10px;
+            color: #d4af37;
+        }
+
+        .artifact-tagline {
+            font-size: 18px;
+            color: #fff;
+            font-weight: 600;
+            margin-bottom: 20px;
+        }
+
+        .artifact-description {
+            font-size: 16px;
+            color: #cccccc;
+            line-height: 1.8;
+            margin-bottom: 20px;
+        }
+
+        .artifact-image {
+            width: 100%;
+            max-width: 600px;
+            height: auto;
+            border-radius: 6px;
+            margin: 20px 0;
+        }
+
+        .host-section {
+            text-align: center;
+            padding: 40px 0;
+        }
+
+        .host-section h2 {
+            font-size: 32px;
+            margin-bottom: 20px;
+        }
+
+        .host-title {
+            font-size: 16px;
+            color: #d4af37;
+            margin-bottom: 20px;
+            font-weight: 500;
+        }
+
+        .host-bio {
+            font-size: 16px;
+            color: #cccccc;
+            line-height: 1.8;
+            text-align: left;
+            margin: 20px 0;
+        }
+
+        .benefits-list {
+            list-style: none;
+            margin: 20px 0;
+        }
+
+        .benefits-list li {
+            padding: 8px 0 8px 30px;
+            font-size: 17px;
+            color: #cccccc;
+            position: relative;
+        }
+
+        .benefits-list li:before {
+            content: '✓';
+            position: absolute;
+            left: 0;
+            color: #d4af37;
+            font-size: 20px;
+            font-weight: 700;
+        }
+
+        .final-cta {
+            background: linear-gradient(180deg, #0a0a0a 0%, #1a1a1a 100%);
+            text-align: center;
+            padding: 60px 20px;
+            margin-top: 40px;
+        }
+
+        .final-cta h2 {
+            font-size: 32px;
+            margin-bottom: 15px;
+        }
+
+        .final-cta .event-date {
+            margin-bottom: 10px;
+        }
+
+        .final-cta p {
+            font-size: 18px;
+            color: #cccccc;
+            margin: 15px 0 30px;
+        }
+
+        .footer {
+            text-align: center;
+            padding: 40px 20px;
+            color: #666;
+            font-size: 14px;
+        }
+
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.9);
+            overflow-y: auto;
+        }
+
+        .modal-content {
+            background: #1a1a1a;
+            margin: 5% auto;
+            padding: 40px;
+            border: 2px solid #d4af37;
+            border-radius: 12px;
+            width: 90%;
+            max-width: 500px;
+            position: relative;
+        }
+
+        .close {
+            color: #999;
+            position: absolute;
+            right: 20px;
+            top: 15px;
+            font-size: 32px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: color 0.2s;
+        }
+
+        .close:hover {
+            color: #d4af37;
+        }
+
+        .modal h2 {
+            font-size: 28px;
+            margin-bottom: 10px;
+            text-align: center;
+        }
+
+        .modal p {
+            text-align: center;
+            color: #cccccc;
+            margin-bottom: 25px;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            color: #d4af37;
+            font-weight: 600;
+            font-size: 14px;
+        }
+
+        .form-group input {
+            width: 100%;
+            padding: 14px;
+            background: #0a0a0a;
+            border: 1px solid #333;
+            border-radius: 6px;
+            color: #fff;
+            font-size: 16px;
+            transition: border-color 0.2s;
+        }
+
+        .form-group input:focus {
+            outline: none;
+            border-color: #d4af37;
+        }
+
+        .submit-button {
+            width: 100%;
+            background: linear-gradient(135deg, #d4af37 0%, #f4d03f 100%);
+            color: #000;
+            padding: 16px;
+            font-size: 18px;
+            font-weight: 700;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            transition: transform 0.2s;
+        }
+
+        .submit-button:hover {
+            transform: translateY(-2px);
+        }
+
+        .submit-button:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        .error-message {
+            background: #ff4444;
+            color: white;
+            padding: 12px;
+            border-radius: 6px;
+            margin-bottom: 20px;
+            display: none;
+        }
+
+        @media (max-width: 768px) {
+            h1 {
+                font-size: 28px;
+            }
+
+            .subtitle {
+                font-size: 18px;
+            }
+
+            .event-details {
+                font-size: 16px;
+            }
+
+            .artifact h3 {
+                font-size: 22px;
+            }
+
+            .content-section {
+                padding: 30px 20px;
+            }
+
+            .modal-content {
+                padding: 30px 20px;
+                margin: 10% auto;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <div class="container">
+            <div class="event-label">FREE LIVE ONLINE TRAINING</div>
+            <div class="subtitle">Special Training for the Self Mastery Company Community</div>
+            <h1>Become The Person Capable Of Creating The Life You Truly Want</h1>
+            <p class="event-details">Gain More Clarity, Confidence, Purpose, Resilience & Meaning In A Rapidly Changing World</p>
+            <p style="font-size: 20px; font-weight: 600; color: #d4af37; margin: 20px 0;">Free Special 90 Minute Live Training</p>
+            <div class="event-date">Monday, June 8, 2026 • 2:00 PM PST / 5:00 PM EST</div>
+            <div style="margin-top: 30px;">
+                <button class="cta-button" onclick="openModal()">Reserve Your Seat Now</button>
+            </div>
+        </div>
+    </div>
+
+    <div class="container">
+        <div class="content-section">
+            <p style="font-size: 20px; margin-bottom: 20px;">If you've been feeling stuck...</p>
+            <ul class="problem-list">
+                <li>Overwhelmed...</li>
+                <li>Burned out...</li>
+                <li>Disconnected...</li>
+            </ul>
+            <p style="margin: 20px 0;">Or wondering if there has to be more to life than simply checking boxes and getting through another week...</p>
+            <p style="font-size: 20px; font-weight: 600; color: #d4af37;">You are not alone.</p>
+        </div>
+
+        <div class="content-section">
+            <p style="font-size: 18px; margin-bottom: 15px;">The world is changing faster than ever.</p>
+            <p style="margin: 10px 0; color: #cccccc;">Technology is changing.<br>
+            Business is changing.<br>
+            Relationships are changing.<br>
+            Leadership is changing.</p>
+            
+            <p style="margin: 30px 0 15px; font-size: 18px;">And millions of people are quietly asking themselves:</p>
+            <ul class="question-list">
+                <li>Who am I becoming?</li>
+                <li>Am I living the life I truly want?</li>
+                <li>Why do I feel like something is missing?</li>
+                <li>How do I find greater purpose?</li>
+                <li>How do I become more confident?</li>
+                <li>How do I create deeper relationships?</li>
+                <li>How do I make a meaningful impact?</li>
+            </ul>
+            
+            <p style="margin-top: 30px; font-size: 20px; font-weight: 600;">And that's exactly what this training is about.</p>
+        </div>
+
+        <div class="content-section">
+            <p style="font-size: 18px; font-weight: 600; margin-bottom: 15px;">This is NOT another motivational webinar filled with empty inspiration and temporary excitement.</p>
+            <p style="font-size: 18px; color: #d4af37; margin-top: 20px;">This training is about helping you develop the mindset, habits, relationships, resilience, and purpose needed to create an extraordinary life.</p>
+        </div>
+
+        <div style="text-align: center; margin: 50px 0;">
+            <h2 style="font-size: 36px; margin-bottom: 30px;">Here's What You'll Discover Inside This FREE Training</h2>
+        </div>
+
+        <div class="artifact">
+            <div class="artifact-number">Artifact #1</div>
+            <h3>The Self Mastery Blueprint™</h3>
+            <div class="artifact-tagline">Stop Living By Default. Start Living By Design.</div>
+            <img src="artifact1.jpg" alt="The Self Mastery Blueprint" class="artifact-image">
+            <div class="artifact-description">
+                Discover the proven framework for creating greater clarity, confidence, purpose, resilience, and fulfillment by mastering the most important project you'll ever work on: Yourself.
+            </div>
+        </div>
+
+        <div class="artifact">
+            <div class="artifact-number">Artifact #2</div>
+            <h3>The Purpose & Vision Lighthouse™</h3>
+            <div class="artifact-tagline">Stop Drifting. Create A Future Worth Pursuing.</div>
+            <img src="artifact2.jpg" alt="The Purpose & Vision Lighthouse" class="artifact-image">
+            <div class="artifact-description">
+                Discover how extraordinary people create clarity, define their purpose, and build a compelling vision that guides every major decision in life.
+            </div>
+        </div>
+
+        <div class="artifact">
+            <div class="artifact-number">Artifact #3</div>
+            <h3>The Human Connection Bridge™</h3>
+            <div class="artifact-tagline">Build Relationships. Create Opportunities. Change Lives.</div>
+            <img src="artifact3.jpg" alt="The Human Connection Bridge" class="artifact-image">
+            <div class="artifact-description">
+                Discover why the quality of your life is often determined by the quality of your relationships and how authentic connection opens doors personally, professionally, and financially.
+            </div>
+        </div>
+
+        <div class="artifact">
+            <div class="artifact-number">Artifact #4</div>
+            <h3>The Courage & Resilience Forge™</h3>
+            <div class="artifact-tagline">Pressure Creates Strength. Adversity Creates Mastery.</div>
+            <img src="artifact4.jpg" alt="The Courage & Resilience Forge" class="artifact-image">
+            <div class="artifact-description">
+                Learn how challenges, setbacks, rejection, and uncertainty can become the very experiences that strengthen your confidence and shape your future.
+            </div>
+        </div>
+
+        <div class="artifact">
+            <div class="artifact-number">Artifact #5</div>
+            <h3>The Legacy & Impact Torch™</h3>
+            <div class="artifact-tagline">Leave A Legacy. Inspire Generations. Create Lasting Impact.</div>
+            <img src="artifact5.jpg" alt="The Legacy & Impact Torch" class="artifact-image">
+            <div class="artifact-description">
+                Discover how fulfillment, contribution, leadership, and service combine to create a life that matters long after you're gone.
+            </div>
+        </div>
+
+        <div class="host-section">
+            <h2>Meet Your Host</h2>
+            <h3 style="font-size: 28px; color: #d4af37; margin-bottom: 10px;">Nikky Kho</h3>
+            <div class="host-title">Entrepreneur • Educator • Venture Builder • Leadership Mentor</div>
+            <div class="host-bio">
+                <p>For decades, Nikky Kho has worked with entrepreneurs, executives, business owners, professionals, students, nonprofit leaders, and communities around the world.</p>
+                <p style="margin: 15px 0;">He has built businesses, launched ventures, mentored leaders, spoken internationally, and helped organizations create meaningful impact.</p>
+                <p style="margin: 15px 0;">His work has reached more than 4 million people globally through education, entrepreneurship, leadership development, philanthropy, innovation, and community building.</p>
+                <p style="margin: 15px 0; font-weight: 600; color: #d4af37;">But the truth is...</p>
+                <p style="margin: 15px 0;">This training is not about becoming more successful on paper.</p>
+                <p style="margin: 15px 0;">It's about becoming stronger. Wiser. More resilient. More confident. More connected. More fulfilled.</p>
+                <p style="margin: 15px 0; font-style: italic; color: #cccccc;">Because most people don't need another productivity hack. They need a framework for becoming the person they were meant to become.</p>
+                <p style="margin: 20px 0; font-weight: 600;">And that's exactly what this training was designed to provide.</p>
+            </div>
+        </div>
+
+        <div class="content-section">
+            <h2 style="font-size: 32px; margin-bottom: 20px; text-align: center;">Why This Matters Right Now</h2>
+            <p style="margin: 20px 0;">Most people spend years learning:</p>
+            <p style="margin: 10px 0 10px 20px; color: #cccccc;">How to make money.<br>
+            How to get a degree.<br>
+            How to build a career.<br>
+            How to achieve goals.</p>
+            
+            <p style="margin: 30px 0 15px; font-weight: 600;">Very few people ever learn:</p>
+            <p style="font-size: 24px; color: #d4af37; text-align: center; margin: 20px 0;">How To Master Themselves.</p>
+            
+            <p style="margin: 30px 0 15px;">Yet self mastery influences:</p>
+            <ul class="benefits-list">
+                <li>Your confidence</li>
+                <li>Your relationships</li>
+                <li>Your leadership</li>
+                <li>Your resilience</li>
+                <li>Your happiness</li>
+                <li>Your fulfillment</li>
+                <li>Your impact</li>
+                <li>Your legacy</li>
+            </ul>
+            
+            <p style="margin: 30px 0; font-size: 20px; text-align: center; font-style: italic;">Because no matter where you go... There you are.</p>
+        </div>
+
+        <div class="content-section">
+            <h2 style="font-size: 32px; margin-bottom: 20px; text-align: center;">This Training Is Perfect For You If:</h2>
+            <ul class="benefits-list">
+                <li>You feel stuck in a season of life</li>
+                <li>You're searching for greater purpose</li>
+                <li>You want more confidence</li>
+                <li>You want stronger relationships</li>
+                <li>You want to become a better leader</li>
+                <li>You want to overcome fear and self-doubt</li>
+                <li>You want more clarity about your future</li>
+                <li>You want to make a meaningful impact</li>
+                <li>You know there is another level available to you</li>
+            </ul>
+        </div>
+
+        <div class="content-section">
+            <h2 style="font-size: 32px; margin-bottom: 20px; text-align: center;">What You'll Walk Away With</h2>
+            <p style="margin-bottom: 20px;">After this 90-minute experience you'll leave with:</p>
+            <ul class="benefits-list">
+                <li>A proven self-mastery framework</li>
+                <li>Greater clarity and direction</li>
+                <li>New tools for personal growth</li>
+                <li>A deeper understanding of your potential</li>
+                <li>Action steps you can immediately implement</li>
+                <li>A vision for your next chapter</li>
+            </ul>
+            <p style="margin-top: 30px; font-size: 20px; font-weight: 600; text-align: center;">And most importantly...</p>
+            <p style="margin-top: 15px; font-size: 18px; color: #d4af37; text-align: center;">A clearer picture of the person you're capable of becoming.</p>
+        </div>
+    </div>
+
+    <div class="final-cta">
+        <div class="container">
+            <h2>FREE LIVE TRAINING</h2>
+            <div class="event-date">Monday, June 8, 2026</div>
+            <div class="event-date">2:00 PM PST / 5:00 PM EST</div>
+            <p>Limited Spots Available Due To Live Training Capacity</p>
+            <button class="cta-button" onclick="openModal()">RESERVE MY FREE SEAT</button>
+            <p style="margin-top: 40px; font-size: 20px; font-style: italic; color: #d4af37;">Your Greatest Adventure Isn't Across The World.<br>It's Becoming The Person You Were Meant To Be.</p>
+            <p style="margin-top: 30px; font-size: 16px; color: #999;">Self Mastery Company™<br>5 Artifacts. One Extraordinary Life.</p>
+        </div>
+    </div>
+
+    <div id="registrationModal" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="closeModal()">&times;</span>
+            <h2>Reserve Your Seat</h2>
+            <p>Monday, June 8, 2026 • 2:00 PM PST / 5:00 PM EST</p>
+            <div id="errorMessage" class="error-message"></div>
+            <form id="registrationForm" onsubmit="handleSubmit(event)">
+                <div class="form-group">
+                    <label for="firstName">First Name *</label>
+                    <input type="text" id="firstName" name="firstName" required>
+                </div>
+                <div class="form-group">
+                    <label for="lastName">Last Name *</label>
+                    <input type="text" id="lastName" name="lastName" required>
+                </div>
+                <div class="form-group">
+                    <label for="email">Email *</label>
+                    <input type="email" id="email" name="email" required>
+                </div>
+                <div class="form-group">
+                    <label for="phone">Phone (optional)</label>
+                    <input type="tel" id="phone" name="phone">
+                </div>
+                <button type="submit" class="submit-button" id="submitButton">
+                    RESERVE MY FREE SEAT
+                </button>
+            </form>
+        </div>
+    </div>
+
+    <script>
+        function openModal() {
+            document.getElementById('registrationModal').style.display = 'block';
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeModal() {
+            document.getElementById('registrationModal').style.display = 'none';
+            document.body.style.overflow = 'auto';
+        }
+
+        window.onclick = function(event) {
+            const modal = document.getElementById('registrationModal');
+            if (event.target === modal) {
+                closeModal();
+            }
+        }
+
+        async function handleSubmit(event) {
+            event.preventDefault();
+            
+            const submitButton = document.getElementById('submitButton');
+            const errorMessage = document.getElementById('errorMessage');
+            
+            submitButton.disabled = true;
+            submitButton.textContent = 'RESERVING YOUR SEAT...';
+            errorMessage.style.display = 'none';
+            
+            const formData = {
+                firstName: document.getElementById('firstName').value.trim(),
+                lastName: document.getElementById('lastName').value.trim(),
+                email: document.getElementById('email').value.trim(),
+                phone: document.getElementById('phone').value.trim()
+            };
+
+            try {
+                const response = await fetch('/api/nextversion-register', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(formData)
+                });
+
+                const data = await response.json();
+
+                if (response.ok && data.success) {
+                    window.location.href = '/nextversion-conf';
+                } else {
+                    throw new Error(data.message || 'Registration failed');
+                }
+            } catch (error) {
+                console.error('Registration error:', error);
+                errorMessage.textContent = 'Something went wrong. Please try again or contact support.';
+                errorMessage.style.display = 'block';
+                submitButton.disabled = false;
+                submitButton.textContent = 'RESERVE MY FREE SEAT';
+            }
+        }
+    </script>
+</body>
+</html>
