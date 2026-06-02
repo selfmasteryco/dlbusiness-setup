@@ -451,9 +451,48 @@
                 width: 100%;
             }
         }
+
+        /* Registration Notification */
+        .page-notification {
+            position: fixed;
+            bottom: 20px;
+            left: 20px;
+            background: rgba(26, 35, 50, 0.98);
+            backdrop-filter: blur(10px);
+            border: 1px solid #2196F3;
+            border-radius: 10px;
+            padding: 16px 20px;
+            min-width: 300px;
+            max-width: 320px;
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.5);
+            z-index: 9999;
+            display: none;
+            color: #ffffff;
+            font-size: 14px;
+            line-height: 1.4;
+        }
+
+        .page-notification strong {
+            color: #d4af37;
+            font-weight: 600;
+        }
+
+        @media (max-width: 768px) {
+            .page-notification {
+                left: 10px;
+                right: 10px;
+                bottom: 10px;
+                min-width: auto;
+                max-width: none;
+            }
+        }
     </style>
 </head>
 <body>
+
+    <div id="pageNotification" class="page-notification">
+        <strong id="pageNotifName"></strong> just registered from <strong id="pageNotifLocation"></strong>
+    </div>
     <div class="header">
         <div class="container">
             <div class="event-label">FREE LIVE ONLINE TRAINING</div>
@@ -735,6 +774,55 @@
                 submitButton.textContent = 'RESERVE MY FREE SEAT';
             }
         }
+    </script>
+    <script>
+        // Registration notification names and locations
+        const names = [
+            "Michael Chen", "Sarah Johnson", "David Martinez", "Emily Williams", 
+            "James Anderson", "Lisa Thompson", "Robert Garcia", "Jennifer Davis",
+            "Christopher Lee", "Amanda Rodriguez", "Daniel Wilson", "Jessica Moore",
+            "Matthew Taylor", "Ashley Brown", "Joshua Martinez", "Michelle Anderson",
+            "Kevin White", "Laura Harris", "Brian Clark", "Nicole Lewis"
+        ];
+
+        const locations = [
+            "New York, NY", "Los Angeles, CA", "Chicago, IL", "Houston, TX",
+            "Phoenix, AZ", "Philadelphia, PA", "San Antonio, TX", "San Diego, CA",
+            "Dallas, TX", "Austin, TX", "Miami, FL", "Seattle, WA",
+            "Boston, MA", "Denver, CO", "Atlanta, GA", "Portland, OR",
+            "Las Vegas, NV", "Nashville, TN", "Charlotte, NC", "San Francisco, CA"
+        ];
+
+        function getRandomItem(arr) {
+            return arr[Math.floor(Math.random() * arr.length)];
+        }
+
+        function showPageNotification() {
+            const notification = document.getElementById('pageNotification');
+            if (!notification) return;
+            
+            const nameEl = document.getElementById('pageNotifName');
+            const locationEl = document.getElementById('pageNotifLocation');
+            
+            if (nameEl) nameEl.textContent = getRandomItem(names);
+            if (locationEl) locationEl.textContent = getRandomItem(locations);
+            
+            notification.style.display = 'block';
+            
+            setTimeout(() => {
+                notification.style.display = 'none';
+            }, 8000);
+        }
+
+        // Show first notification after 3 seconds
+        setTimeout(showPageNotification, 3000);
+
+        // Show notification every 12-18 seconds
+        setInterval(() => {
+            if (Math.random() > 0.3) {
+                showPageNotification();
+            }
+        }, Math.random() * 6000 + 12000);
     </script>
 </body>
 </html><!-- force redeploy Tue Jun  2 17:03:09 UTC 2026 -->
