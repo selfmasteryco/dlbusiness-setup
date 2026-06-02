@@ -512,7 +512,15 @@
             max-width: 320px;
             box-shadow: 0 8px 25px rgba(0, 0, 0, 0.5);
             z-index: 9999;
-            animation: fadeIn 0.8s ease, fadeOut 0.8s ease 5s forwards;
+            opacity: 0;
+            transition: opacity 0.5s ease;
+        }
+
+        .notification.show {
+            opacity: 1;
+        }
+
+        .notification.hide {
             opacity: 0;
         }
 
@@ -903,6 +911,18 @@
             return arr[Math.floor(Math.random() * arr.length)];
         }
 
+        let isScrolling = false;
+        let scrollTimeout;
+
+        window.addEventListener('scroll', function() {
+            isScrolling = true;
+            clearTimeout(scrollTimeout);
+            
+            scrollTimeout = setTimeout(function() {
+                isScrolling = false;
+            }, 150);
+        });
+
         function showNotification() {
             const name = getRandomItem(names);
             const location = getRandomItem(locations);
@@ -938,9 +958,30 @@
             
             document.body.appendChild(notification);
             
+            // Fade in
             setTimeout(() => {
-                notification.remove();
-            }, 5800);
+                notification.classList.add('show');
+            }, 100);
+            
+            // Track time remaining
+            let timeRemaining = 12000; // 12 seconds visible time
+            const checkInterval = 100;
+            
+            const countdownInterval = setInterval(() => {
+                if (!isScrolling) {
+                    timeRemaining -= checkInterval;
+                    
+                    if (timeRemaining <= 0) {
+                        clearInterval(countdownInterval);
+                        notification.classList.add('hide');
+                        notification.classList.remove('show');
+                        
+                        setTimeout(() => {
+                            notification.remove();
+                        }, 500);
+                    }
+                }
+            }, checkInterval);
         }
 
         // Show first notification after 4 seconds
