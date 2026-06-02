@@ -501,8 +501,10 @@
         }
 
         /* NOTIFICATION STYLES */
-        .notification {
+        .page-notification {
             position: fixed;
+            bottom: 20px;
+            left: 20px;
             background: rgba(26, 35, 50, 0.98);
             backdrop-filter: blur(10px);
             border: 1px solid #2196F3;
@@ -512,41 +514,12 @@
             max-width: 320px;
             box-shadow: 0 8px 25px rgba(0, 0, 0, 0.5);
             z-index: 9999;
-            opacity: 0;
-            transition: opacity 0.5s ease;
+            display: none;
         }
 
-        .notification.show {
-            opacity: 1;
-        }
 
-        .notification.hide {
-            opacity: 0;
-        }
 
-        @keyframes fadeIn {
-            from {
-                opacity: 0;
-                transform: scale(0.9);
-            }
-            to {
-                opacity: 1;
-                transform: scale(1);
-            }
-        }
-
-        @keyframes fadeOut {
-            from {
-                opacity: 1;
-                transform: scale(1);
-            }
-            to {
-                opacity: 0;
-                transform: scale(0.9);
-            }
-        }
-
-        .notification-icon {
+        .page-notification-icon {
             display: inline-block;
             width: 12px;
             height: 12px;
@@ -568,29 +541,29 @@
             }
         }
 
-        .notification-content {
+        .page-notification-content {
             display: inline-block;
             vertical-align: middle;
         }
 
-        .notification-text {
+        .page-notification-text {
             color: #fff;
             font-size: 14px;
             line-height: 1.4;
         }
 
-        .notification-name {
+        .page-notification-name {
             font-weight: 700;
             color: #64B5F6;
         }
 
-        .notification-action {
+        .page-notification-action {
             color: #90CAF9;
             font-size: 13px;
             margin-top: 2px;
         }
 
-        .notification-time {
+        .page-notification-time {
             color: #999;
 
         @media (max-width: 768px) {
@@ -600,14 +573,12 @@
                 display: block !important;
             }
 
-            .notification {
-                bottom: 20px !important;
-                left: 50% !important;
-                right: auto !important;
-                top: auto !important;
-                transform: translateX(-50%) !important;
-                min-width: 280px !important;
-                max-width: 90% !important;
+            .page-notification {
+                left: 10px !important;
+                right: 10px !important;
+                bottom: 10px !important;
+                min-width: auto !important;
+                max-width: none !important;
             }
         }
             font-size: 12px;
@@ -617,6 +588,17 @@
     </style>
 </head>
 <body>
+
+    <div id="pageNotification" class="page-notification">
+        <span class="page-notification-icon"></span>
+        <div class="page-notification-content">
+            <div class="page-notification-text">
+                <span class="page-notification-name" id="pageNotifName"></span> from <span id="pageNotifLocation"></span>
+            </div>
+            <div class="page-notification-action">just reserved their seat</div>
+            <div class="page-notification-time">just now</div>
+        </div>
+    </div>
     <div class="header">
         <div class="container">
             <div class="event-label">FREE LIVE ONLINE TRAINING</div>
@@ -917,136 +899,37 @@
             "Las Vegas, NV", "Nashville, TN", "Charlotte, NC", "San Francisco, CA"
         ];
 
+</html><!-- force redeploy Tue Jun  2 17:03:09 UTC 2026 -->
+
         function getRandomItem(arr) {
             return arr[Math.floor(Math.random() * arr.length)];
         }
 
-        let isScrolling = false;
-        let scrollTimeout;
-        let activeNotification = null;
-        let isMobile = window.innerWidth <= 768;
-
-        window.addEventListener('resize', function() {
-            isMobile = window.innerWidth <= 768;
-        });
-
-        window.addEventListener('scroll', function() {
-            isScrolling = true;
-            clearTimeout(scrollTimeout);
+        // Show page notification
+        function showPageNotification() {
+            const notification = document.getElementById('pageNotification');
+            const randomName = getRandomItem(names);
+            const randomLocation = getRandomItem(locations);
             
-            scrollTimeout = setTimeout(function() {
-                isScrolling = false;
-            }, 150);
-        });
-
-        function showNotification() {
-            // On mobile, only show one notification at a time
-            if (isMobile && activeNotification) {
-                return;
-            }
-
-            const name = getRandomItem(names);
-            const location = getRandomItem(locations);
-            const timeAgo = Math.floor(Math.random() * 5) + 1;
+            document.getElementById('pageNotifName').textContent = randomName;
+            document.getElementById('pageNotifLocation').textContent = randomLocation;
             
-            const notification = document.createElement('div');
-            notification.className = 'notification';
+            notification.style.display = 'block';
             
-            // On desktop, apply random position
-            if (!isMobile) {
-                const positions = [
-                    { bottom: '20px', left: '20px' },
-                    { bottom: '20px', right: '20px' },
-                    { top: '80px', left: '20px' },
-                    { top: '80px', right: '20px' }
-                ];
-                
-                const position = positions[Math.floor(Math.random() * positions.length)];
-                
-                // Use setProperty with important flag to override CSS
-                if (position.bottom) {
-                    notification.style.setProperty('bottom', position.bottom, 'important');
-                    notification.style.setProperty('top', 'auto', 'important');
-                }
-                if (position.top) {
-                    notification.style.setProperty('top', position.top, 'important');
-                    notification.style.setProperty('bottom', 'auto', 'important');
-                }
-                if (position.left) {
-                    notification.style.setProperty('left', position.left, 'important');
-                    notification.style.setProperty('right', 'auto', 'important');
-                    notification.style.setProperty('transform', 'none', 'important');
-                }
-                if (position.right) {
-                    notification.style.setProperty('right', position.right, 'important');
-                    notification.style.setProperty('left', 'auto', 'important');
-                    notification.style.setProperty('transform', 'none', 'important');
-                }
-            }
-            // Mobile positioning is handled by CSS
-            
-            notification.innerHTML = `
-                <span class="notification-icon"></span>
-                <div class="notification-content">
-                    <div class="notification-text">
-                        <span class="notification-name">${name}</span> from ${location}
-                    </div>
-                    <div class="notification-action">just reserved their seat</div>
-                    <div class="notification-time">${timeAgo} ${timeAgo === 1 ? 'minute' : 'minutes'} ago</div>
-                </div>
-            `;
-            
-            document.body.appendChild(notification);
-            
-            // Track active notification on mobile
-            if (isMobile) {
-                activeNotification = notification;
-            }
-            
-            // Fade in
             setTimeout(() => {
-                notification.classList.add('show');
-            }, 100);
-            
-            // Track time remaining
-            let timeRemaining = 12000; // 12 seconds visible time
-            const checkInterval = 100;
-            
-            const countdownInterval = setInterval(() => {
-                if (!isScrolling) {
-                    timeRemaining -= checkInterval;
-                    
-                    if (timeRemaining <= 0) {
-                        clearInterval(countdownInterval);
-                        notification.classList.add('hide');
-                        notification.classList.remove('show');
-                        
-                        // Clear active notification tracker
-                        if (isMobile && activeNotification === notification) {
-                            activeNotification = null;
-                        }
-                        
-                        setTimeout(() => {
-                            notification.remove();
-                        }, 500);
-                    }
-                }
-            }, checkInterval);
+                notification.style.display = 'none';
+            }, 8000); // 8 seconds
         }
 
-        // Show first notification after 4 seconds
-        setTimeout(showNotification, 4000);
+        // Show first notification after 5 seconds
+        setTimeout(showPageNotification, 5000);
 
-        // Show subsequent notifications every 9-13 seconds
-        function scheduleNextNotification() {
-            const delay = 9000 + Math.random() * 4000; // 9-13 seconds
-            setTimeout(() => {
-                showNotification();
-                scheduleNextNotification();
-            }, delay);
-        }
-
-        scheduleNextNotification();
+        // Show notification every 12-18 seconds
+        setInterval(() => {
+            if (Math.random() > 0.3) {
+                showPageNotification();
+            }
+        }, Math.random() * 6000 + 12000);
     </script>
 </body>
-</html><!-- force redeploy Tue Jun  2 17:03:09 UTC 2026 -->
+</html>
