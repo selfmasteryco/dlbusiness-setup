@@ -553,25 +553,16 @@
         }
 
         .page-notification-name {
+        }
+
+        .page-notification strong {
+            font-weight: 600;
+            color: #d4af37;
             font-weight: 700;
-            color: #64B5F6;
+            color: #d4af37;
         }
 
-        .page-notification-action {
-            color: #90CAF9;
-            font-size: 13px;
-            margin-top: 2px;
-        }
 
-        .page-notification-time {
-            color: #999;
-
-        @media (max-width: 768px) {
-            .header {
-                min-height: auto !important;
-                padding: 40px 20px 30px !important;
-                display: block !important;
-            }
 
             .page-notification {
                 left: 10px !important;
@@ -590,14 +581,7 @@
 <body>
 
     <div id="pageNotification" class="page-notification">
-        <span class="page-notification-icon"></span>
-        <div class="page-notification-content">
-            <div class="page-notification-text">
-                <span class="page-notification-name" id="pageNotifName"></span> from <span id="pageNotifLocation"></span>
-            </div>
-            <div class="page-notification-action">just reserved their seat</div>
-            <div class="page-notification-time">just now</div>
-        </div>
+        <strong id="pageNotifName"></strong> just registered from <strong id="pageNotifLocation"></strong>
     </div>
     <div class="header">
         <div class="container">
