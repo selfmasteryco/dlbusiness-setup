@@ -890,21 +890,31 @@
         // Show page notification
         function showPageNotification() {
             const notification = document.getElementById('pageNotification');
+            if (!notification) {
+                console.error('Notification element not found');
+                return;
+            }
+            
             const randomName = getRandomItem(names);
             const randomLocation = getRandomItem(locations);
             
-            document.getElementById('pageNotifName').textContent = randomName;
-            document.getElementById('pageNotifLocation').textContent = randomLocation;
+            const nameEl = document.getElementById('pageNotifName');
+            const locationEl = document.getElementById('pageNotifLocation');
+            
+            if (nameEl) nameEl.textContent = randomName;
+            if (locationEl) locationEl.textContent = randomLocation;
             
             notification.style.display = 'block';
+            notification.style.opacity = '1';
+            notification.style.visibility = 'visible';
             
             setTimeout(() => {
                 notification.style.display = 'none';
             }, 8000); // 8 seconds
         }
 
-        // Show first notification after 5 seconds
-        setTimeout(showPageNotification, 5000);
+        // Show first notification after 2 seconds
+        setTimeout(showPageNotification, 2000);
 
         // Show notification every 12-18 seconds
         setInterval(() => {
