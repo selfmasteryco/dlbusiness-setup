@@ -554,32 +554,28 @@
             line-height: 1.4;
         }
 
-        .page-notification-name {
-        }
 
         .page-notification strong {
             font-weight: 600;
             color: #d4af37;
-            font-weight: 700;
-            color: #d4af37;
         }
 
-
+        @media (max-width: 768px) {
+            .header {
+                min-height: auto !important;
+                padding: 40px 20px 30px !important;
+                display: block !important;
+            }
 
             .page-notification {
                 left: 10px !important;
                 right: 10px !important;
                 bottom: 10px !important;
+                top: auto !important;
                 min-width: auto !important;
-                max-width: none !important;
+                max-width: calc(100% - 20px) !important;
             }
         }
-            font-size: 12px;
-            margin-top: 4px;
-        }
-        }
-    </style>
-</head>
 <body>
 
     <div id="pageNotification" class="page-notification">
