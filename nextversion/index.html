@@ -930,20 +930,22 @@
             
             // Random position: bottom-left, bottom-right, top-left, top-right
             const positions = [
-                { bottom: '20px', left: '20px', right: 'auto', top: 'auto' },
-                { bottom: '20px', right: '20px', left: 'auto', top: 'auto' },
-                { top: '80px', left: '20px', right: 'auto', bottom: 'auto' },
-                { top: '80px', right: '20px', left: 'auto', bottom: 'auto' }
+                { bottom: '20px', left: '20px' },
+                { bottom: '20px', right: '20px' },
+                { top: '80px', left: '20px' },
+                { top: '80px', right: '20px' }
             ];
             
             const position = positions[Math.floor(Math.random() * positions.length)];
             
             const notification = document.createElement('div');
             notification.className = 'notification';
-            notification.style.bottom = position.bottom;
-            notification.style.left = position.left;
-            notification.style.right = position.right;
-            notification.style.top = position.top;
+            
+            // Apply position styles
+            if (position.bottom) notification.style.bottom = position.bottom;
+            if (position.top) notification.style.top = position.top;
+            if (position.left) notification.style.left = position.left;
+            if (position.right) notification.style.right = position.right;
             
             notification.innerHTML = `
                 <span class="notification-icon"></span>
