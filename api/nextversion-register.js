@@ -26,7 +26,7 @@ export default async function handler(req, res) {
 
   // Global Control API credentials
   const GC_API_KEY = '73f5c85ded8e55bbee19cef706770ddca40bd1edaa18a4f63164a0341ad28428';
-  const TAG_ID = '6a1f06529623b6235f2f0386'; // Int-Free Training tag
+  const TAG_ID = '6a1f16da9623b6235f34e52d'; // web-nextversion tag
 
   try {
     // Fire tag to Global Control
