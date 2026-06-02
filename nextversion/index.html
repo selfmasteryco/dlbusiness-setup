@@ -414,7 +414,11 @@
             background: linear-gradient(-45deg, #0a1628, #1a2d4a, #0d2847, #1e3a5f, #0a1628) !important;
             background-size: 400% 400% !important;
             animation: gradient 15s ease infinite !important;
-            padding: 60px 20px 50px !important;
+            min-height: 100vh !important;
+            display: flex !important;
+            align-items: center !important;
+            justify-content: center !important;
+            padding: 60px 20px !important;
         }
 
         .header::before {
@@ -428,6 +432,11 @@
                         radial-gradient(circle at 80% 80%, rgba(21, 101, 192, 0.15) 0%, transparent 50%);
             pointer-events: none;
             z-index: 0;
+        }
+
+        .header .container {
+            position: relative;
+            z-index: 1;
         }
 
         .event-label {
@@ -575,6 +584,14 @@
 
         .notification-time {
             color: #999;
+
+        @media (max-width: 768px) {
+            .header {
+                min-height: auto !important;
+                padding: 40px 20px 30px !important;
+                display: block !important;
+            }
+        }
             font-size: 12px;
             margin-top: 4px;
         }
