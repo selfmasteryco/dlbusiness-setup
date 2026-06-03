@@ -20,7 +20,7 @@
         }
 
         .container {
-            max-width: 1200px;
+            max-width: 900px;
             margin: 0 auto;
             padding: 20px;
         }
@@ -179,22 +179,6 @@
             border-radius: 6px;
             margin: 20px auto;
             display: block;
-            filter: saturate(0.4) hue-rotate(180deg) brightness(0.95) contrast(1.1);
-        }
-
-        .why-matters-image {
-            filter: saturate(0.4) hue-rotate(180deg) brightness(0.95) contrast(1.1);
-        }
-
-        @media (max-width: 768px) {
-            .why-matters-grid {
-                grid-template-columns: 1fr !important;
-            }
-            
-            .why-matters-image {
-                display: block;
-                margin: 20px 0;
-            }
         }
 
         .host-section {
@@ -419,132 +403,9 @@
                 margin: 10% auto;
             }
         }
-
-        /* Desktop: Larger text and wider layout */
-        @media (min-width: 769px) {
-            h1 {
-                font-size: 60px !important;
-                margin-bottom: 30px !important;
-            }
-
-            h2 {
-                font-size: 42px !important;
-            }
-
-            .subtitle {
-                font-size: 32px !important;
-            }
-
-            .event-label {
-                font-size: 18px !important;
-                padding: 14px 32px !important;
-            }
-
-            .event-details {
-                font-size: 26px !important;
-            }
-
-            .event-date {
-                font-size: 30px !important;
-            }
-
-            .header p[style*="font-size: 20px"] {
-                font-size: 28px !important;
-            }
-
-            .cta-button {
-                font-size: 22px !important;
-                padding: 24px 60px !important;
-            }
-
-            .content-section {
-                font-size: 20px !important;
-                padding: 50px 40px !important;
-            }
-
-            .content-section p {
-                font-size: 20px !important;
-                line-height: 1.8 !important;
-            }
-
-            .problem-list li,
-            .question-list li,
-            .benefits-list li {
-                font-size: 22px !important;
-            }
-
-            .artifact h3 {
-                font-size: 34px !important;
-            }
-
-            .artifact-tagline {
-                font-size: 22px !important;
-            }
-
-            .artifact-description {
-                font-size: 19px !important;
-            }
-
-            .host-bio p {
-                font-size: 19px !important;
-            }
-        }
-
-        /* Desktop: Full height centered header */
-        @media (min-width: 769px) {
-            .header {
-                min-height: 100vh;
-                display: flex;
-                align-items: center;
-                justify-content: center;
-            }
-
-            .header .container {
-                width: 100%;
-            }
-        }
-
-        /* Registration Notification */
-        .page-notification {
-            position: fixed;
-            bottom: 20px;
-            left: 20px;
-            background: rgba(26, 35, 50, 0.98);
-            backdrop-filter: blur(10px);
-            border: 1px solid #2196F3;
-            border-radius: 10px;
-            padding: 16px 20px;
-            min-width: 300px;
-            max-width: 320px;
-            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.5);
-            z-index: 9999;
-            display: none;
-            color: #ffffff;
-            font-size: 14px;
-            line-height: 1.4;
-        }
-
-        .page-notification strong {
-            color: #d4af37;
-            font-weight: 600;
-        }
-
-        @media (max-width: 768px) {
-            .page-notification {
-                left: 10px;
-                right: 10px;
-                bottom: 10px;
-                min-width: auto;
-                max-width: none;
-            }
-        }
     </style>
 </head>
 <body>
-
-    <div id="pageNotification" class="page-notification">
-        <strong id="pageNotifName"></strong> just registered from <strong id="pageNotifLocation"></strong>
-    </div>
     <div class="header">
         <div class="container">
             <div class="event-label">FREE LIVE ONLINE TRAINING</div>
@@ -692,11 +553,6 @@
             </ul>
             
             <p style="margin: 30px 0; font-size: 20px; text-align: center; font-style: italic;">Because no matter where you go... There you are.</p>
-            
-            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin: 40px 0;" class="why-matters-grid">
-                <img src="/nextversion/why-matters-1.jpg" alt="Why This Matters" style="width: 100%; border-radius: 8px;" class="why-matters-image">
-                <img src="/nextversion/why-matters-2.jpg" alt="Self Mastery Impact" style="width: 100%; border-radius: 8px;" class="why-matters-image">
-            </div>
         </div>
 
         <div class="content-section">
@@ -831,62 +687,6 @@
                 submitButton.textContent = 'RESERVE MY FREE SEAT';
             }
         }
-    </script>
-    <script>
-        // Registration notification names and locations
-        const names = [
-            "Michael Chen", "Sarah Johnson", "David Martinez", "Emily Williams", 
-            "James Anderson", "Lisa Thompson", "Robert Garcia", "Jennifer Davis",
-            "Christopher Lee", "Amanda Rodriguez", "Daniel Wilson", "Jessica Moore",
-            "Matthew Taylor", "Ashley Brown", "Joshua Martinez", "Michelle Anderson",
-            "Kevin White", "Laura Harris", "Brian Clark", "Nicole Lewis"
-        ];
-
-        const locations = [
-            "New York, NY", "Los Angeles, CA", "Chicago, IL", "Houston, TX",
-            "Phoenix, AZ", "Philadelphia, PA", "San Antonio, TX", "San Diego, CA",
-            "Dallas, TX", "Austin, TX", "Miami, FL", "Seattle, WA",
-            "Boston, MA", "Denver, CO", "Atlanta, GA", "Portland, OR",
-            "Las Vegas, NV", "Nashville, TN", "Charlotte, NC", "San Francisco, CA"
-        ];
-
-        function getRandomItem(arr) {
-            return arr[Math.floor(Math.random() * arr.length)];
-        }
-
-        function showPageNotification() {
-            const notification = document.getElementById('pageNotification');
-            if (!notification) return;
-            
-            const nameEl = document.getElementById('pageNotifName');
-            const locationEl = document.getElementById('pageNotifLocation');
-            
-            // Format name as "FirstName L." (first name + last initial)
-            const fullName = getRandomItem(names);
-            const nameParts = fullName.split(' ');
-            const firstName = nameParts[0];
-            const lastInitial = nameParts[1] ? nameParts[1].charAt(0) + '.' : '';
-            const formattedName = firstName + ' ' + lastInitial;
-            
-            if (nameEl) nameEl.textContent = formattedName;
-            if (locationEl) locationEl.textContent = getRandomItem(locations);
-            
-            notification.style.display = 'block';
-            
-            setTimeout(() => {
-                notification.style.display = 'none';
-            }, 8000);
-        }
-
-        // Show first notification after 3 seconds
-        setTimeout(showPageNotification, 3000);
-
-        // Show notification every 12-18 seconds
-        setInterval(() => {
-            if (Math.random() > 0.3) {
-                showPageNotification();
-            }
-        }, Math.random() * 6000 + 12000);
     </script>
 </body>
 </html><!-- force redeploy Tue Jun  2 17:03:09 UTC 2026 -->

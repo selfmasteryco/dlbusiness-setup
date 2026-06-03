@@ -1,0 +1,241 @@
+<!-- Enhanced CSS to add to existing file -->
+<style>
+/* Override body and add animation */
+body {
+    position: relative;
+}
+
+@keyframes gradient {
+    0% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
+}
+
+/* Enhanced header with animated gradient */
+.header-enhanced {
+    background: linear-gradient(-45deg, #0a1628, #1a2d4a, #0d2847, #1e3a5f, #0a1628);
+    background-size: 400% 400%;
+    animation: gradient 15s ease infinite;
+    position: relative;
+    overflow: hidden;
+}
+
+.header-enhanced::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: radial-gradient(circle at 20% 50%, rgba(33, 150, 243, 0.2) 0%, transparent 50%),
+                radial-gradient(circle at 80% 80%, rgba(21, 101, 192, 0.15) 0%, transparent 50%);
+    pointer-events: none;
+}
+
+/* Enhanced event label */
+.event-label-enhanced {
+    background: linear-gradient(135deg, #2196F3 0%, #1976D2 100%);
+    padding: 10px 24px;
+    font-size: 14px;
+    font-weight: 800;
+    letter-spacing: 1.5px;
+    border-radius: 6px;
+    box-shadow: 0 4px 20px rgba(33, 150, 243, 0.5);
+}
+
+/* Enhanced h1 */
+h1.enhanced {
+    font-size: 42px;
+    font-weight: 800;
+    text-shadow: 0 2px 10px rgba(0,0,0,0.4);
+    position: relative;
+    z-index: 1;
+}
+
+/* Enhanced subtitle */
+.subtitle-enhanced {
+    font-size: 24px;
+    color: #64B5F6;
+    font-weight: 700;
+    text-shadow: 0 2px 8px rgba(100, 181, 246, 0.4);
+}
+
+/* Enhanced CTA button */
+.cta-button-enhanced {
+    background: linear-gradient(135deg, #2196F3 0%, #1565C0 100%);
+    padding: 20px 50px;
+    font-size: 19px;
+    font-weight: 800;
+    border-radius: 8px;
+    box-shadow: 0 8px 25px rgba(33, 150, 243, 0.5);
+    transition: all 0.3s ease;
+}
+
+.cta-button-enhanced:hover {
+    transform: translateY(-3px) scale(1.02);
+    box-shadow: 0 12px 35px rgba(33, 150, 243, 0.7);
+    background: linear-gradient(135deg, #42A5F5 0%, #1E88E5 100%);
+}
+
+/* Registration Notifications */
+.notification {
+    position: fixed;
+    bottom: 20px;
+    left: 20px;
+    background: rgba(26, 35, 50, 0.98);
+    backdrop-filter: blur(10px);
+    border: 1px solid #2196F3;
+    border-radius: 10px;
+    padding: 16px 20px;
+    min-width: 300px;
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.4);
+    z-index: 9999;
+    animation: slideIn 0.6s ease, slideOut 0.6s ease 5.4s forwards;
+    opacity: 0;
+}
+
+@keyframes slideIn {
+    from {
+        transform: translateX(-120%);
+        opacity: 0;
+    }
+    to {
+        transform: translateX(0);
+        opacity: 1;
+    }
+}
+
+@keyframes slideOut {
+    from {
+        transform: translateX(0);
+        opacity: 1;
+    }
+    to {
+        transform: translateX(-120%);
+        opacity: 0;
+    }
+}
+
+.notification-icon {
+    display: inline-block;
+    width: 12px;
+    height: 12px;
+    background: #4CAF50;
+    border-radius: 50%;
+    margin-right: 12px;
+    animation: pulse 2s infinite;
+    vertical-align: middle;
+}
+
+@keyframes pulse {
+    0%, 100% { 
+        opacity: 1;
+        transform: scale(1);
+    }
+    50% { 
+        opacity: 0.6;
+        transform: scale(0.9);
+    }
+}
+
+.notification-content {
+    display: inline-block;
+    vertical-align: middle;
+}
+
+.notification-text {
+    color: #fff;
+    font-size: 14px;
+    line-height: 1.4;
+}
+
+.notification-name {
+    font-weight: 700;
+    color: #64B5F6;
+}
+
+.notification-action {
+    color: #90CAF9;
+    font-size: 13px;
+    margin-top: 2px;
+}
+
+.notification-time {
+    color: #999;
+    font-size: 12px;
+    margin-top: 4px;
+}
+
+@media (max-width: 768px) {
+    .notification {
+        min-width: 260px;
+        padding: 12px 16px;
+        bottom: 10px;
+        left: 10px;
+    }
+    
+    h1.enhanced {
+        font-size: 32px;
+    }
+}
+</style>
+
+<!-- Notification JavaScript -->
+<script>
+const names = [
+    "Michael Chen", "Sarah Johnson", "David Martinez", "Emily Williams", 
+    "James Anderson", "Lisa Thompson", "Robert Garcia", "Jennifer Davis",
+    "Christopher Lee", "Amanda Rodriguez", "Daniel Wilson", "Jessica Moore",
+    "Matthew Taylor", "Ashley Brown", "Joshua Martinez", "Michelle Anderson"
+];
+
+const locations = [
+    "New York, NY", "Los Angeles, CA", "Chicago, IL", "Houston, TX",
+    "Phoenix, AZ", "Philadelphia, PA", "San Antonio, TX", "San Diego, CA",
+    "Dallas, TX", "Austin, TX", "Miami, FL", "Seattle, WA",
+    "Boston, MA", "Denver, CO", "Atlanta, GA", "Portland, OR"
+];
+
+function getRandomItem(arr) {
+    return arr[Math.floor(Math.random() * arr.length)];
+}
+
+function showNotification() {
+    const name = getRandomItem(names);
+    const location = getRandomItem(locations);
+    const timeAgo = Math.floor(Math.random() * 5) + 1;
+    
+    const notification = document.createElement('div');
+    notification.className = 'notification';
+    notification.innerHTML = `
+        <span class="notification-icon"></span>
+        <div class="notification-content">
+            <div class="notification-text">
+                <span class="notification-name">${name}</span> from ${location}
+            </div>
+            <div class="notification-action">just registered for the training</div>
+            <div class="notification-time">${timeAgo} ${timeAgo === 1 ? 'minute' : 'minutes'} ago</div>
+        </div>
+    `;
+    
+    document.body.appendChild(notification);
+    
+    setTimeout(() => {
+        notification.remove();
+    }, 6000);
+}
+
+// Show first notification after 3 seconds
+setTimeout(showNotification, 3000);
+
+// Show subsequent notifications every 8-12 seconds
+function scheduleNextNotification() {
+    const delay = 8000 + Math.random() * 4000; // 8-12 seconds
+    setTimeout(() => {
+        showNotification();
+        scheduleNextNotification();
+    }, delay);
+}
+
+scheduleNextNotification();
+</script>
