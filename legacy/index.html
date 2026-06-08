@@ -13,7 +13,7 @@
         
         body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background: #1a1a2e;
+            background: #000714;
             min-height: 100vh;
             padding: 20px;
             color: #333;
@@ -29,7 +29,7 @@
         }
         
         h1 {
-            background: #1a1a2e;
+            background: #000714;
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             font-size: 2.5em;
@@ -49,11 +49,11 @@
             padding: 25px;
             background: #f8f9fa;
             border-radius: 15px;
-            border-left: 5px solid #fa709a;
+            border-left: 5px solid #DEA335;
         }
         
         .pillar h3 {
-            color: #fa709a;
+            color: #DEA335;
             margin-bottom: 10px;
             font-size: 1.4em;
         }
@@ -114,21 +114,21 @@
         }
         
         .rating-btn:hover {
-            border-color: #fa709a;
+            border-color: #DEA335;
             transform: scale(1.1);
         }
         
         .rating-btn.selected {
-            background: #1a1a2e;
+            background: #000714;
             color: white;
-            border-color: #fa709a;
+            border-color: #DEA335;
         }
         
         .calculate-btn {
             display: block;
             width: 100%;
             padding: 20px;
-            background: #1a1a2e;
+            background: #000714;
             color: white;
             border: none;
             border-radius: 12px;
@@ -162,7 +162,7 @@
         .score-header {
             text-align: center;
             padding: 40px;
-            background: #1a1a2e;
+            background: #000714;
             border-radius: 15px;
             color: white;
             margin-bottom: 30px;
@@ -197,7 +197,7 @@
         }
         
         .pillar-result h4 {
-            color: #fa709a;
+            color: #DEA335;
             margin-bottom: 15px;
             font-size: 1.2em;
         }
@@ -223,7 +223,7 @@
         .comparison-score {
             font-size: 2em;
             font-weight: bold;
-            color: #fa709a;
+            color: #DEA335;
         }
         
         .gap-indicator {
@@ -237,7 +237,7 @@
         
         .gap-fill {
             height: 100%;
-            background: #1a1a2e;
+            background: #000714;
             border-radius: 15px;
             transition: width 1s ease-out;
             display: flex;
@@ -254,11 +254,11 @@
             padding: 25px;
             background: #fff7e6;
             border-radius: 12px;
-            border-left: 5px solid #fee140;
+            border-left: 5px solid #DEA335;
         }
         
         .insights h3 {
-            color: #fa709a;
+            color: #DEA335;
             margin-bottom: 15px;
         }
         
@@ -273,7 +273,7 @@
             text-align: center;
             margin-top: 40px;
             padding: 30px;
-            background: #1a1a2e;
+            background: #000714;
             border-radius: 15px;
             color: white;
         }
@@ -287,7 +287,7 @@
             display: inline-block;
             padding: 18px 40px;
             background: white;
-            color: #fa709a;
+            color: #DEA335;
             text-decoration: none;
             border-radius: 10px;
             font-weight: bold;
@@ -346,7 +346,17 @@
                         <div class="rating-scale">
                             <label>Low</label>
                             <div class="rating-buttons" id="purpose-current">
-                                ${[1,2,3,4,5,6,7,8,9,10].map(n => `<button class="rating-btn" onclick="rate('purpose', 'current', ${n})">${n}</button>`).join('')}
+                                
+                                <button class="rating-btn" onclick="rate('purpose', 'current', 1)">1</button>
+                                <button class="rating-btn" onclick="rate('purpose', 'current', 2)">2</button>
+                                <button class="rating-btn" onclick="rate('purpose', 'current', 3)">3</button>
+                                <button class="rating-btn" onclick="rate('purpose', 'current', 4)">4</button>
+                                <button class="rating-btn" onclick="rate('purpose', 'current', 5)">5</button>
+                                <button class="rating-btn" onclick="rate('purpose', 'current', 6)">6</button>
+                                <button class="rating-btn" onclick="rate('purpose', 'current', 7)">7</button>
+                                <button class="rating-btn" onclick="rate('purpose', 'current', 8)">8</button>
+                                <button class="rating-btn" onclick="rate('purpose', 'current', 9)">9</button>
+                                <button class="rating-btn" onclick="rate('purpose', 'current', 10)">10</button>
                             </div>
                             <label>High</label>
                         </div>
@@ -356,7 +366,17 @@
                         <div class="rating-scale">
                             <label>Low</label>
                             <div class="rating-buttons" id="purpose-desired">
-                                ${[1,2,3,4,5,6,7,8,9,10].map(n => `<button class="rating-btn" onclick="rate('purpose', 'desired', ${n})">${n}</button>`).join('')}
+                                
+                                <button class="rating-btn" onclick="rate('purpose', 'desired', 1)">1</button>
+                                <button class="rating-btn" onclick="rate('purpose', 'desired', 2)">2</button>
+                                <button class="rating-btn" onclick="rate('purpose', 'desired', 3)">3</button>
+                                <button class="rating-btn" onclick="rate('purpose', 'desired', 4)">4</button>
+                                <button class="rating-btn" onclick="rate('purpose', 'desired', 5)">5</button>
+                                <button class="rating-btn" onclick="rate('purpose', 'desired', 6)">6</button>
+                                <button class="rating-btn" onclick="rate('purpose', 'desired', 7)">7</button>
+                                <button class="rating-btn" onclick="rate('purpose', 'desired', 8)">8</button>
+                                <button class="rating-btn" onclick="rate('purpose', 'desired', 9)">9</button>
+                                <button class="rating-btn" onclick="rate('purpose', 'desired', 10)">10</button>
                             </div>
                             <label>High</label>
                         </div>
@@ -374,7 +394,17 @@
                         <div class="rating-scale">
                             <label>Low</label>
                             <div class="rating-buttons" id="people-current">
-                                ${[1,2,3,4,5,6,7,8,9,10].map(n => `<button class="rating-btn" onclick="rate('people', 'current', ${n})">${n}</button>`).join('')}
+                                
+                                <button class="rating-btn" onclick="rate('people', 'current', 1)">1</button>
+                                <button class="rating-btn" onclick="rate('people', 'current', 2)">2</button>
+                                <button class="rating-btn" onclick="rate('people', 'current', 3)">3</button>
+                                <button class="rating-btn" onclick="rate('people', 'current', 4)">4</button>
+                                <button class="rating-btn" onclick="rate('people', 'current', 5)">5</button>
+                                <button class="rating-btn" onclick="rate('people', 'current', 6)">6</button>
+                                <button class="rating-btn" onclick="rate('people', 'current', 7)">7</button>
+                                <button class="rating-btn" onclick="rate('people', 'current', 8)">8</button>
+                                <button class="rating-btn" onclick="rate('people', 'current', 9)">9</button>
+                                <button class="rating-btn" onclick="rate('people', 'current', 10)">10</button>
                             </div>
                             <label>High</label>
                         </div>
@@ -384,7 +414,17 @@
                         <div class="rating-scale">
                             <label>Low</label>
                             <div class="rating-buttons" id="people-desired">
-                                ${[1,2,3,4,5,6,7,8,9,10].map(n => `<button class="rating-btn" onclick="rate('people', 'desired', ${n})">${n}</button>`).join('')}
+                                
+                                <button class="rating-btn" onclick="rate('people', 'desired', 1)">1</button>
+                                <button class="rating-btn" onclick="rate('people', 'desired', 2)">2</button>
+                                <button class="rating-btn" onclick="rate('people', 'desired', 3)">3</button>
+                                <button class="rating-btn" onclick="rate('people', 'desired', 4)">4</button>
+                                <button class="rating-btn" onclick="rate('people', 'desired', 5)">5</button>
+                                <button class="rating-btn" onclick="rate('people', 'desired', 6)">6</button>
+                                <button class="rating-btn" onclick="rate('people', 'desired', 7)">7</button>
+                                <button class="rating-btn" onclick="rate('people', 'desired', 8)">8</button>
+                                <button class="rating-btn" onclick="rate('people', 'desired', 9)">9</button>
+                                <button class="rating-btn" onclick="rate('people', 'desired', 10)">10</button>
                             </div>
                             <label>High</label>
                         </div>
@@ -402,7 +442,17 @@
                         <div class="rating-scale">
                             <label>Low</label>
                             <div class="rating-buttons" id="value-current">
-                                ${[1,2,3,4,5,6,7,8,9,10].map(n => `<button class="rating-btn" onclick="rate('value', 'current', ${n})">${n}</button>`).join('')}
+                                
+                                <button class="rating-btn" onclick="rate('value', 'current', 1)">1</button>
+                                <button class="rating-btn" onclick="rate('value', 'current', 2)">2</button>
+                                <button class="rating-btn" onclick="rate('value', 'current', 3)">3</button>
+                                <button class="rating-btn" onclick="rate('value', 'current', 4)">4</button>
+                                <button class="rating-btn" onclick="rate('value', 'current', 5)">5</button>
+                                <button class="rating-btn" onclick="rate('value', 'current', 6)">6</button>
+                                <button class="rating-btn" onclick="rate('value', 'current', 7)">7</button>
+                                <button class="rating-btn" onclick="rate('value', 'current', 8)">8</button>
+                                <button class="rating-btn" onclick="rate('value', 'current', 9)">9</button>
+                                <button class="rating-btn" onclick="rate('value', 'current', 10)">10</button>
                             </div>
                             <label>High</label>
                         </div>
@@ -412,7 +462,17 @@
                         <div class="rating-scale">
                             <label>Low</label>
                             <div class="rating-buttons" id="value-desired">
-                                ${[1,2,3,4,5,6,7,8,9,10].map(n => `<button class="rating-btn" onclick="rate('value', 'desired', ${n})">${n}</button>`).join('')}
+                                
+                                <button class="rating-btn" onclick="rate('value', 'desired', 1)">1</button>
+                                <button class="rating-btn" onclick="rate('value', 'desired', 2)">2</button>
+                                <button class="rating-btn" onclick="rate('value', 'desired', 3)">3</button>
+                                <button class="rating-btn" onclick="rate('value', 'desired', 4)">4</button>
+                                <button class="rating-btn" onclick="rate('value', 'desired', 5)">5</button>
+                                <button class="rating-btn" onclick="rate('value', 'desired', 6)">6</button>
+                                <button class="rating-btn" onclick="rate('value', 'desired', 7)">7</button>
+                                <button class="rating-btn" onclick="rate('value', 'desired', 8)">8</button>
+                                <button class="rating-btn" onclick="rate('value', 'desired', 9)">9</button>
+                                <button class="rating-btn" onclick="rate('value', 'desired', 10)">10</button>
                             </div>
                             <label>High</label>
                         </div>
@@ -430,7 +490,17 @@
                         <div class="rating-scale">
                             <label>Low</label>
                             <div class="rating-buttons" id="generations-current">
-                                ${[1,2,3,4,5,6,7,8,9,10].map(n => `<button class="rating-btn" onclick="rate('generations', 'current', ${n})">${n}</button>`).join('')}
+                                
+                                <button class="rating-btn" onclick="rate('generations', 'current', 1)">1</button>
+                                <button class="rating-btn" onclick="rate('generations', 'current', 2)">2</button>
+                                <button class="rating-btn" onclick="rate('generations', 'current', 3)">3</button>
+                                <button class="rating-btn" onclick="rate('generations', 'current', 4)">4</button>
+                                <button class="rating-btn" onclick="rate('generations', 'current', 5)">5</button>
+                                <button class="rating-btn" onclick="rate('generations', 'current', 6)">6</button>
+                                <button class="rating-btn" onclick="rate('generations', 'current', 7)">7</button>
+                                <button class="rating-btn" onclick="rate('generations', 'current', 8)">8</button>
+                                <button class="rating-btn" onclick="rate('generations', 'current', 9)">9</button>
+                                <button class="rating-btn" onclick="rate('generations', 'current', 10)">10</button>
                             </div>
                             <label>High</label>
                         </div>
@@ -440,7 +510,17 @@
                         <div class="rating-scale">
                             <label>Low</label>
                             <div class="rating-buttons" id="generations-desired">
-                                ${[1,2,3,4,5,6,7,8,9,10].map(n => `<button class="rating-btn" onclick="rate('generations', 'desired', ${n})">${n}</button>`).join('')}
+                                
+                                <button class="rating-btn" onclick="rate('generations', 'desired', 1)">1</button>
+                                <button class="rating-btn" onclick="rate('generations', 'desired', 2)">2</button>
+                                <button class="rating-btn" onclick="rate('generations', 'desired', 3)">3</button>
+                                <button class="rating-btn" onclick="rate('generations', 'desired', 4)">4</button>
+                                <button class="rating-btn" onclick="rate('generations', 'desired', 5)">5</button>
+                                <button class="rating-btn" onclick="rate('generations', 'desired', 6)">6</button>
+                                <button class="rating-btn" onclick="rate('generations', 'desired', 7)">7</button>
+                                <button class="rating-btn" onclick="rate('generations', 'desired', 8)">8</button>
+                                <button class="rating-btn" onclick="rate('generations', 'desired', 9)">9</button>
+                                <button class="rating-btn" onclick="rate('generations', 'desired', 10)">10</button>
                             </div>
                             <label>High</label>
                         </div>
@@ -458,7 +538,17 @@
                         <div class="rating-scale">
                             <label>Low</label>
                             <div class="rating-buttons" id="service-current">
-                                ${[1,2,3,4,5,6,7,8,9,10].map(n => `<button class="rating-btn" onclick="rate('service', 'current', ${n})">${n}</button>`).join('')}
+                                
+                                <button class="rating-btn" onclick="rate('service', 'current', 1)">1</button>
+                                <button class="rating-btn" onclick="rate('service', 'current', 2)">2</button>
+                                <button class="rating-btn" onclick="rate('service', 'current', 3)">3</button>
+                                <button class="rating-btn" onclick="rate('service', 'current', 4)">4</button>
+                                <button class="rating-btn" onclick="rate('service', 'current', 5)">5</button>
+                                <button class="rating-btn" onclick="rate('service', 'current', 6)">6</button>
+                                <button class="rating-btn" onclick="rate('service', 'current', 7)">7</button>
+                                <button class="rating-btn" onclick="rate('service', 'current', 8)">8</button>
+                                <button class="rating-btn" onclick="rate('service', 'current', 9)">9</button>
+                                <button class="rating-btn" onclick="rate('service', 'current', 10)">10</button>
                             </div>
                             <label>High</label>
                         </div>
@@ -468,7 +558,17 @@
                         <div class="rating-scale">
                             <label>Low</label>
                             <div class="rating-buttons" id="service-desired">
-                                ${[1,2,3,4,5,6,7,8,9,10].map(n => `<button class="rating-btn" onclick="rate('service', 'desired', ${n})">${n}</button>`).join('')}
+                                
+                                <button class="rating-btn" onclick="rate('service', 'desired', 1)">1</button>
+                                <button class="rating-btn" onclick="rate('service', 'desired', 2)">2</button>
+                                <button class="rating-btn" onclick="rate('service', 'desired', 3)">3</button>
+                                <button class="rating-btn" onclick="rate('service', 'desired', 4)">4</button>
+                                <button class="rating-btn" onclick="rate('service', 'desired', 5)">5</button>
+                                <button class="rating-btn" onclick="rate('service', 'desired', 6)">6</button>
+                                <button class="rating-btn" onclick="rate('service', 'desired', 7)">7</button>
+                                <button class="rating-btn" onclick="rate('service', 'desired', 8)">8</button>
+                                <button class="rating-btn" onclick="rate('service', 'desired', 9)">9</button>
+                                <button class="rating-btn" onclick="rate('service', 'desired', 10)">10</button>
                             </div>
                             <label>High</label>
                         </div>
@@ -604,7 +704,7 @@
                 </div>
                 
                 <div class="pillar-results">
-                    <h3 style="margin-bottom: 20px; color: #fa709a;">Pillar-by-Pillar Breakdown</h3>
+                    <h3 style="margin-bottom: 20px; color: #DEA335;">Pillar-by-Pillar Breakdown</h3>
                     ${pillarResultsHTML}
                 </div>
                 
