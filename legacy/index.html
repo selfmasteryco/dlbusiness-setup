@@ -1,0 +1,632 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Legacy Impact Scorecard | Self Mastery Co</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #fa709a 0%, #fee140 100%);
+            min-height: 100vh;
+            padding: 20px;
+            color: #333;
+        }
+        
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 20px;
+            padding: 40px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+        }
+        
+        h1 {
+            background: linear-gradient(135deg, #fa709a 0%, #fee140 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            font-size: 2.5em;
+            margin-bottom: 10px;
+            text-align: center;
+        }
+        
+        .subtitle {
+            text-align: center;
+            color: #666;
+            margin-bottom: 40px;
+            font-size: 1.1em;
+        }
+        
+        .pillar {
+            margin-bottom: 35px;
+            padding: 25px;
+            background: #f8f9fa;
+            border-radius: 15px;
+            border-left: 5px solid #fa709a;
+        }
+        
+        .pillar h3 {
+            color: #fa709a;
+            margin-bottom: 10px;
+            font-size: 1.4em;
+        }
+        
+        .pillar p {
+            color: #666;
+            margin-bottom: 20px;
+            font-size: 0.95em;
+        }
+        
+        .rating-section {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+        
+        .rating-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 20px;
+        }
+        
+        .rating-label {
+            flex: 1;
+            font-weight: 600;
+            color: #333;
+        }
+        
+        .rating-scale {
+            flex: 2;
+            display: flex;
+            gap: 10px;
+            align-items: center;
+        }
+        
+        .rating-scale label {
+            font-size: 0.85em;
+            color: #999;
+            min-width: 60px;
+        }
+        
+        .rating-buttons {
+            display: flex;
+            gap: 8px;
+        }
+        
+        .rating-btn {
+            width: 40px;
+            height: 40px;
+            border: 2px solid #e0e0e0;
+            border-radius: 8px;
+            background: white;
+            cursor: pointer;
+            transition: all 0.2s;
+            font-weight: bold;
+            color: #666;
+        }
+        
+        .rating-btn:hover {
+            border-color: #fa709a;
+            transform: scale(1.1);
+        }
+        
+        .rating-btn.selected {
+            background: linear-gradient(135deg, #fa709a 0%, #fee140 100%);
+            color: white;
+            border-color: #fa709a;
+        }
+        
+        .calculate-btn {
+            display: block;
+            width: 100%;
+            padding: 20px;
+            background: linear-gradient(135deg, #fa709a 0%, #fee140 100%);
+            color: white;
+            border: none;
+            border-radius: 12px;
+            font-size: 1.3em;
+            font-weight: bold;
+            cursor: pointer;
+            margin-top: 30px;
+            transition: transform 0.2s;
+        }
+        
+        .calculate-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 25px rgba(250, 112, 154, 0.4);
+        }
+        
+        .results {
+            display: none;
+            margin-top: 40px;
+        }
+        
+        .results.show {
+            display: block;
+            animation: fadeIn 0.5s ease-out;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        .score-header {
+            text-align: center;
+            padding: 40px;
+            background: linear-gradient(135deg, #fa709a 0%, #fee140 100%);
+            border-radius: 15px;
+            color: white;
+            margin-bottom: 30px;
+        }
+        
+        .score-header h2 {
+            font-size: 2em;
+            margin-bottom: 15px;
+        }
+        
+        .score-number {
+            font-size: 5em;
+            font-weight: bold;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.2);
+        }
+        
+        .gap-display {
+            font-size: 1.3em;
+            margin-top: 15px;
+            opacity: 0.95;
+        }
+        
+        .pillar-results {
+            margin-bottom: 30px;
+        }
+        
+        .pillar-result {
+            margin-bottom: 20px;
+            padding: 20px;
+            background: #f8f9fa;
+            border-radius: 12px;
+        }
+        
+        .pillar-result h4 {
+            color: #fa709a;
+            margin-bottom: 15px;
+            font-size: 1.2em;
+        }
+        
+        .comparison {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 15px;
+        }
+        
+        .comparison-item {
+            text-align: center;
+            flex: 1;
+        }
+        
+        .comparison-label {
+            font-size: 0.9em;
+            color: #999;
+            margin-bottom: 5px;
+        }
+        
+        .comparison-score {
+            font-size: 2em;
+            font-weight: bold;
+            color: #fa709a;
+        }
+        
+        .gap-indicator {
+            width: 100%;
+            height: 30px;
+            background: #e0e0e0;
+            border-radius: 15px;
+            overflow: hidden;
+            position: relative;
+        }
+        
+        .gap-fill {
+            height: 100%;
+            background: linear-gradient(135deg, #fa709a 0%, #fee140 100%);
+            border-radius: 15px;
+            transition: width 1s ease-out;
+            display: flex;
+            align-items: center;
+            justify-content: flex-end;
+            padding-right: 10px;
+            color: white;
+            font-weight: bold;
+            font-size: 0.9em;
+        }
+        
+        .insights {
+            margin-top: 30px;
+            padding: 25px;
+            background: #fff7e6;
+            border-radius: 12px;
+            border-left: 5px solid #fee140;
+        }
+        
+        .insights h3 {
+            color: #fa709a;
+            margin-bottom: 15px;
+        }
+        
+        .insight-item {
+            margin-bottom: 15px;
+            padding: 15px;
+            background: white;
+            border-radius: 8px;
+        }
+        
+        .cta {
+            text-align: center;
+            margin-top: 40px;
+            padding: 30px;
+            background: linear-gradient(135deg, #fa709a 0%, #fee140 100%);
+            border-radius: 15px;
+            color: white;
+        }
+        
+        .cta h3 {
+            margin-bottom: 15px;
+            font-size: 1.8em;
+        }
+        
+        .cta-btn {
+            display: inline-block;
+            padding: 18px 40px;
+            background: white;
+            color: #fa709a;
+            text-decoration: none;
+            border-radius: 10px;
+            font-weight: bold;
+            font-size: 1.2em;
+            margin-top: 15px;
+            transition: transform 0.2s;
+        }
+        
+        .cta-btn:hover {
+            transform: scale(1.05);
+        }
+        
+        @media (max-width: 600px) {
+            .container {
+                padding: 25px;
+            }
+            
+            h1 {
+                font-size: 2em;
+            }
+            
+            .rating-row {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+            
+            .rating-scale {
+                width: 100%;
+            }
+            
+            .rating-btn {
+                width: 35px;
+                height: 35px;
+                font-size: 0.9em;
+            }
+            
+            .score-number {
+                font-size: 3.5em;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🌟 Legacy Impact Scorecard</h1>
+        <p class="subtitle">Measure where you are vs. where you want to be across the 5 Pillars of Legacy</p>
+        
+        <div id="assessment">
+            <!-- Pillar 1: Purpose Driven -->
+            <div class="pillar">
+                <h3>1. Purpose Driven</h3>
+                <p>Living with meaning, intention, and clear direction</p>
+                <div class="rating-section">
+                    <div class="rating-row">
+                        <div class="rating-label">Current State:</div>
+                        <div class="rating-scale">
+                            <label>Low</label>
+                            <div class="rating-buttons" id="purpose-current">
+                                ${[1,2,3,4,5,6,7,8,9,10].map(n => `<button class="rating-btn" onclick="rate('purpose', 'current', ${n})">${n}</button>`).join('')}
+                            </div>
+                            <label>High</label>
+                        </div>
+                    </div>
+                    <div class="rating-row">
+                        <div class="rating-label">Desired State:</div>
+                        <div class="rating-scale">
+                            <label>Low</label>
+                            <div class="rating-buttons" id="purpose-desired">
+                                ${[1,2,3,4,5,6,7,8,9,10].map(n => `<button class="rating-btn" onclick="rate('purpose', 'desired', ${n})">${n}</button>`).join('')}
+                            </div>
+                            <label>High</label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Pillar 2: People Focused -->
+            <div class="pillar">
+                <h3>2. People Focused</h3>
+                <p>Investing in relationships and empowering others</p>
+                <div class="rating-section">
+                    <div class="rating-row">
+                        <div class="rating-label">Current State:</div>
+                        <div class="rating-scale">
+                            <label>Low</label>
+                            <div class="rating-buttons" id="people-current">
+                                ${[1,2,3,4,5,6,7,8,9,10].map(n => `<button class="rating-btn" onclick="rate('people', 'current', ${n})">${n}</button>`).join('')}
+                            </div>
+                            <label>High</label>
+                        </div>
+                    </div>
+                    <div class="rating-row">
+                        <div class="rating-label">Desired State:</div>
+                        <div class="rating-scale">
+                            <label>Low</label>
+                            <div class="rating-buttons" id="people-desired">
+                                ${[1,2,3,4,5,6,7,8,9,10].map(n => `<button class="rating-btn" onclick="rate('people', 'desired', ${n})">${n}</button>`).join('')}
+                            </div>
+                            <label>High</label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Pillar 3: Value Creator -->
+            <div class="pillar">
+                <h3>3. Value Creator</h3>
+                <p>Creating value that outlives your presence</p>
+                <div class="rating-section">
+                    <div class="rating-row">
+                        <div class="rating-label">Current State:</div>
+                        <div class="rating-scale">
+                            <label>Low</label>
+                            <div class="rating-buttons" id="value-current">
+                                ${[1,2,3,4,5,6,7,8,9,10].map(n => `<button class="rating-btn" onclick="rate('value', 'current', ${n})">${n}</button>`).join('')}
+                            </div>
+                            <label>High</label>
+                        </div>
+                    </div>
+                    <div class="rating-row">
+                        <div class="rating-label">Desired State:</div>
+                        <div class="rating-scale">
+                            <label>Low</label>
+                            <div class="rating-buttons" id="value-desired">
+                                ${[1,2,3,4,5,6,7,8,9,10].map(n => `<button class="rating-btn" onclick="rate('value', 'desired', ${n})">${n}</button>`).join('')}
+                            </div>
+                            <label>High</label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Pillar 4: Generations Minded -->
+            <div class="pillar">
+                <h3>4. Generations Minded</h3>
+                <p>Building a bridge to tomorrow and thinking long-term</p>
+                <div class="rating-section">
+                    <div class="rating-row">
+                        <div class="rating-label">Current State:</div>
+                        <div class="rating-scale">
+                            <label>Low</label>
+                            <div class="rating-buttons" id="generations-current">
+                                ${[1,2,3,4,5,6,7,8,9,10].map(n => `<button class="rating-btn" onclick="rate('generations', 'current', ${n})">${n}</button>`).join('')}
+                            </div>
+                            <label>High</label>
+                        </div>
+                    </div>
+                    <div class="rating-row">
+                        <div class="rating-label">Desired State:</div>
+                        <div class="rating-scale">
+                            <label>Low</label>
+                            <div class="rating-buttons" id="generations-desired">
+                                ${[1,2,3,4,5,6,7,8,9,10].map(n => `<button class="rating-btn" onclick="rate('generations', 'desired', ${n})">${n}</button>`).join('')}
+                            </div>
+                            <label>High</label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Pillar 5: Legacy of Service -->
+            <div class="pillar">
+                <h3>5. Legacy of Service</h3>
+                <p>Living a life of giving, contribution, and service</p>
+                <div class="rating-section">
+                    <div class="rating-row">
+                        <div class="rating-label">Current State:</div>
+                        <div class="rating-scale">
+                            <label>Low</label>
+                            <div class="rating-buttons" id="service-current">
+                                ${[1,2,3,4,5,6,7,8,9,10].map(n => `<button class="rating-btn" onclick="rate('service', 'current', ${n})">${n}</button>`).join('')}
+                            </div>
+                            <label>High</label>
+                        </div>
+                    </div>
+                    <div class="rating-row">
+                        <div class="rating-label">Desired State:</div>
+                        <div class="rating-scale">
+                            <label>Low</label>
+                            <div class="rating-buttons" id="service-desired">
+                                ${[1,2,3,4,5,6,7,8,9,10].map(n => `<button class="rating-btn" onclick="rate('service', 'desired', ${n})">${n}</button>`).join('')}
+                            </div>
+                            <label>High</label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <button class="calculate-btn" onclick="calculateLegacy()">📊 Calculate My Legacy Gap</button>
+        </div>
+        
+        <div class="results" id="results">
+            <!-- Results will be inserted here -->
+        </div>
+    </div>
+    
+    <script>
+        let scores = {
+            purpose: { current: 0, desired: 0 },
+            people: { current: 0, desired: 0 },
+            value: { current: 0, desired: 0 },
+            generations: { current: 0, desired: 0 },
+            service: { current: 0, desired: 0 }
+        };
+        
+        function rate(pillar, type, score) {
+            scores[pillar][type] = score;
+            
+            // Update UI
+            const container = document.getElementById(`${pillar}-${type}`);
+            container.querySelectorAll('.rating-btn').forEach(btn => {
+                btn.classList.remove('selected');
+            });
+            container.querySelectorAll('.rating-btn')[score - 1].classList.add('selected');
+        }
+        
+        function calculateLegacy() {
+            // Validate all scores
+            for (let pillar in scores) {
+                if (scores[pillar].current === 0 || scores[pillar].desired === 0) {
+                    alert('Please rate both current and desired state for all 5 pillars');
+                    return;
+                }
+            }
+            
+            let totalCurrent = 0;
+            let totalDesired = 0;
+            let resultsHTML = '';
+            
+            for (let pillar in scores) {
+                totalCurrent += scores[pillar].current;
+                totalDesired += scores[pillar].desired;
+            }
+            
+            const avgCurrent = (totalCurrent / 5).toFixed(1);
+            const avgDesired = (totalDesired / 5).toFixed(1);
+            const gap = (avgDesired - avgCurrent).toFixed(1);
+            const percentComplete = ((avgCurrent / avgDesired) * 100).toFixed(0);
+            
+            // Generate pillar-by-pillar results
+            const pillarNames = {
+                purpose: 'Purpose Driven',
+                people: 'People Focused',
+                value: 'Value Creator',
+                generations: 'Generations Minded',
+                service: 'Legacy of Service'
+            };
+            
+            let pillarResultsHTML = '';
+            let insights = [];
+            let biggestGap = { name: '', gap: 0 };
+            let strongest = { name: '', score: 0 };
+            
+            for (let pillar in scores) {
+                const current = scores[pillar].current;
+                const desired = scores[pillar].desired;
+                const pillarGap = desired - current;
+                const pillarPercent = ((current / desired) * 100).toFixed(0);
+                
+                if (pillarGap > biggestGap.gap) {
+                    biggestGap = { name: pillarNames[pillar], gap: pillarGap };
+                }
+                
+                if (current > strongest.score) {
+                    strongest = { name: pillarNames[pillar], score: current };
+                }
+                
+                pillarResultsHTML += `
+                    <div class="pillar-result">
+                        <h4>${pillarNames[pillar]}</h4>
+                        <div class="comparison">
+                            <div class="comparison-item">
+                                <div class="comparison-label">Current</div>
+                                <div class="comparison-score">${current}/10</div>
+                            </div>
+                            <div class="comparison-item">
+                                <div class="comparison-label">Gap</div>
+                                <div class="comparison-score" style="color: ${pillarGap > 3 ? '#e74c3c' : '#f39c12'};">${pillarGap}</div>
+                            </div>
+                            <div class="comparison-item">
+                                <div class="comparison-label">Desired</div>
+                                <div class="comparison-score">${desired}/10</div>
+                            </div>
+                        </div>
+                        <div class="gap-indicator">
+                            <div class="gap-fill" style="width: ${pillarPercent}%">${pillarPercent}%</div>
+                        </div>
+                    </div>
+                `;
+            }
+            
+            // Generate insights
+            if (percentComplete < 60) {
+                insights.push('<strong>🎯 Opportunity Zone:</strong> You have significant room for legacy growth. This is your chance to make transformational shifts.');
+            } else if (percentComplete < 80) {
+                insights.push('<strong>📈 Growth Zone:</strong> You\'re making progress but haven\'t reached your full legacy potential yet.');
+            } else {
+                insights.push('<strong>🌟 Mastery Zone:</strong> You\'re close to your desired legacy impact. Fine-tuning will get you there.');
+            }
+            
+            insights.push(`<strong>💪 Biggest Opportunity:</strong> Focus on ${biggestGap.name} - closing this ${biggestGap.gap}-point gap will create the most dramatic transformation.`);
+            insights.push(`<strong>🏆 Your Strength:</strong> ${strongest.name} is your highest-rated pillar. Build on this strength to elevate other areas.`);
+            
+            if (gap > 3) {
+                insights.push('<strong>🚀 Action Required:</strong> The gap between where you are and where you want to be requires intentional action. The Self Mastery Adventure provides the structure to close this gap.');
+            }
+            
+            resultsHTML = `
+                <div class="score-header">
+                    <h2>Your Legacy Impact Score</h2>
+                    <div class="score-number">${percentComplete}%</div>
+                    <div class="gap-display">You're ${percentComplete}% of the way to your desired legacy impact</div>
+                    <div class="gap-display" style="font-size: 1.1em; margin-top: 10px;">Gap to close: ${gap} points</div>
+                </div>
+                
+                <div class="pillar-results">
+                    <h3 style="margin-bottom: 20px; color: #fa709a;">Pillar-by-Pillar Breakdown</h3>
+                    ${pillarResultsHTML}
+                </div>
+                
+                <div class="insights">
+                    <h3>💡 Your Legacy Insights</h3>
+                    ${insights.map(insight => `<div class="insight-item">${insight}</div>`).join('')}
+                </div>
+                
+                <div class="cta">
+                    <h3>Ready to Close the Gap?</h3>
+                    <p style="margin: 15px 0; font-size: 1.1em;">
+                        The Self Mastery Adventure is designed to help you bridge the gap between 
+                        where you are and the legacy you want to leave.
+                    </p>
+                    <a href="#" class="cta-btn">Join Self Mastery Adventure</a>
+                </div>
+            `;
+            
+            document.getElementById('results').innerHTML = resultsHTML;
+            document.getElementById('results').classList.add('show');
+            document.getElementById('results').scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+        }
+    </script>
+</body>
+</html>

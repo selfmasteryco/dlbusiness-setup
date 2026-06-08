@@ -1,0 +1,553 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Values Hierarchy Builder | Self Mastery Co</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #a8edea 0%, #fed6e3 100%);
+            min-height: 100vh;
+            padding: 20px;
+            color: #333;
+        }
+        
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 20px;
+            padding: 40px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+        }
+        
+        h1 {
+            background: linear-gradient(135deg, #a8edea 0%, #fed6e3 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            font-size: 2.5em;
+            margin-bottom: 10px;
+            text-align: center;
+        }
+        
+        .subtitle {
+            text-align: center;
+            color: #666;
+            margin-bottom: 40px;
+            font-size: 1.1em;
+        }
+        
+        .section {
+            margin-bottom: 40px;
+        }
+        
+        .section h2 {
+            color: #5eaaa8;
+            margin-bottom: 20px;
+            font-size: 1.6em;
+        }
+        
+        .values-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+            gap: 12px;
+            margin-bottom: 30px;
+        }
+        
+        .value-card {
+            padding: 15px;
+            background: #f8f9fa;
+            border: 2px solid #e0e0e0;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: all 0.3s;
+            text-align: center;
+            font-size: 0.95em;
+            user-select: none;
+        }
+        
+        .value-card:hover {
+            background: #fff;
+            border-color: #a8edea;
+            transform: translateY(-2px);
+        }
+        
+        .value-card.selected {
+            background: linear-gradient(135deg, #a8edea 0%, #fed6e3 100%);
+            color: white;
+            border-color: #a8edea;
+        }
+        
+        .selected-count {
+            text-align: center;
+            color: #666;
+            margin-bottom: 20px;
+            font-size: 1em;
+        }
+        
+        .selected-count strong {
+            color: #5eaaa8;
+            font-size: 1.2em;
+        }
+        
+        .rank-section {
+            display: none;
+        }
+        
+        .rank-section.active {
+            display: block;
+            animation: fadeIn 0.5s ease-out;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        .ranking-area {
+            background: #f8f9fa;
+            padding: 30px;
+            border-radius: 15px;
+            min-height: 400px;
+        }
+        
+        .rank-item {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            padding: 15px 20px;
+            background: white;
+            border: 2px solid #e0e0e0;
+            border-radius: 10px;
+            margin-bottom: 12px;
+            cursor: move;
+            transition: all 0.3s;
+        }
+        
+        .rank-item:hover {
+            border-color: #a8edea;
+            box-shadow: 0 5px 15px rgba(168, 237, 234, 0.2);
+        }
+        
+        .rank-item.dragging {
+            opacity: 0.5;
+        }
+        
+        .rank-number {
+            width: 40px;
+            height: 40px;
+            background: linear-gradient(135deg, #a8edea 0%, #fed6e3 100%);
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            font-size: 1.1em;
+        }
+        
+        .rank-value {
+            flex: 1;
+            font-size: 1.1em;
+            font-weight: 600;
+        }
+        
+        .drag-handle {
+            color: #999;
+            cursor: move;
+        }
+        
+        .btn {
+            padding: 15px 30px;
+            border: none;
+            border-radius: 10px;
+            font-size: 1.1em;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        
+        .btn-primary {
+            background: linear-gradient(135deg, #a8edea 0%, #fed6e3 100%);
+            color: white;
+            display: block;
+            width: 100%;
+            margin-top: 20px;
+        }
+        
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 25px rgba(168, 237, 234, 0.4);
+        }
+        
+        .results {
+            display: none;
+        }
+        
+        .results.active {
+            display: block;
+            animation: fadeIn 0.5s ease-out;
+        }
+        
+        .values-list {
+            background: linear-gradient(135deg, #a8edea 0%, #fed6e3 100%);
+            padding: 40px;
+            border-radius: 15px;
+            color: white;
+            margin-bottom: 30px;
+        }
+        
+        .values-list h2 {
+            margin-bottom: 25px;
+            font-size: 2em;
+            text-align: center;
+        }
+        
+        .value-item {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+            padding: 15px;
+            margin-bottom: 10px;
+            background: rgba(255,255,255,0.2);
+            border-radius: 10px;
+        }
+        
+        .value-rank {
+            width: 45px;
+            height: 45px;
+            background: white;
+            color: #5eaaa8;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            font-size: 1.2em;
+        }
+        
+        .value-name {
+            flex: 1;
+            font-size: 1.3em;
+            font-weight: 600;
+        }
+        
+        .insights-section {
+            background: #f8f9fa;
+            padding: 30px;
+            border-radius: 15px;
+            margin-bottom: 30px;
+        }
+        
+        .insights-section h3 {
+            color: #5eaaa8;
+            margin-bottom: 20px;
+            font-size: 1.5em;
+        }
+        
+        .insight {
+            padding: 20px;
+            background: white;
+            border-radius: 10px;
+            margin-bottom: 15px;
+            border-left: 4px solid #a8edea;
+        }
+        
+        .cta {
+            text-align: center;
+            padding: 40px;
+            background: linear-gradient(135deg, #a8edea 0%, #fed6e3 100%);
+            border-radius: 15px;
+            color: white;
+        }
+        
+        .cta h3 {
+            margin-bottom: 15px;
+            font-size: 2em;
+        }
+        
+        .cta-btn {
+            display: inline-block;
+            padding: 20px 50px;
+            background: white;
+            color: #5eaaa8;
+            text-decoration: none;
+            border-radius: 12px;
+            font-weight: bold;
+            font-size: 1.3em;
+            margin-top: 20px;
+            transition: transform 0.2s;
+        }
+        
+        .cta-btn:hover {
+            transform: scale(1.05);
+        }
+        
+        @media (max-width: 600px) {
+            .container {
+                padding: 25px;
+            }
+            
+            h1 {
+                font-size: 2em;
+            }
+            
+            .values-grid {
+                grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>💎 Values Hierarchy Builder</h1>
+        <p class="subtitle">Discover and rank what matters most to you</p>
+        
+        <!-- Step 1: Select Values -->
+        <div class="section" id="selection-section">
+            <h2>Step 1: Choose Your Top 10 Values</h2>
+            <p style="color: #666; margin-bottom: 20px;">Click to select the values that resonate most with you. Choose exactly 10.</p>
+            
+            <div class="selected-count" id="count">
+                Selected: <strong>0</strong> / 10
+            </div>
+            
+            <div class="values-grid" id="values-grid">
+                <!-- Values will be populated here -->
+            </div>
+            
+            <button class="btn btn-primary" onclick="startRanking()" id="rank-btn" disabled>
+                Continue to Ranking →
+            </button>
+        </div>
+        
+        <!-- Step 2: Rank Values -->
+        <div class="section rank-section" id="ranking-section">
+            <h2>Step 2: Rank Your Values</h2>
+            <p style="color: #666; margin-bottom: 20px;">Drag and drop to arrange your values from most to least important</p>
+            
+            <div class="ranking-area" id="ranking-area">
+                <!-- Ranking items will be added here -->
+            </div>
+            
+            <button class="btn btn-primary" onclick="showResults()">
+                See My Values Hierarchy →
+            </button>
+        </div>
+        
+        <!-- Results -->
+        <div class="section results" id="results-section">
+            <div class="values-list" id="final-values">
+                <!-- Final ranked values -->
+            </div>
+            
+            <div class="insights-section">
+                <h3>💡 What Your Values Say About You</h3>
+                <div id="insights">
+                    <!-- Insights will be generated -->
+                </div>
+            </div>
+            
+            <div class="cta">
+                <h3>Live Your Values With Purpose</h3>
+                <p style="margin: 15px 0; font-size: 1.1em;">
+                    Knowing your values is the first step. The Self Mastery Adventure helps you 
+                    align your daily life with what matters most.
+                </p>
+                <a href="#" class="cta-btn">Join Self Mastery Adventure</a>
+            </div>
+        </div>
+    </div>
+    
+    <script>
+        const allValues = [
+            'Authenticity', 'Growth', 'Freedom', 'Family', 'Love',
+            'Impact', 'Integrity', 'Creativity', 'Adventure', 'Health',
+            'Wisdom', 'Courage', 'Service', 'Excellence', 'Connection',
+            'Purpose', 'Peace', 'Abundance', 'Joy', 'Leadership',
+            'Learning', 'Balance', 'Contribution', 'Innovation', 'Faith',
+            'Compassion', 'Achievement', 'Security', 'Fun', 'Justice',
+            'Community', 'Harmony', 'Resilience', 'Gratitude', 'Discipline',
+            'Respect', 'Generosity', 'Honesty', 'Kindness', 'Passion'
+        ];
+        
+        let selectedValues = [];
+        let rankedValues = [];
+        
+        // Populate values grid
+        const grid = document.getElementById('values-grid');
+        allValues.forEach(value => {
+            const card = document.createElement('div');
+            card.className = 'value-card';
+            card.textContent = value;
+            card.onclick = () => toggleValue(value, card);
+            grid.appendChild(card);
+        });
+        
+        function toggleValue(value, element) {
+            if (selectedValues.includes(value)) {
+                // Deselect
+                selectedValues = selectedValues.filter(v => v !== value);
+                element.classList.remove('selected');
+            } else {
+                // Select (if under 10)
+                if (selectedValues.length < 10) {
+                    selectedValues.push(value);
+                    element.classList.add('selected');
+                }
+            }
+            
+            updateCount();
+        }
+        
+        function updateCount() {
+            const count = selectedValues.length;
+            document.getElementById('count').innerHTML = `Selected: <strong>${count}</strong> / 10`;
+            document.getElementById('rank-btn').disabled = count !== 10;
+        }
+        
+        function startRanking() {
+            document.getElementById('selection-section').style.display = 'none';
+            document.getElementById('ranking-section').classList.add('active');
+            
+            rankedValues = [...selectedValues];
+            renderRanking();
+        }
+        
+        function renderRanking() {
+            const area = document.getElementById('ranking-area');
+            area.innerHTML = '';
+            
+            rankedValues.forEach((value, index) => {
+                const item = document.createElement('div');
+                item.className = 'rank-item';
+                item.draggable = true;
+                item.dataset.index = index;
+                
+                item.innerHTML = `
+                    <div class="rank-number">${index + 1}</div>
+                    <div class="rank-value">${value}</div>
+                    <div class="drag-handle">☰</div>
+                `;
+                
+                item.addEventListener('dragstart', handleDragStart);
+                item.addEventListener('dragover', handleDragOver);
+                item.addEventListener('drop', handleDrop);
+                item.addEventListener('dragend', handleDragEnd);
+                
+                area.appendChild(item);
+            });
+        }
+        
+        let draggedElement = null;
+        
+        function handleDragStart(e) {
+            draggedElement = this;
+            this.classList.add('dragging');
+            e.dataTransfer.effectAllowed = 'move';
+        }
+        
+        function handleDragOver(e) {
+            if (e.preventDefault) {
+                e.preventDefault();
+            }
+            e.dataTransfer.dropEffect = 'move';
+            return false;
+        }
+        
+        function handleDrop(e) {
+            if (e.stopPropagation) {
+                e.stopPropagation();
+            }
+            
+            if (draggedElement !== this) {
+                const draggedIndex = parseInt(draggedElement.dataset.index);
+                const targetIndex = parseInt(this.dataset.index);
+                
+                // Swap in array
+                const temp = rankedValues[draggedIndex];
+                rankedValues[draggedIndex] = rankedValues[targetIndex];
+                rankedValues[targetIndex] = temp;
+                
+                renderRanking();
+            }
+            
+            return false;
+        }
+        
+        function handleDragEnd(e) {
+            this.classList.remove('dragging');
+        }
+        
+        function showResults() {
+            document.getElementById('ranking-section').style.display = 'none';
+            document.getElementById('results-section').classList.add('active');
+            
+            // Display final values
+            let valuesHTML = '<h2>Your Values Hierarchy</h2>';
+            rankedValues.forEach((value, index) => {
+                valuesHTML += `
+                    <div class="value-item">
+                        <div class="value-rank">${index + 1}</div>
+                        <div class="value-name">${value}</div>
+                    </div>
+                `;
+            });
+            
+            document.getElementById('final-values').innerHTML = valuesHTML;
+            
+            // Generate insights
+            generateInsights();
+        }
+        
+        function generateInsights() {
+            const insights = [];
+            const top3 = rankedValues.slice(0, 3);
+            const bottom3 = rankedValues.slice(-3);
+            
+            // Top value insight
+            insights.push({
+                title: `🥇 Your North Star: ${top3[0]}`,
+                text: `${top3[0]} is your #1 value. This should guide your biggest decisions and define your highest priorities. When facing tough choices, ask: "Which option honors ${top3[0]} most?"`
+            });
+            
+            // Top 3 pattern
+            insights.push({
+                title: '🎯 Your Core Values',
+                text: `Your top 3 values - ${top3.join(', ')} - form your core identity. These define who you are at your best. Alignment means living these daily, not just occasionally.`
+            });
+            
+            // Practical application
+            insights.push({
+                title: '⚡ Put Them Into Practice',
+                text: `Look at your calendar and commitments. Do they reflect these values? If not, you've found your misalignment. The gap between knowing your values and living them is where transformation happens.`
+            });
+            
+            // Warning sign
+            insights.push({
+                title: '⚠️ Watch for Violations',
+                text: `When you feel drained, frustrated, or unfulfilled, check: are you violating one of your top values? That feeling is your internal compass telling you you're off course.`
+            });
+            
+            let insightsHTML = '';
+            insights.forEach(insight => {
+                insightsHTML += `
+                    <div class="insight">
+                        <h4 style="color: #5eaaa8; margin-bottom: 10px; font-size: 1.2em;">${insight.title}</h4>
+                        <p style="color: #666; line-height: 1.6;">${insight.text}</p>
+                    </div>
+                `;
+            });
+            
+            document.getElementById('insights').innerHTML = insightsHTML;
+        }
+    </script>
+</body>
+</html>

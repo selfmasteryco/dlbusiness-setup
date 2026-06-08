@@ -1,0 +1,557 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Purpose Discovery Quiz | Self Mastery Co</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+            min-height: 100vh;
+            padding: 20px;
+            color: #333;
+        }
+        
+        .container {
+            max-width: 700px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 20px;
+            padding: 40px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+        }
+        
+        h1 {
+            background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            font-size: 2.5em;
+            margin-bottom: 10px;
+            text-align: center;
+        }
+        
+        .subtitle {
+            text-align: center;
+            color: #666;
+            margin-bottom: 40px;
+            font-size: 1.1em;
+        }
+        
+        .question {
+            display: none;
+            animation: fadeIn 0.5s ease-out;
+        }
+        
+        .question.active {
+            display: block;
+        }
+        
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        .progress-bar {
+            width: 100%;
+            height: 8px;
+            background: #f0f0f0;
+            border-radius: 10px;
+            margin-bottom: 30px;
+            overflow: hidden;
+        }
+        
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+            width: 0%;
+            transition: width 0.3s ease;
+            border-radius: 10px;
+        }
+        
+        .question-number {
+            color: #f5576c;
+            font-weight: bold;
+            margin-bottom: 15px;
+            font-size: 0.9em;
+        }
+        
+        .question h2 {
+            color: #333;
+            margin-bottom: 25px;
+            font-size: 1.5em;
+            line-height: 1.4;
+        }
+        
+        .options {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+        
+        .option {
+            padding: 20px;
+            background: #f8f9fa;
+            border: 2px solid #e0e0e0;
+            border-radius: 12px;
+            cursor: pointer;
+            transition: all 0.3s;
+            font-size: 1.05em;
+        }
+        
+        .option:hover {
+            background: #fff;
+            border-color: #f093fb;
+            transform: translateX(5px);
+        }
+        
+        .option.selected {
+            background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+            color: white;
+            border-color: #f5576c;
+        }
+        
+        .nav-buttons {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 30px;
+        }
+        
+        .btn {
+            padding: 15px 30px;
+            border: none;
+            border-radius: 10px;
+            font-size: 1.1em;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        
+        .btn-back {
+            background: #e0e0e0;
+            color: #666;
+        }
+        
+        .btn-back:hover {
+            background: #d0d0d0;
+        }
+        
+        .btn-next {
+            background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+            color: white;
+        }
+        
+        .btn-next:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 25px rgba(245, 87, 108, 0.4);
+        }
+        
+        .btn-next:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+        
+        .results {
+            display: none;
+            text-align: center;
+        }
+        
+        .results.show {
+            display: block;
+            animation: fadeIn 0.5s ease-out;
+        }
+        
+        .purpose-statement {
+            background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+            color: white;
+            padding: 40px;
+            border-radius: 15px;
+            margin: 30px 0;
+            font-size: 1.3em;
+            line-height: 1.8;
+            box-shadow: 0 10px 30px rgba(245, 87, 108, 0.3);
+        }
+        
+        .purpose-type {
+            margin: 30px 0;
+            padding: 30px;
+            background: #f8f9fa;
+            border-radius: 15px;
+        }
+        
+        .purpose-type h3 {
+            color: #f5576c;
+            font-size: 1.8em;
+            margin-bottom: 15px;
+        }
+        
+        .characteristics {
+            text-align: left;
+            margin: 20px 0;
+        }
+        
+        .characteristics ul {
+            list-style: none;
+            padding: 0;
+        }
+        
+        .characteristics li {
+            padding: 10px 0;
+            padding-left: 30px;
+            position: relative;
+        }
+        
+        .characteristics li:before {
+            content: "✓";
+            position: absolute;
+            left: 0;
+            color: #f5576c;
+            font-weight: bold;
+            font-size: 1.2em;
+        }
+        
+        .cta {
+            margin-top: 40px;
+            padding-top: 30px;
+            border-top: 2px solid #e0e0e0;
+        }
+        
+        .cta h3 {
+            margin-bottom: 15px;
+            font-size: 1.8em;
+            color: #f5576c;
+        }
+        
+        .cta-btn {
+            display: inline-block;
+            padding: 20px 50px;
+            background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+            color: white;
+            text-decoration: none;
+            border-radius: 12px;
+            font-weight: bold;
+            font-size: 1.3em;
+            margin-top: 20px;
+            transition: transform 0.2s;
+        }
+        
+        .cta-btn:hover {
+            transform: scale(1.05);
+        }
+        
+        @media (max-width: 600px) {
+            .container {
+                padding: 25px;
+            }
+            
+            h1 {
+                font-size: 2em;
+            }
+            
+            .purpose-statement {
+                font-size: 1.1em;
+                padding: 25px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🎯 Purpose Discovery Quiz</h1>
+        <p class="subtitle">Discover your unique purpose and create your personalized purpose statement</p>
+        
+        <div class="progress-bar">
+            <div class="progress-fill" id="progress"></div>
+        </div>
+        
+        <div id="quiz">
+            <!-- Questions will be inserted here -->
+        </div>
+        
+        <div class="results" id="results">
+            <!-- Results will be shown here -->
+        </div>
+    </div>
+    
+    <script>
+        const questions = [
+            {
+                q: "What energizes you most?",
+                options: [
+                    { text: "Helping others solve their problems", type: "guide" },
+                    { text: "Creating something new and innovative", type: "creator" },
+                    { text: "Leading teams to achieve big goals", type: "leader" },
+                    { text: "Teaching and sharing knowledge", type: "teacher" },
+                    { text: "Building systems that create impact", type: "builder" }
+                ]
+            },
+            {
+                q: "When you imagine your ideal day, you're...",
+                options: [
+                    { text: "Mentoring someone through a breakthrough", type: "guide" },
+                    { text: "Bringing a vision to life", type: "creator" },
+                    { text: "Rallying people around a mission", type: "leader" },
+                    { text: "Explaining complex ideas simply", type: "teacher" },
+                    { text: "Optimizing processes and systems", type: "builder" }
+                ]
+            },
+            {
+                q: "What do people most often ask you for?",
+                options: [
+                    { text: "Advice and guidance on their challenges", type: "guide" },
+                    { text: "Fresh ideas and creative solutions", type: "creator" },
+                    { text: "Direction and clarity on where to go", type: "leader" },
+                    { text: "Explanations and insights", type: "teacher" },
+                    { text: "Help organizing and structuring things", type: "builder" }
+                ]
+            },
+            {
+                q: "Your biggest frustration is when...",
+                options: [
+                    { text: "People struggle alone without support", type: "guide" },
+                    { text: "Potential goes unrealized", type: "creator" },
+                    { text: "Teams lack clear vision or leadership", type: "leader" },
+                    { text: "Knowledge isn't shared effectively", type: "teacher" },
+                    { text: "Chaos and disorder prevent progress", type: "builder" }
+                ]
+            },
+            {
+                q: "You feel most fulfilled when...",
+                options: [
+                    { text: "Someone has a breakthrough because of you", type: "guide" },
+                    { text: "Your idea becomes reality", type: "creator" },
+                    { text: "Your team achieves what seemed impossible", type: "leader" },
+                    { text: "Someone applies what you taught them", type: "teacher" },
+                    { text: "Your system runs smoothly and creates results", type: "builder" }
+                ]
+            },
+            {
+                q: "In 10 years, you want to be known for...",
+                options: [
+                    { text: "Transforming lives through guidance", type: "guide" },
+                    { text: "Creating something that didn't exist before", type: "creator" },
+                    { text: "Leading a movement that changed things", type: "leader" },
+                    { text: "Educating a generation", type: "teacher" },
+                    { text: "Building infrastructure that lasts", type: "builder" }
+                ]
+            },
+            {
+                q: "Your natural strength is...",
+                options: [
+                    { text: "Deep empathy and understanding", type: "guide" },
+                    { text: "Vision and imagination", type: "creator" },
+                    { text: "Decisiveness and conviction", type: "leader" },
+                    { text: "Clarity and communication", type: "teacher" },
+                    { text: "Strategy and execution", type: "builder" }
+                ]
+            },
+            {
+                q: "What legacy do you want to leave?",
+                options: [
+                    { text: "Lives transformed through my support", type: "guide" },
+                    { text: "Original work that inspires others", type: "creator" },
+                    { text: "A movement that outlives me", type: "leader" },
+                    { text: "Knowledge passed to future generations", type: "teacher" },
+                    { text: "Systems that continue creating value", type: "builder" }
+                ]
+            }
+        ];
+        
+        const purposeTypes = {
+            guide: {
+                title: "The Guide",
+                statement: "My purpose is to walk alongside others, helping them navigate challenges and discover their own path to breakthrough and growth.",
+                characteristics: [
+                    "You have deep empathy and emotional intelligence",
+                    "People naturally open up to you and trust your guidance",
+                    "You find fulfillment in others' success and transformation",
+                    "Your superpower is seeing potential in others before they see it themselves",
+                    "You create safe spaces for vulnerability and growth"
+                ]
+            },
+            creator: {
+                title: "The Creator",
+                statement: "My purpose is to bring new ideas into existence, creating original work that inspires, challenges, and expands what's possible.",
+                characteristics: [
+                    "You see possibilities others miss",
+                    "Innovation and originality energize you",
+                    "You're driven to make your vision tangible",
+                    "Your superpower is turning abstract ideas into concrete reality",
+                    "You push boundaries and redefine what's possible"
+                ]
+            },
+            leader: {
+                title: "The Leader",
+                statement: "My purpose is to rally people around a vision, create momentum toward meaningful goals, and inspire others to become their best.",
+                characteristics: [
+                    "You naturally step into leadership roles",
+                    "People follow your vision and conviction",
+                    "You thrive when coordinating teams toward big goals",
+                    "Your superpower is creating alignment and momentum",
+                    "You transform individual effort into collective impact"
+                ]
+            },
+            teacher: {
+                title: "The Teacher",
+                statement: "My purpose is to illuminate understanding, share knowledge generously, and empower others through education and insight.",
+                characteristics: [
+                    "You love breaking down complex ideas",
+                    "Clarity and communication come naturally to you",
+                    "You're energized by 'aha moments' in others",
+                    "Your superpower is making difficult concepts accessible",
+                    "You create ripple effects through shared wisdom"
+                ]
+            },
+            builder: {
+                title: "The Builder",
+                statement: "My purpose is to create systems, structures, and frameworks that turn vision into sustainable reality and chaos into order.",
+                characteristics: [
+                    "You see the architecture behind success",
+                    "Systems thinking is your natural lens",
+                    "You're driven to create lasting infrastructure",
+                    "Your superpower is turning ideas into executable plans",
+                    "You build foundations that others build upon"
+                ]
+            }
+        };
+        
+        let currentQuestion = 0;
+        let answers = { guide: 0, creator: 0, leader: 0, teacher: 0, builder: 0 };
+        let selectedOption = null;
+        
+        function renderQuestion() {
+            const quiz = document.getElementById('quiz');
+            const q = questions[currentQuestion];
+            
+            quiz.innerHTML = `
+                <div class="question active">
+                    <div class="question-number">Question ${currentQuestion + 1} of ${questions.length}</div>
+                    <h2>${q.q}</h2>
+                    <div class="options">
+                        ${q.options.map((opt, i) => `
+                            <div class="option" onclick="selectOption(${i})" data-index="${i}">
+                                ${opt.text}
+                            </div>
+                        `).join('')}
+                    </div>
+                    <div class="nav-buttons">
+                        <button class="btn btn-back" onclick="previousQuestion()" ${currentQuestion === 0 ? 'style="visibility:hidden"' : ''}>← Back</button>
+                        <button class="btn btn-next" onclick="nextQuestion()" disabled id="nextBtn">
+                            ${currentQuestion === questions.length - 1 ? 'See My Purpose →' : 'Next →'}
+                        </button>
+                    </div>
+                </div>
+            `;
+            
+            updateProgress();
+        }
+        
+        function selectOption(index) {
+            selectedOption = index;
+            
+            // Remove all selections
+            document.querySelectorAll('.option').forEach(opt => {
+                opt.classList.remove('selected');
+            });
+            
+            // Add selection to clicked option
+            document.querySelector(`.option[data-index="${index}"]`).classList.add('selected');
+            
+            // Enable next button
+            document.getElementById('nextBtn').disabled = false;
+        }
+        
+        function nextQuestion() {
+            if (selectedOption === null) return;
+            
+            // Record answer
+            const type = questions[currentQuestion].options[selectedOption].type;
+            answers[type]++;
+            
+            selectedOption = null;
+            
+            if (currentQuestion < questions.length - 1) {
+                currentQuestion++;
+                renderQuestion();
+            } else {
+                showResults();
+            }
+        }
+        
+        function previousQuestion() {
+            if (currentQuestion > 0) {
+                currentQuestion--;
+                selectedOption = null;
+                renderQuestion();
+            }
+        }
+        
+        function updateProgress() {
+            const progress = ((currentQuestion + 1) / questions.length) * 100;
+            document.getElementById('progress').style.width = progress + '%';
+        }
+        
+        function showResults() {
+            // Find dominant purpose type
+            let maxType = 'guide';
+            let maxScore = 0;
+            
+            for (let [type, score] of Object.entries(answers)) {
+                if (score > maxScore) {
+                    maxScore = score;
+                    maxType = type;
+                }
+            }
+            
+            const purpose = purposeTypes[maxType];
+            
+            const resultsHTML = `
+                <h1>✨ Your Purpose Revealed</h1>
+                
+                <div class="purpose-type">
+                    <h3>${purpose.title}</h3>
+                </div>
+                
+                <div class="purpose-statement">
+                    "${purpose.statement}"
+                </div>
+                
+                <div class="characteristics">
+                    <h3 style="color: #f5576c; margin-bottom: 20px;">What This Means For You:</h3>
+                    <ul>
+                        ${purpose.characteristics.map(char => `<li>${char}</li>`).join('')}
+                    </ul>
+                </div>
+                
+                <div class="cta">
+                    <h3>Ready to Live Your Purpose?</h3>
+                    <p style="color: #666; font-size: 1.1em; margin: 20px 0;">
+                        The Self Mastery Adventure will help you align your daily life with this purpose and turn it into lasting impact.
+                    </p>
+                    <a href="#" class="cta-btn">🚀 Join Self Mastery Adventure</a>
+                </div>
+            `;
+            
+            document.getElementById('quiz').style.display = 'none';
+            document.getElementById('results').innerHTML = resultsHTML;
+            document.getElementById('results').classList.add('show');
+            document.getElementById('progress').style.width = '100%';
+        }
+        
+        // Initialize
+        renderQuestion();
+    </script>
+</body>
+</html>

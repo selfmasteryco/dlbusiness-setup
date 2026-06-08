@@ -1,0 +1,384 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Your Self Mastery Adventure Bonuses | Self Mastery Co</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 40px 20px;
+            color: #333;
+        }
+        
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+        
+        .header {
+            text-align: center;
+            color: white;
+            margin-bottom: 50px;
+        }
+        
+        .header h1 {
+            font-size: 3em;
+            margin-bottom: 15px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+        }
+        
+        .header .tagline {
+            font-size: 1.4em;
+            opacity: 0.95;
+            font-weight: 300;
+            margin-bottom: 10px;
+        }
+        
+        .header .subtitle {
+            font-size: 1.1em;
+            opacity: 0.9;
+        }
+        
+        .intro-card {
+            background: white;
+            padding: 40px;
+            border-radius: 20px;
+            margin-bottom: 40px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+            text-align: center;
+        }
+        
+        .intro-card h2 {
+            color: #667eea;
+            font-size: 2em;
+            margin-bottom: 20px;
+        }
+        
+        .intro-card p {
+            font-size: 1.2em;
+            line-height: 1.8;
+            color: #666;
+            margin-bottom: 15px;
+        }
+        
+        .intro-card .value-box {
+            display: inline-block;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 20px 40px;
+            border-radius: 15px;
+            margin-top: 20px;
+            font-size: 1.3em;
+            font-weight: bold;
+        }
+        
+        .bonuses-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(450px, 1fr));
+            gap: 30px;
+            margin-bottom: 50px;
+        }
+        
+        .bonus-card {
+            background: white;
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+        
+        .bonus-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 30px 70px rgba(0,0,0,0.4);
+        }
+        
+        .bonus-header {
+            padding: 30px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            text-align: center;
+        }
+        
+        .bonus-header .icon {
+            font-size: 3em;
+            margin-bottom: 15px;
+        }
+        
+        .bonus-header h3 {
+            font-size: 1.8em;
+            margin-bottom: 10px;
+        }
+        
+        .bonus-header .artifact {
+            font-size: 0.95em;
+            opacity: 0.9;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+        
+        .bonus-body {
+            padding: 30px;
+        }
+        
+        .bonus-body p {
+            color: #666;
+            line-height: 1.7;
+            margin-bottom: 20px;
+            font-size: 1.05em;
+        }
+        
+        .bonus-features {
+            list-style: none;
+            margin-bottom: 25px;
+        }
+        
+        .bonus-features li {
+            padding: 10px 0;
+            padding-left: 30px;
+            position: relative;
+            color: #555;
+        }
+        
+        .bonus-features li:before {
+            content: "✓";
+            position: absolute;
+            left: 0;
+            color: #667eea;
+            font-weight: bold;
+            font-size: 1.3em;
+        }
+        
+        .bonus-btn {
+            display: block;
+            width: 100%;
+            padding: 18px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            text-align: center;
+            text-decoration: none;
+            border-radius: 12px;
+            font-weight: bold;
+            font-size: 1.2em;
+            transition: all 0.3s;
+        }
+        
+        .bonus-btn:hover {
+            transform: scale(1.02);
+            box-shadow: 0 10px 30px rgba(102, 126, 234, 0.4);
+        }
+        
+        .cta-section {
+            background: white;
+            padding: 50px;
+            border-radius: 20px;
+            text-align: center;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+            margin-top: 50px;
+        }
+        
+        .cta-section h2 {
+            color: #667eea;
+            font-size: 2.5em;
+            margin-bottom: 20px;
+        }
+        
+        .cta-section p {
+            font-size: 1.2em;
+            color: #666;
+            line-height: 1.8;
+            margin-bottom: 30px;
+        }
+        
+        .cta-btn {
+            display: inline-block;
+            padding: 25px 60px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            text-decoration: none;
+            border-radius: 15px;
+            font-weight: bold;
+            font-size: 1.5em;
+            transition: all 0.3s;
+            box-shadow: 0 10px 30px rgba(102, 126, 234, 0.3);
+        }
+        
+        .cta-btn:hover {
+            transform: scale(1.05);
+            box-shadow: 0 15px 40px rgba(102, 126, 234, 0.5);
+        }
+        
+        .footer {
+            text-align: center;
+            color: white;
+            margin-top: 50px;
+            padding-top: 30px;
+            border-top: 1px solid rgba(255,255,255,0.2);
+            opacity: 0.9;
+        }
+        
+        @media (max-width: 768px) {
+            .header h1 {
+                font-size: 2.2em;
+            }
+            
+            .bonuses-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .intro-card, .cta-section {
+                padding: 30px 25px;
+            }
+            
+            .cta-btn {
+                padding: 20px 40px;
+                font-size: 1.3em;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>🎁 Your Self Mastery Adventure Bonus Pack</h1>
+            <div class="tagline">5 Interactive Tools to Accelerate Your Transformation</div>
+            <div class="subtitle">The person you become determines the life you create.</div>
+        </div>
+        
+        <div class="intro-card">
+            <h2>Welcome to Your Transformation Toolkit</h2>
+            <p>You've taken the first step on your Self Mastery Adventure. These 5 interactive bonuses will help you gain clarity, build alignment, and create lasting transformation across the 5 Artifacts of Self Mastery.</p>
+            <p><strong>Click each bonus below to access your personalized experience.</strong></p>
+            <div class="value-box">Total Bonus Value: $305</div>
+        </div>
+        
+        <div class="bonuses-grid">
+            <!-- Bonus 1 -->
+            <div class="bonus-card">
+                <div class="bonus-header">
+                    <div class="icon">🎯</div>
+                    <h3>Life Alignment Calculator</h3>
+                    <div class="artifact">All 5 Artifacts</div>
+                </div>
+                <div class="bonus-body">
+                    <p>Discover how aligned you are with your highest self across Awareness, Alignment, Discipline, Connection, and Legacy.</p>
+                    <ul class="bonus-features">
+                        <li>Interactive slider assessment</li>
+                        <li>Instant alignment percentage</li>
+                        <li>Identifies your strongest & weakest areas</li>
+                        <li>Personalized insights & action steps</li>
+                    </ul>
+                    <a href="/alignment" class="bonus-btn" target="_blank">
+                        Access Calculator →
+                    </a>
+                </div>
+            </div>
+            
+            <!-- Bonus 2 -->
+            <div class="bonus-card">
+                <div class="bonus-header" style="background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);">
+                    <div class="icon">🧭</div>
+                    <h3>Purpose Discovery Quiz</h3>
+                    <div class="artifact">Alignment · Purpose</div>
+                </div>
+                <div class="bonus-body">
+                    <p>Take an 8-question quiz to discover your unique purpose archetype and generate your personalized purpose statement.</p>
+                    <ul class="bonus-features">
+                        <li>Identify your purpose type</li>
+                        <li>Get personalized purpose statement</li>
+                        <li>5 archetypes: Guide, Creator, Leader, Teacher, Builder</li>
+                        <li>Understand your unique strengths</li>
+                    </ul>
+                    <a href="/purpose" class="bonus-btn" target="_blank" style="background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);">
+                        Take Quiz →
+                    </a>
+                </div>
+            </div>
+            
+            <!-- Bonus 3 -->
+            <div class="bonus-card">
+                <div class="bonus-header" style="background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);">
+                    <div class="icon">🗺️</div>
+                    <h3>90-Day Transformation Roadmap</h3>
+                    <div class="artifact">Custom Action Plan</div>
+                </div>
+                <div class="bonus-body">
+                    <p>Build your personalized 90-day action plan with week-by-week milestones tailored to your chosen artifact focus.</p>
+                    <ul class="bonus-features">
+                        <li>Choose your primary focus area</li>
+                        <li>Month-by-month breakdown</li>
+                        <li>Weekly milestones & actions</li>
+                        <li>Turn vision into executable plan</li>
+                    </ul>
+                    <a href="/roadmap" class="bonus-btn" target="_blank" style="background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);">
+                        Build Roadmap →
+                    </a>
+                </div>
+            </div>
+            
+            <!-- Bonus 4 -->
+            <div class="bonus-card">
+                <div class="bonus-header" style="background: linear-gradient(135deg, #fa709a 0%, #fee140 100%);">
+                    <div class="icon">🌟</div>
+                    <h3>Legacy Impact Scorecard</h3>
+                    <div class="artifact">Legacy · Impact</div>
+                </div>
+                <div class="bonus-body">
+                    <p>Measure where you are vs. where you want to be across the 5 Pillars of Legacy and identify your biggest gaps.</p>
+                    <ul class="bonus-features">
+                        <li>Rate current vs desired state</li>
+                        <li>5 Legacy Pillars assessment</li>
+                        <li>Visual gap analysis</li>
+                        <li>Actionable insights to close gaps</li>
+                    </ul>
+                    <a href="/legacy" class="bonus-btn" target="_blank" style="background: linear-gradient(135deg, #fa709a 0%, #fee140 100%);">
+                        Access Scorecard →
+                    </a>
+                </div>
+            </div>
+            
+            <!-- Bonus 5 -->
+            <div class="bonus-card">
+                <div class="bonus-header" style="background: linear-gradient(135deg, #a8edea 0%, #fed6e3 100%);">
+                    <div class="icon">💎</div>
+                    <h3>Values Hierarchy Builder</h3>
+                    <div class="artifact">Alignment · Values</div>
+                </div>
+                <div class="bonus-body">
+                    <p>Discover and rank what matters most to you. Select your top 10 values and create your personalized values hierarchy.</p>
+                    <ul class="bonus-features">
+                        <li>Choose from 40 core values</li>
+                        <li>Drag-and-drop ranking interface</li>
+                        <li>Identify your north star value</li>
+                        <li>Get insights on living your values</li>
+                    </ul>
+                    <a href="/values" class="bonus-btn" target="_blank" style="background: linear-gradient(135deg, #a8edea 0%, #fed6e3 100%);">
+                        Build Hierarchy →
+                    </a>
+                </div>
+            </div>
+        </div>
+        
+        <div class="cta-section">
+            <h2>Ready to Transform Your Life?</h2>
+            <p>These bonuses give you the tools. The Self Mastery Adventure gives you the structure, community, and accountability to actually execute.</p>
+            <p style="font-size: 1.4em; margin-bottom: 30px;"><strong>The person you become determines the life you create.</strong></p>
+            <p style="margin-bottom: 40px;">You already know enough. Now it's time to <strong>become</strong>.</p>
+            <a href="#" class="cta-btn">🚀 Enroll in Self Mastery Adventure</a>
+        </div>
+        
+        <div class="footer">
+            <p>© 2026 Self Mastery Co. All rights reserved.</p>
+            <p style="margin-top: 10px; font-size: 0.9em;">The greatest adventure is the one within.</p>
+        </div>
+    </div>
+</body>
+</html>

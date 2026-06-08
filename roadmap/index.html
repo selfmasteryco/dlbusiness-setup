@@ -1,0 +1,585 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>90-Day Transformation Roadmap | Self Mastery Co</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+            min-height: 100vh;
+            padding: 20px;
+            color: #333;
+        }
+        
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 20px;
+            padding: 40px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+        }
+        
+        h1 {
+            background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            font-size: 2.5em;
+            margin-bottom: 10px;
+            text-align: center;
+        }
+        
+        .subtitle {
+            text-align: center;
+            color: #666;
+            margin-bottom: 40px;
+            font-size: 1.1em;
+        }
+        
+        .step {
+            display: none;
+        }
+        
+        .step.active {
+            display: block;
+            animation: fadeIn 0.5s ease-out;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        .artifact-selector {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+            margin: 30px 0;
+        }
+        
+        .artifact-card {
+            padding: 25px;
+            background: #f8f9fa;
+            border: 3px solid #e0e0e0;
+            border-radius: 15px;
+            cursor: pointer;
+            transition: all 0.3s;
+            text-align: center;
+        }
+        
+        .artifact-card:hover {
+            background: #fff;
+            border-color: #4facfe;
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(79, 172, 254, 0.2);
+        }
+        
+        .artifact-card.selected {
+            background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+            color: white;
+            border-color: #00f2fe;
+        }
+        
+        .artifact-card h3 {
+            font-size: 1.3em;
+            margin-bottom: 10px;
+        }
+        
+        .artifact-card p {
+            font-size: 0.9em;
+            opacity: 0.8;
+        }
+        
+        .goal-input {
+            margin: 20px 0;
+        }
+        
+        .goal-input label {
+            display: block;
+            margin-bottom: 10px;
+            font-weight: bold;
+            color: #333;
+            font-size: 1.1em;
+        }
+        
+        .goal-input input,
+        .goal-input textarea {
+            width: 100%;
+            padding: 15px;
+            border: 2px solid #e0e0e0;
+            border-radius: 10px;
+            font-size: 1em;
+            font-family: inherit;
+            transition: border-color 0.3s;
+        }
+        
+        .goal-input input:focus,
+        .goal-input textarea:focus {
+            outline: none;
+            border-color: #4facfe;
+        }
+        
+        .goal-input textarea {
+            min-height: 100px;
+            resize: vertical;
+        }
+        
+        .btn-container {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 30px;
+        }
+        
+        .btn {
+            padding: 15px 30px;
+            border: none;
+            border-radius: 10px;
+            font-size: 1.1em;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        
+        .btn-back {
+            background: #e0e0e0;
+            color: #666;
+        }
+        
+        .btn-next {
+            background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+            color: white;
+        }
+        
+        .btn-next:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 25px rgba(79, 172, 254, 0.4);
+        }
+        
+        .roadmap {
+            margin-top: 30px;
+        }
+        
+        .month {
+            margin-bottom: 30px;
+            padding: 25px;
+            background: #f8f9fa;
+            border-radius: 15px;
+            border-left: 5px solid #4facfe;
+        }
+        
+        .month h3 {
+            color: #4facfe;
+            margin-bottom: 15px;
+            font-size: 1.5em;
+        }
+        
+        .milestone {
+            padding: 15px;
+            background: white;
+            border-radius: 10px;
+            margin-bottom: 10px;
+        }
+        
+        .milestone h4 {
+            color: #333;
+            margin-bottom: 8px;
+        }
+        
+        .milestone ul {
+            margin-left: 20px;
+            color: #666;
+        }
+        
+        .milestone li {
+            margin-bottom: 5px;
+        }
+        
+        .cta {
+            text-align: center;
+            margin-top: 40px;
+            padding: 30px;
+            background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+            border-radius: 15px;
+            color: white;
+        }
+        
+        .cta h3 {
+            margin-bottom: 15px;
+            font-size: 1.8em;
+        }
+        
+        .cta-btn {
+            display: inline-block;
+            padding: 18px 40px;
+            background: white;
+            color: #4facfe;
+            text-decoration: none;
+            border-radius: 10px;
+            font-weight: bold;
+            font-size: 1.2em;
+            margin-top: 15px;
+            transition: transform 0.2s;
+        }
+        
+        .cta-btn:hover {
+            transform: scale(1.05);
+        }
+        
+        .progress-indicator {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            margin-bottom: 30px;
+        }
+        
+        .progress-dot {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            background: #e0e0e0;
+            transition: all 0.3s;
+        }
+        
+        .progress-dot.active {
+            background: #4facfe;
+            transform: scale(1.3);
+        }
+        
+        @media (max-width: 600px) {
+            .container {
+                padding: 25px;
+            }
+            
+            h1 {
+                font-size: 2em;
+            }
+            
+            .artifact-selector {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🗺️ 90-Day Transformation Roadmap</h1>
+        <p class="subtitle">Design your personalized path to breakthrough across the 5 Artifacts</p>
+        
+        <div class="progress-indicator">
+            <div class="progress-dot active" id="dot1"></div>
+            <div class="progress-dot" id="dot2"></div>
+            <div class="progress-dot" id="dot3"></div>
+            <div class="progress-dot" id="dot4"></div>
+        </div>
+        
+        <!-- Step 1: Select Primary Artifact -->
+        <div class="step active" id="step1">
+            <h2 style="margin-bottom: 20px;">Step 1: Choose Your Primary Focus</h2>
+            <p style="margin-bottom: 20px; color: #666;">Which artifact needs your attention most right now?</p>
+            
+            <div class="artifact-selector">
+                <div class="artifact-card" onclick="selectArtifact('awareness')">
+                    <h3>🔍 Awareness</h3>
+                    <p>Master your self-knowledge</p>
+                </div>
+                <div class="artifact-card" onclick="selectArtifact('alignment')">
+                    <h3>🎯 Alignment</h3>
+                    <p>Align with your purpose</p>
+                </div>
+                <div class="artifact-card" onclick="selectArtifact('discipline')">
+                    <h3>💪 Discipline</h3>
+                    <p>Build unshakable habits</p>
+                </div>
+                <div class="artifact-card" onclick="selectArtifact('connection')">
+                    <h3>🤝 Connection</h3>
+                    <p>Deepen relationships</p>
+                </div>
+                <div class="artifact-card" onclick="selectArtifact('legacy')">
+                    <h3>🌟 Legacy</h3>
+                    <p>Create lasting impact</p>
+                </div>
+            </div>
+            
+            <div class="btn-container">
+                <div></div>
+                <button class="btn btn-next" onclick="nextStep()" id="step1Next" disabled>Next →</button>
+            </div>
+        </div>
+        
+        <!-- Step 2: Define 90-Day Goal -->
+        <div class="step" id="step2">
+            <h2 style="margin-bottom: 20px;">Step 2: Define Your 90-Day Goal</h2>
+            
+            <div class="goal-input">
+                <label>What specific transformation do you want in the next 90 days?</label>
+                <textarea id="mainGoal" placeholder="Example: I want to develop daily meditation practice and eliminate negative self-talk"></textarea>
+            </div>
+            
+            <div class="goal-input">
+                <label>Why is this important to you?</label>
+                <textarea id="whyGoal" placeholder="Example: Because I know inner peace will help me show up better for my family and business"></textarea>
+            </div>
+            
+            <div class="btn-container">
+                <button class="btn btn-back" onclick="prevStep()">← Back</button>
+                <button class="btn btn-next" onclick="nextStep()">Next →</button>
+            </div>
+        </div>
+        
+        <!-- Step 3: Identify Obstacles -->
+        <div class="step" id="step3">
+            <h2 style="margin-bottom: 20px;">Step 3: Identify Your Obstacles</h2>
+            
+            <div class="goal-input">
+                <label>What's been holding you back?</label>
+                <textarea id="obstacles" placeholder="Example: Lack of consistency, too busy, don't know where to start"></textarea>
+            </div>
+            
+            <div class="goal-input">
+                <label>What support do you need to succeed?</label>
+                <textarea id="support" placeholder="Example: Accountability, clear structure, community of like-minded people"></textarea>
+            </div>
+            
+            <div class="btn-container">
+                <button class="btn btn-back" onclick="prevStep()">← Back</button>
+                <button class="btn btn-next" onclick="generateRoadmap()">Generate My Roadmap →</button>
+            </div>
+        </div>
+        
+        <!-- Step 4: Your Roadmap -->
+        <div class="step" id="step4">
+            <h2 style="margin-bottom: 30px; text-align: center;">Your 90-Day Transformation Roadmap</h2>
+            <div id="roadmapContent"></div>
+        </div>
+    </div>
+    
+    <script>
+        let currentStep = 1;
+        let selectedArtifact = null;
+        let userData = {};
+        
+        const roadmapTemplates = {
+            awareness: {
+                month1: {
+                    title: "Foundation: Self-Discovery",
+                    milestones: [
+                        { title: "Week 1: Identify Patterns", actions: ["Daily journaling - track thoughts and emotions", "Notice recurring beliefs", "Identify 3 key triggers"] },
+                        { title: "Week 2: Shadow Work", actions: ["Explore limiting beliefs", "Question automatic thoughts", "Begin mindfulness practice"] },
+                        { title: "Week 3: Blind Spots", actions: ["Seek feedback from trusted people", "Notice what you avoid", "Document insights"] },
+                        { title: "Week 4: Integration", actions: ["Review patterns discovered", "Create awareness ritual", "Set Month 2 intentions"] }
+                    ]
+                },
+                month2: {
+                    title: "Deepening: Understanding & Insight",
+                    milestones: [
+                        { title: "Week 5-6: Root Causes", actions: ["Explore origin of beliefs", "Connect patterns to past", "Build self-compassion"] },
+                        { title: "Week 7-8: New Perspectives", actions: ["Challenge old narratives", "Reframe limiting beliefs", "Strengthen awareness muscle"] }
+                    ]
+                },
+                month3: {
+                    title: "Mastery: Living Consciously",
+                    milestones: [
+                        { title: "Week 9-10: Conscious Choice", actions: ["Practice pause before reacting", "Choose responses intentionally", "Track conscious choices"] },
+                        { title: "Week 11-12: Integration", actions: ["Solidify new awareness", "Celebrate transformation", "Design maintenance plan"] }
+                    ]
+                }
+            },
+            alignment: {
+                month1: {
+                    title: "Foundation: Clarity",
+                    milestones: [
+                        { title: "Week 1: Values Discovery", actions: ["Identify top 5 core values", "Define what each means", "Rate current alignment"] },
+                        { title: "Week 2: Vision Creation", actions: ["Write ideal life vision", "Create vision board", "Define 1-year goals"] },
+                        { title: "Week 3: Purpose Definition", actions: ["Clarify your 'why'", "Write purpose statement", "Connect daily work to purpose"] },
+                        { title: "Week 4: Gap Analysis", actions: ["Identify misalignments", "Prioritize changes needed", "Set Month 2 focus"] }
+                    ]
+                },
+                month2: {
+                    title: "Alignment: Action",
+                    milestones: [
+                        { title: "Week 5-6: Eliminate Misalignment", actions: ["Remove 1-2 non-aligned activities", "Set better boundaries", "Reclaim time for what matters"] },
+                        { title: "Week 7-8: Add Alignment", actions: ["Start 1-2 purpose-driven activities", "Build aligned routines", "Track alignment score"] }
+                    ]
+                },
+                month3: {
+                    title: "Mastery: Living Aligned",
+                    milestones: [
+                        { title: "Week 9-10: Optimization", actions: ["Fine-tune daily schedule", "Strengthen aligned habits", "Increase impact"] },
+                        { title: "Week 11-12: Sustainability", actions: ["Create alignment rituals", "Build support system", "Plan next 90 days"] }
+                    ]
+                }
+            },
+            discipline: {
+                month1: {
+                    title: "Foundation: Habit Building",
+                    milestones: [
+                        { title: "Week 1: Keystone Habit", actions: ["Choose 1 foundational habit", "Design morning routine", "Track daily completion"] },
+                        { title: "Week 2: Consistency", actions: ["30-day commitment to keystone", "Remove friction points", "Celebrate small wins"] },
+                        { title: "Week 3: Stack Habits", actions: ["Add complementary habit", "Link to existing routine", "Strengthen discipline muscle"] },
+                        { title: "Week 4: Resilience", actions: ["Bounce back from setbacks", "Strengthen commitment", "Review Month 1 progress"] }
+                    ]
+                },
+                month2: {
+                    title: "Expansion: Systems & Structure",
+                    milestones: [
+                        { title: "Week 5-6: Evening Routine", actions: ["Design end-of-day ritual", "Prepare for tomorrow", "Track sleep & recovery"] },
+                        { title: "Week 7-8: Eliminate Resistance", actions: ["Remove bad habits", "Replace with better options", "Build accountability"] }
+                    ]
+                },
+                month3: {
+                    title: "Mastery: Unshakable Standards",
+                    milestones: [
+                        { title: "Week 9-10: Advanced Practices", actions: ["Add challenging disciplines", "Push comfort zone", "Build mental toughness"] },
+                        { title: "Week 11-12: Lifestyle Integration", actions: ["Make discipline automatic", "Create identity shift", "Design long-term plan"] }
+                    ]
+                }
+            },
+            connection: {
+                month1: {
+                    title: "Foundation: Relationship Audit",
+                    milestones: [
+                        { title: "Week 1: Assess Connections", actions: ["List key relationships", "Rate quality & alignment", "Identify needs"] },
+                        { title: "Week 2: Deepen Key Bonds", actions: ["Schedule quality time", "Have meaningful conversations", "Show appreciation"] },
+                        { title: "Week 3: Communication Skills", actions: ["Practice active listening", "Express needs clearly", "Reduce reactivity"] },
+                        { title: "Week 4: Set Boundaries", actions: ["Identify boundary needs", "Communicate clearly", "Honor your limits"] }
+                    ]
+                },
+                month2: {
+                    title: "Expansion: New Connections",
+                    milestones: [
+                        { title: "Week 5-6: Expand Network", actions: ["Join aligned community", "Attend events/groups", "Make new connections"] },
+                        { title: "Week 7-8: Give Value", actions: ["Help others generously", "Share knowledge", "Build reciprocity"] }
+                    ]
+                },
+                month3: {
+                    title: "Mastery: Leadership & Influence",
+                    milestones: [
+                        { title: "Week 9-10: Lead Others", actions: ["Mentor someone", "Create group value", "Inspire action"] },
+                        { title: "Week 11-12: Legacy Relationships", actions: ["Strengthen key bonds", "Create traditions", "Build lasting impact"] }
+                    ]
+                }
+            },
+            legacy: {
+                month1: {
+                    title: "Foundation: Legacy Vision",
+                    milestones: [
+                        { title: "Week 1: Define Impact", actions: ["Write legacy statement", "Identify who you'll serve", "Clarify your contribution"] },
+                        { title: "Week 2: Current State", actions: ["Assess current impact", "Identify gaps", "Set legacy goals"] },
+                        { title: "Week 3: Values Alignment", actions: ["Define core principles", "Live by highest values", "Make aligned choices"] },
+                        { title: "Week 4: First Steps", actions: ["Take 1 legacy action", "Document journey", "Share your mission"] }
+                    ]
+                },
+                month2: {
+                    title: "Building: Create Value",
+                    milestones: [
+                        { title: "Week 5-6: Serve Others", actions: ["Start helping consistently", "Create valuable content", "Build your platform"] },
+                        { title: "Week 7-8: Systems", actions: ["Create sustainable structure", "Build for scale", "Document processes"] }
+                    ]
+                },
+                month3: {
+                    title: "Mastery: Lasting Impact",
+                    milestones: [
+                        { title: "Week 9-10: Amplify", actions: ["Reach more people", "Deepen impact", "Empower others to lead"] },
+                        { title: "Week 11-12: Sustainability", actions: ["Create enduring systems", "Train successors", "Plan next chapter"] }
+                    ]
+                }
+            }
+        };
+        
+        function selectArtifact(artifact) {
+            selectedArtifact = artifact;
+            document.querySelectorAll('.artifact-card').forEach(card => {
+                card.classList.remove('selected');
+            });
+            event.target.closest('.artifact-card').classList.add('selected');
+            document.getElementById('step1Next').disabled = false;
+        }
+        
+        function nextStep() {
+            if (currentStep < 4) {
+                document.getElementById(`step${currentStep}`).classList.remove('active');
+                document.getElementById(`dot${currentStep}`).classList.remove('active');
+                currentStep++;
+                document.getElementById(`step${currentStep}`).classList.add('active');
+                document.getElementById(`dot${currentStep}`).classList.add('active');
+            }
+        }
+        
+        function prevStep() {
+            if (currentStep > 1) {
+                document.getElementById(`step${currentStep}`).classList.remove('active');
+                document.getElementById(`dot${currentStep}`).classList.remove('active');
+                currentStep--;
+                document.getElementById(`step${currentStep}`).classList.add('active');
+                document.getElementById(`dot${currentStep}`).classList.add('active');
+            }
+        }
+        
+        function generateRoadmap() {
+            userData.mainGoal = document.getElementById('mainGoal').value;
+            userData.whyGoal = document.getElementById('whyGoal').value;
+            userData.obstacles = document.getElementById('obstacles').value;
+            userData.support = document.getElementById('support').value;
+            
+            const template = roadmapTemplates[selectedArtifact];
+            const artifactNames = {
+                awareness: 'Awareness',
+                alignment: 'Alignment',
+                discipline: 'Discipline',
+                connection: 'Connection',
+                legacy: 'Legacy'
+            };
+            
+            let roadmapHTML = `
+                <div style="background: #f8f9fa; padding: 25px; border-radius: 15px; margin-bottom: 30px;">
+                    <h3 style="color: #4facfe; margin-bottom: 15px;">Your Focus: ${artifactNames[selectedArtifact]}</h3>
+                    <p style="font-size: 1.1em; margin-bottom: 10px;"><strong>Goal:</strong> ${userData.mainGoal}</p>
+                    <p style="font-size: 1.1em;"><strong>Why:</strong> ${userData.whyGoal}</p>
+                </div>
+                
+                <div class="roadmap">
+                    ${generateMonth('Month 1 (Days 1-30)', template.month1)}
+                    ${generateMonth('Month 2 (Days 31-60)', template.month2)}
+                    ${generateMonth('Month 3 (Days 61-90)', template.month3)}
+                </div>
+                
+                <div class="cta">
+                    <h3>🚀 Ready to Make This Real?</h3>
+                    <p style="margin: 15px 0; font-size: 1.1em;">
+                        You have the roadmap. The Self Mastery Adventure gives you the structure, 
+                        accountability, and community to actually execute it.
+                    </p>
+                    <a href="#" class="cta-btn">Join Self Mastery Adventure</a>
+                </div>
+            `;
+            
+            document.getElementById('roadmapContent').innerHTML = roadmapHTML;
+            nextStep();
+        }
+        
+        function generateMonth(title, data) {
+            return `
+                <div class="month">
+                    <h3>${title}: ${data.title}</h3>
+                    ${data.milestones.map(milestone => `
+                        <div class="milestone">
+                            <h4>${milestone.title}</h4>
+                            <ul>
+                                ${milestone.actions.map(action => `<li>${action}</li>`).join('')}
+                            </ul>
+                        </div>
+                    `).join('')}
+                </div>
+            `;
+        }
+    </script>
+</body>
+</html>
