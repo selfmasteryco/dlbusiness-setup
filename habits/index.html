@@ -1,0 +1,473 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Daily Habits Tracker | Self Mastery Co</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: #000714;
+            min-height: 100vh;
+            padding: 20px;
+            color: #fff;
+        }
+        
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            background: rgba(255,255,255,0.03);
+            border-radius: 20px;
+            padding: 40px;
+            border: 1px solid rgba(255,255,255,0.1);
+        }
+        
+        h1 {
+            color: #ffffff;
+            font-size: 2.5em;
+            margin-bottom: 10px;
+            text-align: center;
+        }
+        
+        .subtitle {
+            text-align: center;
+            color: #ffffff;
+            opacity: 0.7;
+            margin-bottom: 40px;
+            font-size: 1.1em;
+        }
+        
+        .date-selector {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+        
+        .date-selector input[type="date"] {
+            padding: 12px 20px;
+            font-size: 1.1em;
+            border: 1px solid rgba(255,255,255,0.2);
+            background: rgba(255,255,255,0.05);
+            color: #ffffff;
+            border-radius: 10px;
+            cursor: pointer;
+        }
+        
+        .date-selector input[type="date"]::-webkit-calendar-picker-indicator {
+            filter: invert(1);
+        }
+        
+        .artifact-section {
+            margin-bottom: 35px;
+            padding: 25px;
+            background: rgba(255,255,255,0.03);
+            border-radius: 15px;
+            border: 1px solid rgba(255,255,255,0.1);
+        }
+        
+        .artifact-section h3 {
+            color: #ffffff;
+            margin-bottom: 20px;
+            font-size: 1.5em;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .habit-item {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            padding: 15px;
+            background: rgba(255,255,255,0.02);
+            border-radius: 10px;
+            margin-bottom: 12px;
+            transition: all 0.3s;
+        }
+        
+        .habit-item:hover {
+            background: rgba(255,255,255,0.05);
+        }
+        
+        .habit-checkbox {
+            width: 30px;
+            height: 30px;
+            cursor: pointer;
+            accent-color: #DEA335;
+        }
+        
+        .habit-label {
+            flex: 1;
+            color: #ffffff;
+            font-size: 1.1em;
+            opacity: 0.9;
+        }
+        
+        .habit-item.completed .habit-label {
+            text-decoration: line-through;
+            opacity: 0.6;
+        }
+        
+        .stats-section {
+            margin-top: 40px;
+            padding: 30px;
+            background: rgba(222, 163, 53, 0.1);
+            border-radius: 15px;
+            border: 1px solid rgba(222, 163, 53, 0.3);
+        }
+        
+        .stats-section h3 {
+            color: #DEA335;
+            margin-bottom: 20px;
+            font-size: 1.8em;
+            text-align: center;
+        }
+        
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+        }
+        
+        .stat-card {
+            text-align: center;
+            padding: 20px;
+            background: rgba(255,255,255,0.03);
+            border-radius: 12px;
+        }
+        
+        .stat-number {
+            font-size: 3em;
+            font-weight: bold;
+            color: #DEA335;
+            margin-bottom: 5px;
+        }
+        
+        .stat-label {
+            color: #ffffff;
+            opacity: 0.8;
+            font-size: 0.95em;
+        }
+        
+        .progress-bar {
+            width: 100%;
+            height: 20px;
+            background: rgba(255,255,255,0.1);
+            border-radius: 10px;
+            overflow: hidden;
+            margin-top: 20px;
+        }
+        
+        .progress-fill {
+            height: 100%;
+            background: #DEA335;
+            transition: width 0.5s ease;
+            border-radius: 10px;
+        }
+        
+        .reset-btn {
+            display: block;
+            width: 100%;
+            padding: 15px;
+            background: rgba(255,255,255,0.1);
+            color: #ffffff;
+            border: 1px solid rgba(255,255,255,0.2);
+            border-radius: 10px;
+            font-size: 1em;
+            cursor: pointer;
+            margin-top: 20px;
+            transition: all 0.3s;
+        }
+        
+        .reset-btn:hover {
+            background: rgba(255,255,255,0.15);
+        }
+        
+        .streak-badge {
+            display: inline-block;
+            padding: 8px 20px;
+            background: #DEA335;
+            color: #000714;
+            border-radius: 20px;
+            font-weight: bold;
+            margin-top: 15px;
+            font-size: 1.1em;
+        }
+        
+        @media (max-width: 600px) {
+            .container {
+                padding: 25px;
+            }
+            
+            h1 {
+                font-size: 2em;
+            }
+            
+            .stats-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>📊 Daily Habits Tracker</h1>
+        <p class="subtitle">Track your daily progress across the 5 Artifacts of Self Mastery</p>
+        
+        <div class="date-selector">
+            <input type="date" id="date-picker" onchange="loadDate()">
+        </div>
+        
+        <!-- Awareness -->
+        <div class="artifact-section">
+            <h3>🔍 Awareness</h3>
+            <div class="habit-item" data-artifact="awareness" data-habit="0">
+                <input type="checkbox" class="habit-checkbox" onchange="toggleHabit(this)">
+                <div class="habit-label">Morning reflection / journaling (5-10 min)</div>
+            </div>
+            <div class="habit-item" data-artifact="awareness" data-habit="1">
+                <input type="checkbox" class="habit-checkbox" onchange="toggleHabit(this)">
+                <div class="habit-label">Noticed and named emotional triggers today</div>
+            </div>
+            <div class="habit-item" data-artifact="awareness" data-habit="2">
+                <input type="checkbox" class="habit-checkbox" onchange="toggleHabit(this)">
+                <div class="habit-label">Paused before reacting at least once</div>
+            </div>
+        </div>
+        
+        <!-- Alignment -->
+        <div class="artifact-section">
+            <h3>🎯 Alignment</h3>
+            <div class="habit-item" data-artifact="alignment" data-habit="0">
+                <input type="checkbox" class="habit-checkbox" onchange="toggleHabit(this)">
+                <div class="habit-label">Reviewed my top 3 priorities / values</div>
+            </div>
+            <div class="habit-item" data-artifact="alignment" data-habit="1">
+                <input type="checkbox" class="habit-checkbox" onchange="toggleHabit(this)">
+                <div class="habit-label">Made decisions aligned with my purpose</div>
+            </div>
+            <div class="habit-item" data-artifact="alignment" data-habit="2">
+                <input type="checkbox" class="habit-checkbox" onchange="toggleHabit(this)">
+                <div class="habit-label">Said "no" to something misaligned</div>
+            </div>
+        </div>
+        
+        <!-- Discipline -->
+        <div class="artifact-section">
+            <h3>💪 Discipline</h3>
+            <div class="habit-item" data-artifact="discipline" data-habit="0">
+                <input type="checkbox" class="habit-checkbox" onchange="toggleHabit(this)">
+                <div class="habit-label">Completed morning routine</div>
+            </div>
+            <div class="habit-item" data-artifact="discipline" data-habit="1">
+                <input type="checkbox" class="habit-checkbox" onchange="toggleHabit(this)">
+                <div class="habit-label">Exercised or moved my body (20+ min)</div>
+            </div>
+            <div class="habit-item" data-artifact="discipline" data-habit="2">
+                <input type="checkbox" class="habit-checkbox" onchange="toggleHabit(this)">
+                <div class="habit-label">Kept my most important commitment today</div>
+            </div>
+        </div>
+        
+        <!-- Connection -->
+        <div class="artifact-section">
+            <h3>🤝 Connection</h3>
+            <div class="habit-item" data-artifact="connection" data-habit="0">
+                <input type="checkbox" class="habit-checkbox" onchange="toggleHabit(this)">
+                <div class="habit-label">Had a meaningful conversation (not surface-level)</div>
+            </div>
+            <div class="habit-item" data-artifact="connection" data-habit="1">
+                <input type="checkbox" class="habit-checkbox" onchange="toggleHabit(this)">
+                <div class="habit-label">Actively listened without interrupting</div>
+            </div>
+            <div class="habit-item" data-artifact="connection" data-habit="2">
+                <input type="checkbox" class="habit-checkbox" onchange="toggleHabit(this)">
+                <div class="habit-label">Showed appreciation or gratitude to someone</div>
+            </div>
+        </div>
+        
+        <!-- Legacy -->
+        <div class="artifact-section">
+            <h3>🌟 Legacy</h3>
+            <div class="habit-item" data-artifact="legacy" data-habit="0">
+                <input type="checkbox" class="habit-checkbox" onchange="toggleHabit(this)">
+                <div class="habit-label">Contributed value to someone's life</div>
+            </div>
+            <div class="habit-item" data-artifact="legacy" data-habit="1">
+                <input type="checkbox" class="habit-checkbox" onchange="toggleHabit(this)">
+                <div class="habit-label">Worked on something bigger than myself</div>
+            </div>
+            <div class="habit-item" data-artifact="legacy" data-habit="2">
+                <input type="checkbox" class="habit-checkbox" onchange="toggleHabit(this)">
+                <div class="habit-label">Made a decision with long-term impact in mind</div>
+            </div>
+        </div>
+        
+        <!-- Stats -->
+        <div class="stats-section">
+            <h3>📈 Today's Progress</h3>
+            <div class="stats-grid">
+                <div class="stat-card">
+                    <div class="stat-number" id="completed-count">0</div>
+                    <div class="stat-label">Completed</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number" id="completion-rate">0%</div>
+                    <div class="stat-label">Completion Rate</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number" id="streak-count">0</div>
+                    <div class="stat-label">Day Streak</div>
+                </div>
+            </div>
+            <div class="progress-bar">
+                <div class="progress-fill" id="progress-fill" style="width: 0%"></div>
+            </div>
+            <div style="text-align: center;">
+                <span class="streak-badge" id="streak-badge">🔥 Start your streak!</span>
+            </div>
+            <button class="reset-btn" onclick="resetToday()">Reset Today</button>
+        </div>
+    </div>
+    
+    <script>
+        const TOTAL_HABITS = 15;
+        
+        // Set today's date
+        const today = new Date().toISOString().split('T')[0];
+        document.getElementById('date-picker').value = today;
+        
+        function getStorageKey(date) {
+            return `habits_${date}`;
+        }
+        
+        function getCurrentDate() {
+            return document.getElementById('date-picker').value;
+        }
+        
+        function loadDate() {
+            const date = getCurrentDate();
+            const data = localStorage.getItem(getStorageKey(date));
+            
+            // Reset all checkboxes
+            document.querySelectorAll('.habit-checkbox').forEach(cb => {
+                cb.checked = false;
+                cb.parentElement.classList.remove('completed');
+            });
+            
+            if (data) {
+                const habits = JSON.parse(data);
+                habits.forEach(habit => {
+                    const item = document.querySelector(`[data-artifact="${habit.artifact}"][data-habit="${habit.habit}"]`);
+                    if (item) {
+                        const checkbox = item.querySelector('.habit-checkbox');
+                        checkbox.checked = true;
+                        item.classList.add('completed');
+                    }
+                });
+            }
+            
+            updateStats();
+        }
+        
+        function toggleHabit(checkbox) {
+            const item = checkbox.parentElement;
+            const artifact = item.dataset.artifact;
+            const habit = item.dataset.habit;
+            
+            if (checkbox.checked) {
+                item.classList.add('completed');
+            } else {
+                item.classList.remove('completed');
+            }
+            
+            saveHabits();
+            updateStats();
+        }
+        
+        function saveHabits() {
+            const date = getCurrentDate();
+            const completed = [];
+            
+            document.querySelectorAll('.habit-item').forEach(item => {
+                const checkbox = item.querySelector('.habit-checkbox');
+                if (checkbox.checked) {
+                    completed.push({
+                        artifact: item.dataset.artifact,
+                        habit: item.dataset.habit
+                    });
+                }
+            });
+            
+            localStorage.setItem(getStorageKey(date), JSON.stringify(completed));
+        }
+        
+        function updateStats() {
+            const completed = document.querySelectorAll('.habit-checkbox:checked').length;
+            const rate = Math.round((completed / TOTAL_HABITS) * 100);
+            
+            document.getElementById('completed-count').textContent = completed;
+            document.getElementById('completion-rate').textContent = rate + '%';
+            document.getElementById('progress-fill').style.width = rate + '%';
+            
+            // Calculate streak
+            const streak = calculateStreak();
+            document.getElementById('streak-count').textContent = streak;
+            
+            // Update streak badge
+            const badge = document.getElementById('streak-badge');
+            if (streak === 0) {
+                badge.textContent = '🔥 Start your streak!';
+            } else if (streak === 1) {
+                badge.textContent = '🔥 1 day streak!';
+            } else if (streak >= 7) {
+                badge.textContent = `🔥🔥 ${streak} day streak! You're on fire!`;
+            } else {
+                badge.textContent = `🔥 ${streak} day streak!`;
+            }
+        }
+        
+        function calculateStreak() {
+            let streak = 0;
+            const today = new Date();
+            
+            for (let i = 0; i < 365; i++) {
+                const checkDate = new Date(today);
+                checkDate.setDate(checkDate.getDate() - i);
+                const dateStr = checkDate.toISOString().split('T')[0];
+                
+                const data = localStorage.getItem(getStorageKey(dateStr));
+                if (data) {
+                    const habits = JSON.parse(data);
+                    // Count as streak day if at least 10 out of 15 habits completed
+                    if (habits.length >= 10) {
+                        streak++;
+                    } else {
+                        break;
+                    }
+                } else {
+                    break;
+                }
+            }
+            
+            return streak;
+        }
+        
+        function resetToday() {
+            if (confirm('Are you sure you want to reset today\'s progress?')) {
+                const date = getCurrentDate();
+                localStorage.removeItem(getStorageKey(date));
+                loadDate();
+            }
+        }
+        
+        // Initialize
+        loadDate();
+    </script>
+</body>
+</html>
