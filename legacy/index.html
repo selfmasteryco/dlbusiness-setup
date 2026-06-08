@@ -13,7 +13,7 @@
         
         body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background: linear-gradient(135deg, #fa709a 0%, #fee140 100%);
+            background: #1a1a2e;
             min-height: 100vh;
             padding: 20px;
             color: #333;
@@ -29,7 +29,7 @@
         }
         
         h1 {
-            background: linear-gradient(135deg, #fa709a 0%, #fee140 100%);
+            background: #1a1a2e;
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             font-size: 2.5em;
@@ -119,7 +119,7 @@
         }
         
         .rating-btn.selected {
-            background: linear-gradient(135deg, #fa709a 0%, #fee140 100%);
+            background: #1a1a2e;
             color: white;
             border-color: #fa709a;
         }
@@ -128,7 +128,7 @@
             display: block;
             width: 100%;
             padding: 20px;
-            background: linear-gradient(135deg, #fa709a 0%, #fee140 100%);
+            background: #1a1a2e;
             color: white;
             border: none;
             border-radius: 12px;
@@ -162,7 +162,7 @@
         .score-header {
             text-align: center;
             padding: 40px;
-            background: linear-gradient(135deg, #fa709a 0%, #fee140 100%);
+            background: #1a1a2e;
             border-radius: 15px;
             color: white;
             margin-bottom: 30px;
@@ -237,7 +237,7 @@
         
         .gap-fill {
             height: 100%;
-            background: linear-gradient(135deg, #fa709a 0%, #fee140 100%);
+            background: #1a1a2e;
             border-radius: 15px;
             transition: width 1s ease-out;
             display: flex;
@@ -273,7 +273,7 @@
             text-align: center;
             margin-top: 40px;
             padding: 30px;
-            background: linear-gradient(135deg, #fa709a 0%, #fee140 100%);
+            background: #1a1a2e;
             border-radius: 15px;
             color: white;
         }
@@ -613,14 +613,6 @@
                     ${insights.map(insight => `<div class="insight-item">${insight}</div>`).join('')}
                 </div>
                 
-                <div class="cta">
-                    <h3>Ready to Close the Gap?</h3>
-                    <p style="margin: 15px 0; font-size: 1.1em;">
-                        The Self Mastery Adventure is designed to help you bridge the gap between 
-                        where you are and the legacy you want to leave.
-                    </p>
-                    <a href="#" class="cta-btn">Join Self Mastery Adventure</a>
-                </div>
             `;
             
             document.getElementById('results').innerHTML = resultsHTML;
