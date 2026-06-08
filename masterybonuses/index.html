@@ -13,7 +13,7 @@
         
         body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background: #1a1a2e;
+            background: linear-gradient(to bottom, #1a1a1a 0%, #2d1810 100%);
             min-height: 100vh;
             padding: 40px 20px;
             color: #fff;
@@ -29,69 +29,65 @@
             color: white;
             margin-bottom: 50px;
             padding: 40px 20px;
-            background: linear-gradient(135deg, rgba(102, 126, 234, 0.2) 0%, rgba(118, 75, 162, 0.2) 100%);
+            background: rgba(0,0,0,0.3);
             border-radius: 20px;
-            border: 1px solid rgba(255,255,255,0.1);
+            border: 1px solid rgba(255,179,71,0.2);
         }
         
         .header h1 {
             font-size: 3em;
             margin-bottom: 15px;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
+            color: #FFB347;
             font-weight: 700;
+            text-shadow: 0 0 30px rgba(255,179,71,0.5);
         }
         
         .header .tagline {
             font-size: 1.4em;
-            opacity: 0.95;
             font-weight: 300;
             margin-bottom: 10px;
-            color: #e0e0e0;
+            color: #f5f5f5;
         }
         
         .header .subtitle {
             font-size: 1.2em;
-            opacity: 0.8;
             font-style: italic;
-            color: #c0c0c0;
+            color: #d4a574;
         }
         
         .intro-card {
-            background: rgba(255,255,255,0.05);
+            background: rgba(0,0,0,0.4);
             padding: 40px;
             border-radius: 20px;
             margin-bottom: 40px;
-            border: 1px solid rgba(255,255,255,0.1);
+            border: 1px solid rgba(255,179,71,0.2);
             text-align: center;
         }
         
         .intro-card h2 {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
+            color: #FFB347;
             font-size: 2em;
             margin-bottom: 20px;
+            text-shadow: 0 0 20px rgba(255,179,71,0.3);
         }
         
         .intro-card p {
             font-size: 1.2em;
             line-height: 1.8;
-            color: #d0d0d0;
+            color: #e0e0e0;
             margin-bottom: 15px;
         }
         
         .intro-card .value-box {
             display: inline-block;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            color: white;
+            background: linear-gradient(135deg, #d4a574 0%, #FFB347 100%);
+            color: #1a1a1a;
             padding: 20px 40px;
             border-radius: 15px;
             margin-top: 20px;
             font-size: 1.3em;
             font-weight: bold;
-            box-shadow: 0 10px 30px rgba(102, 126, 234, 0.3);
+            box-shadow: 0 10px 30px rgba(255,179,71,0.4);
         }
         
         .bonuses-grid {
@@ -102,23 +98,23 @@
         }
         
         .bonus-card {
-            background: rgba(255,255,255,0.05);
+            background: rgba(0,0,0,0.4);
             border-radius: 20px;
             overflow: hidden;
-            border: 1px solid rgba(255,255,255,0.1);
+            border: 1px solid rgba(255,179,71,0.2);
             transition: transform 0.3s, box-shadow 0.3s, border-color 0.3s;
         }
         
         .bonus-card:hover {
             transform: translateY(-10px);
-            box-shadow: 0 20px 40px rgba(102, 126, 234, 0.3);
-            border-color: rgba(102, 126, 234, 0.5);
+            box-shadow: 0 20px 40px rgba(255,179,71,0.3);
+            border-color: rgba(255,179,71,0.5);
         }
         
         .bonus-header {
             padding: 30px;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            color: white;
+            background: linear-gradient(135deg, #d4a574 0%, #FFB347 100%);
+            color: #1a1a1a;
             text-align: center;
         }
         
@@ -130,11 +126,12 @@
         .bonus-header h3 {
             font-size: 1.8em;
             margin-bottom: 10px;
+            font-weight: 700;
         }
         
         .bonus-header .artifact {
             font-size: 0.95em;
-            opacity: 0.9;
+            opacity: 0.8;
             text-transform: uppercase;
             letter-spacing: 1px;
         }
@@ -144,7 +141,7 @@
         }
         
         .bonus-body p {
-            color: #d0d0d0;
+            color: #e0e0e0;
             line-height: 1.7;
             margin-bottom: 20px;
             font-size: 1.05em;
@@ -159,14 +156,14 @@
             padding: 10px 0;
             padding-left: 30px;
             position: relative;
-            color: #c0c0c0;
+            color: #d0d0d0;
         }
         
         .bonus-features li:before {
             content: "✓";
             position: absolute;
             left: 0;
-            color: #667eea;
+            color: #FFB347;
             font-weight: bold;
             font-size: 1.3em;
         }
@@ -174,32 +171,33 @@
         .bonus-value {
             text-align: center;
             padding: 15px;
-            background: rgba(102, 126, 234, 0.1);
+            background: rgba(255,179,71,0.1);
             border-radius: 10px;
             margin-bottom: 20px;
-            color: #667eea;
+            color: #FFB347;
             font-weight: bold;
             font-size: 1.2em;
+            border: 1px solid rgba(255,179,71,0.2);
         }
         
         .bonus-btn {
             display: block;
             width: 100%;
             padding: 18px;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            color: white;
+            background: linear-gradient(135deg, #d4a574 0%, #FFB347 100%);
+            color: #1a1a1a;
             text-align: center;
             text-decoration: none;
             border-radius: 12px;
             font-weight: bold;
             font-size: 1.2em;
             transition: all 0.3s;
-            box-shadow: 0 5px 15px rgba(102, 126, 234, 0.3);
+            box-shadow: 0 5px 15px rgba(255,179,71,0.3);
         }
         
         .bonus-btn:hover {
             transform: scale(1.02);
-            box-shadow: 0 10px 30px rgba(102, 126, 234, 0.5);
+            box-shadow: 0 10px 30px rgba(255,179,71,0.5);
         }
         
         .footer {
@@ -207,16 +205,17 @@
             color: #999;
             margin-top: 50px;
             padding-top: 30px;
-            border-top: 1px solid rgba(255,255,255,0.1);
+            border-top: 1px solid rgba(255,179,71,0.2);
         }
         
         .footer p {
             margin-bottom: 10px;
+            color: #b0b0b0;
         }
         
         .footer .tagline {
             font-style: italic;
-            color: #667eea;
+            color: #d4a574;
             font-size: 1.1em;
         }
         
@@ -275,13 +274,13 @@
             
             <!-- Bonus 2 -->
             <div class="bonus-card">
-                <div class="bonus-header" style="background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);">
+                <div class="bonus-header">
                     <div class="icon">🧭</div>
                     <h3>Purpose Discovery Quiz</h3>
                     <div class="artifact">Alignment · Purpose</div>
                 </div>
                 <div class="bonus-body">
-                    <div class="bonus-value" style="background: rgba(240, 147, 251, 0.1); color: #f093fb;">VALUE: $47</div>
+                    <div class="bonus-value">VALUE: $47</div>
                     <p>Take an 8-question quiz to discover your unique purpose archetype and generate your personalized purpose statement.</p>
                     <ul class="bonus-features">
                         <li>Identify your purpose type</li>
@@ -289,7 +288,7 @@
                         <li>5 archetypes: Guide, Creator, Leader, Teacher, Builder</li>
                         <li>Understand your unique strengths</li>
                     </ul>
-                    <a href="/purpose" class="bonus-btn" style="background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);">
+                    <a href="/purpose" class="bonus-btn">
                         Take Quiz →
                     </a>
                 </div>
@@ -297,13 +296,13 @@
             
             <!-- Bonus 3 -->
             <div class="bonus-card">
-                <div class="bonus-header" style="background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);">
+                <div class="bonus-header">
                     <div class="icon">🗺️</div>
                     <h3>90-Day Transformation Roadmap</h3>
                     <div class="artifact">Custom Action Plan</div>
                 </div>
                 <div class="bonus-body">
-                    <div class="bonus-value" style="background: rgba(79, 172, 254, 0.1); color: #4facfe;">VALUE: $97</div>
+                    <div class="bonus-value">VALUE: $97</div>
                     <p>Build your personalized 90-day action plan with week-by-week milestones tailored to your chosen artifact focus.</p>
                     <ul class="bonus-features">
                         <li>Choose your primary focus area</li>
@@ -311,7 +310,7 @@
                         <li>Weekly milestones & actions</li>
                         <li>Turn vision into executable plan</li>
                     </ul>
-                    <a href="/roadmap" class="bonus-btn" style="background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);">
+                    <a href="/roadmap" class="bonus-btn">
                         Build Roadmap →
                     </a>
                 </div>
@@ -319,13 +318,13 @@
             
             <!-- Bonus 4 -->
             <div class="bonus-card">
-                <div class="bonus-header" style="background: linear-gradient(135deg, #fa709a 0%, #fee140 100%);">
+                <div class="bonus-header">
                     <div class="icon">🌟</div>
                     <h3>Legacy Impact Scorecard</h3>
                     <div class="artifact">Legacy · Impact</div>
                 </div>
                 <div class="bonus-body">
-                    <div class="bonus-value" style="background: rgba(250, 112, 154, 0.1); color: #fa709a;">VALUE: $67</div>
+                    <div class="bonus-value">VALUE: $67</div>
                     <p>Measure where you are vs. where you want to be across the 5 Pillars of Legacy and identify your biggest gaps.</p>
                     <ul class="bonus-features">
                         <li>Rate current vs desired state</li>
@@ -333,7 +332,7 @@
                         <li>Visual gap analysis</li>
                         <li>Actionable insights to close gaps</li>
                     </ul>
-                    <a href="/legacy" class="bonus-btn" style="background: linear-gradient(135deg, #fa709a 0%, #fee140 100%);">
+                    <a href="/legacy" class="bonus-btn">
                         Access Scorecard →
                     </a>
                 </div>
@@ -341,13 +340,13 @@
             
             <!-- Bonus 5 -->
             <div class="bonus-card">
-                <div class="bonus-header" style="background: linear-gradient(135deg, #a8edea 0%, #fed6e3 100%);">
+                <div class="bonus-header">
                     <div class="icon">💎</div>
                     <h3>Values Hierarchy Builder</h3>
                     <div class="artifact">Alignment · Values</div>
                 </div>
                 <div class="bonus-body">
-                    <div class="bonus-value" style="background: rgba(168, 237, 234, 0.1); color: #a8edea;">VALUE: $47</div>
+                    <div class="bonus-value">VALUE: $47</div>
                     <p>Discover and rank what matters most to you. Select your top 10 values and create your personalized values hierarchy.</p>
                     <ul class="bonus-features">
                         <li>Choose from 40 core values</li>
@@ -355,7 +354,7 @@
                         <li>Identify your north star value</li>
                         <li>Get insights on living your values</li>
                     </ul>
-                    <a href="/values" class="bonus-btn" style="background: linear-gradient(135deg, #a8edea 0%, #fed6e3 100%);">
+                    <a href="/values" class="bonus-btn">
                         Build Hierarchy →
                     </a>
                 </div>
