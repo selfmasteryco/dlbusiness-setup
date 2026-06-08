@@ -1,0 +1,3270 @@
+From 930a9fdcf04c5ec5b8d21842f1e4a1bf68e24a0e Mon Sep 17 00:00:00 2001
+From: Self Mastery Co <chad@selfmasteryco.com>
+Date: Mon, 8 Jun 2026 16:26:57 +0000
+Subject: [PATCH] Add Self Mastery Adventure bonus pages
+
+---
+ alignment/index.html | 494 +++++++++++++++++++++++++++++++++
+ bonuses/index.html   | 384 ++++++++++++++++++++++++++
+ legacy/index.html    | 632 +++++++++++++++++++++++++++++++++++++++++++
+ purpose/index.html   | 557 ++++++++++++++++++++++++++++++++++++++
+ roadmap/index.html   | 585 +++++++++++++++++++++++++++++++++++++++
+ values/index.html    | 553 +++++++++++++++++++++++++++++++++++++
+ 6 files changed, 3205 insertions(+)
+ create mode 100644 alignment/index.html
+ create mode 100644 bonuses/index.html
+ create mode 100644 legacy/index.html
+ create mode 100644 purpose/index.html
+ create mode 100644 roadmap/index.html
+ create mode 100644 values/index.html
+
+diff --git a/alignment/index.html b/alignment/index.html
+new file mode 100644
+index 0000000..8c6eaaa
+--- /dev/null
++++ b/alignment/index.html
+@@ -0,0 +1,494 @@
++<!DOCTYPE html>
++<html lang="en">
++<head>
++    <meta charset="UTF-8">
++    <meta name="viewport" content="width=device-width, initial-scale=1.0">
++    <title>Life Alignment Score Calculator | Self Mastery Co</title>
++    <style>
++        * {
++            margin: 0;
++            padding: 0;
++            box-sizing: border-box;
++        }
++        
++        body {
++            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
++            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
++            min-height: 100vh;
++            padding: 20px;
++            color: #333;
++        }
++        
++        .container {
++            max-width: 800px;
++            margin: 0 auto;
++            background: white;
++            border-radius: 20px;
++            padding: 40px;
++            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
++        }
++        
++        h1 {
++            color: #667eea;
++            font-size: 2.5em;
++            margin-bottom: 10px;
++            text-align: center;
++        }
++        
++        .subtitle {
++            text-align: center;
++            color: #666;
++            margin-bottom: 40px;
++            font-size: 1.1em;
++        }
++        
++        .artifact {
++            margin-bottom: 30px;
++            padding: 25px;
++            background: #f8f9fa;
++            border-radius: 15px;
++            border-left: 5px solid #667eea;
++        }
++        
++        .artifact h3 {
++            color: #667eea;
++            margin-bottom: 10px;
++            font-size: 1.4em;
++        }
++        
++        .artifact p {
++            color: #666;
++            margin-bottom: 15px;
++            font-size: 0.95em;
++        }
++        
++        .slider-container {
++            margin-top: 15px;
++        }
++        
++        .slider-labels {
++            display: flex;
++            justify-content: space-between;
++            margin-bottom: 8px;
++            font-size: 0.9em;
++            color: #999;
++        }
++        
++        input[type="range"] {
++            width: 100%;
++            height: 8px;
++            border-radius: 5px;
++            background: #ddd;
++            outline: none;
++            -webkit-appearance: none;
++        }
++        
++        input[type="range"]::-webkit-slider-thumb {
++            -webkit-appearance: none;
++            appearance: none;
++            width: 25px;
++            height: 25px;
++            border-radius: 50%;
++            background: #667eea;
++            cursor: pointer;
++            transition: all 0.2s;
++        }
++        
++        input[type="range"]::-webkit-slider-thumb:hover {
++            background: #764ba2;
++            transform: scale(1.2);
++        }
++        
++        input[type="range"]::-moz-range-thumb {
++            width: 25px;
++            height: 25px;
++            border-radius: 50%;
++            background: #667eea;
++            cursor: pointer;
++            border: none;
++        }
++        
++        .score-display {
++            text-align: center;
++            font-size: 1.2em;
++            font-weight: bold;
++            color: #667eea;
++            margin-top: 10px;
++        }
++        
++        .calculate-btn {
++            display: block;
++            width: 100%;
++            padding: 20px;
++            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
++            color: white;
++            border: none;
++            border-radius: 12px;
++            font-size: 1.3em;
++            font-weight: bold;
++            cursor: pointer;
++            margin-top: 30px;
++            transition: transform 0.2s, box-shadow 0.2s;
++        }
++        
++        .calculate-btn:hover {
++            transform: translateY(-2px);
++            box-shadow: 0 10px 25px rgba(102, 126, 234, 0.4);
++        }
++        
++        .results {
++            display: none;
++            margin-top: 40px;
++            padding: 30px;
++            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
++            border-radius: 15px;
++            color: white;
++        }
++        
++        .results.show {
++            display: block;
++            animation: slideIn 0.5s ease-out;
++        }
++        
++        @keyframes slideIn {
++            from {
++                opacity: 0;
++                transform: translateY(20px);
++            }
++            to {
++                opacity: 1;
++                transform: translateY(0);
++            }
++        }
++        
++        .overall-score {
++            text-align: center;
++            margin-bottom: 30px;
++        }
++        
++        .overall-score h2 {
++            font-size: 2em;
++            margin-bottom: 10px;
++        }
++        
++        .score-number {
++            font-size: 4em;
++            font-weight: bold;
++            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
++        }
++        
++        .score-breakdown {
++            background: rgba(255,255,255,0.1);
++            padding: 20px;
++            border-radius: 10px;
++            margin-bottom: 20px;
++        }
++        
++        .breakdown-item {
++            display: flex;
++            justify-content: space-between;
++            align-items: center;
++            margin-bottom: 15px;
++            padding-bottom: 15px;
++            border-bottom: 1px solid rgba(255,255,255,0.2);
++        }
++        
++        .breakdown-item:last-child {
++            border-bottom: none;
++            margin-bottom: 0;
++            padding-bottom: 0;
++        }
++        
++        .breakdown-label {
++            font-weight: bold;
++            font-size: 1.1em;
++        }
++        
++        .breakdown-score {
++            font-size: 1.3em;
++            font-weight: bold;
++        }
++        
++        .progress-bar {
++            width: 60%;
++            height: 10px;
++            background: rgba(255,255,255,0.3);
++            border-radius: 5px;
++            overflow: hidden;
++        }
++        
++        .progress-fill {
++            height: 100%;
++            background: white;
++            border-radius: 5px;
++            transition: width 1s ease-out;
++        }
++        
++        .insights {
++            margin-top: 20px;
++        }
++        
++        .insights h3 {
++            margin-bottom: 15px;
++            font-size: 1.5em;
++        }
++        
++        .insight-box {
++            background: rgba(255,255,255,0.1);
++            padding: 15px;
++            border-radius: 10px;
++            margin-bottom: 10px;
++        }
++        
++        .cta {
++            text-align: center;
++            margin-top: 30px;
++            padding-top: 30px;
++            border-top: 2px solid rgba(255,255,255,0.3);
++        }
++        
++        .cta h3 {
++            margin-bottom: 15px;
++            font-size: 1.8em;
++        }
++        
++        .cta-btn {
++            display: inline-block;
++            padding: 18px 40px;
++            background: white;
++            color: #667eea;
++            text-decoration: none;
++            border-radius: 10px;
++            font-weight: bold;
++            font-size: 1.2em;
++            transition: transform 0.2s;
++        }
++        
++        .cta-btn:hover {
++            transform: scale(1.05);
++        }
++        
++        @media (max-width: 600px) {
++            .container {
++                padding: 25px;
++            }
++            
++            h1 {
++                font-size: 2em;
++            }
++            
++            .score-number {
++                font-size: 3em;
++            }
++        }
++    </style>
++</head>
++<body>
++    <div class="container">
++        <h1>🎯 Life Alignment Calculator</h1>
++        <p class="subtitle">Discover how aligned you are with your highest self across the 5 Artifacts of Self Mastery</p>
++        
++        <div class="artifact">
++            <h3>1. Awareness</h3>
++            <p>How aware are you of your beliefs, patterns, triggers, and blind spots?</p>
++            <div class="slider-container">
++                <div class="slider-labels">
++                    <span>Completely Unaware</span>
++                    <span>Fully Aware</span>
++                </div>
++                <input type="range" id="awareness" min="1" max="10" value="5" oninput="updateScore(this, 'awareness-score')">
++                <div class="score-display">Score: <span id="awareness-score">5</span>/10</div>
++            </div>
++        </div>
++        
++        <div class="artifact">
++            <h3>2. Alignment</h3>
++            <p>How aligned are your daily actions with your values, vision, and purpose?</p>
++            <div class="slider-container">
++                <div class="slider-labels">
++                    <span>Completely Misaligned</span>
++                    <span>Perfectly Aligned</span>
++                </div>
++                <input type="range" id="alignment" min="1" max="10" value="5" oninput="updateScore(this, 'alignment-score')">
++                <div class="score-display">Score: <span id="alignment-score">5</span>/10</div>
++            </div>
++        </div>
++        
++        <div class="artifact">
++            <h3>3. Discipline</h3>
++            <p>How consistent are you with your habits, commitments, and personal standards?</p>
++            <div class="slider-container">
++                <div class="slider-labels">
++                    <span>No Discipline</span>
++                    <span>Unshakable</span>
++                </div>
++                <input type="range" id="discipline" min="1" max="10" value="5" oninput="updateScore(this, 'discipline-score')">
++                <div class="score-display">Score: <span id="discipline-score">5</span>/10</div>
++            </div>
++        </div>
++        
++        <div class="artifact">
++            <h3>4. Connection</h3>
++            <p>How strong are your relationships, communication, and ability to influence others?</p>
++            <div class="slider-container">
++                <div class="slider-labels">
++                    <span>Isolated & Weak</span>
++                    <span>Deeply Connected</span>
++                </div>
++                <input type="range" id="connection" min="1" max="10" value="5" oninput="updateScore(this, 'connection-score')">
++                <div class="score-display">Score: <span id="connection-score">5</span>/10</div>
++            </div>
++        </div>
++        
++        <div class="artifact">
++            <h3>5. Legacy</h3>
++            <p>How intentional are you about creating meaning, impact, and contribution?</p>
++            <div class="slider-container">
++                <div class="slider-labels">
++                    <span>No Impact</span>
++                    <span>Lasting Legacy</span>
++                </div>
++                <input type="range" id="legacy" min="1" max="10" value="5" oninput="updateScore(this, 'legacy-score')">
++                <div class="score-display">Score: <span id="legacy-score">5</span>/10</div>
++            </div>
++        </div>
++        
++        <button class="calculate-btn" onclick="calculateResults()">📊 Calculate My Life Alignment Score</button>
++        
++        <div class="results" id="results">
++            <div class="overall-score">
++                <h2>Your Overall Alignment Score</h2>
++                <div class="score-number" id="overall-score">0</div>
++                <p id="score-label"></p>
++            </div>
++            
++            <div class="score-breakdown">
++                <h3>Score Breakdown</h3>
++                <div class="breakdown-item">
++                    <span class="breakdown-label">Awareness</span>
++                    <span class="breakdown-score" id="result-awareness">0</span>
++                </div>
++                <div class="breakdown-item">
++                    <span class="breakdown-label">Alignment</span>
++                    <span class="breakdown-score" id="result-alignment">0</span>
++                </div>
++                <div class="breakdown-item">
++                    <span class="breakdown-label">Discipline</span>
++                    <span class="breakdown-score" id="result-discipline">0</span>
++                </div>
++                <div class="breakdown-item">
++                    <span class="breakdown-label">Connection</span>
++                    <span class="breakdown-score" id="result-connection">0</span>
++                </div>
++                <div class="breakdown-item">
++                    <span class="breakdown-label">Legacy</span>
++                    <span class="breakdown-score" id="result-legacy">0</span>
++                </div>
++            </div>
++            
++            <div class="insights">
++                <h3>💡 Your Personalized Insights</h3>
++                <div id="insights-content"></div>
++            </div>
++            
++            <div class="cta">
++                <h3>Ready to Transform Your Life?</h3>
++                <p style="margin-bottom: 20px;">Join the Self Mastery Adventure and close the gap between where you are and where you want to be.</p>
++                <a href="#" class="cta-btn">🚀 Enroll in Self Mastery Adventure</a>
++            </div>
++        </div>
++    </div>
++    
++    <script>
++        function updateScore(slider, displayId) {
++            document.getElementById(displayId).textContent = slider.value;
++        }
++        
++        function calculateResults() {
++            const awareness = parseInt(document.getElementById('awareness').value);
++            const alignment = parseInt(document.getElementById('alignment').value);
++            const discipline = parseInt(document.getElementById('discipline').value);
++            const connection = parseInt(document.getElementById('connection').value);
++            const legacy = parseInt(document.getElementById('legacy').value);
++            
++            const total = awareness + alignment + discipline + connection + legacy;
++            const average = (total / 50 * 100).toFixed(0);
++            
++            // Update overall score
++            document.getElementById('overall-score').textContent = average + '%';
++            
++            // Update breakdown
++            document.getElementById('result-awareness').textContent = awareness + '/10';
++            document.getElementById('result-alignment').textContent = alignment + '/10';
++            document.getElementById('result-discipline').textContent = discipline + '/10';
++            document.getElementById('result-connection').textContent = connection + '/10';
++            document.getElementById('result-legacy').textContent = legacy + '/10';
++            
++            // Generate insights
++            let insights = [];
++            const scores = {
++                'Awareness': awareness,
++                'Alignment': alignment,
++                'Discipline': discipline,
++                'Connection': connection,
++                'Legacy': legacy
++            };
++            
++            // Find strongest and weakest
++            let lowest = { name: '', score: 11 };
++            let highest = { name: '', score: 0 };
++            
++            for (let [name, score] of Object.entries(scores)) {
++                if (score < lowest.score) {
++                    lowest = { name, score };
++                }
++                if (score > highest.score) {
++                    highest = { name, score };
++                }
++            }
++            
++            // Score interpretation
++            let scoreLabel = '';
++            if (average < 40) {
++                scoreLabel = '🌱 Awakening Stage - Your transformation journey is just beginning';
++                insights.push(`Your score of ${average}% shows you're ready for significant growth. The Self Mastery Adventure is designed specifically for people in your stage.`);
++            } else if (average < 60) {
++                scoreLabel = '🌿 Growing Stage - You\'re making progress but there\'s untapped potential';
++                insights.push(`At ${average}%, you're on the path but not yet aligned. Small shifts in the right areas could create massive transformation.`);
++            } else if (average < 80) {
++                scoreLabel = '🌳 Developing Stage - You have strong foundations with room to soar';
++                insights.push(`Your ${average}% score shows solid alignment. Fine-tuning your weakest areas could unlock exponential growth.`);
++            } else {
++                scoreLabel = '🦅 Mastery Stage - You\'re living aligned with your highest self';
++                insights.push(`At ${average}%, you're in the mastery zone. Continue deepening your practice and helping others rise.`);
++            }
++            
++            document.getElementById('score-label').textContent = scoreLabel;
++            
++            // Add specific insights
++            if (lowest.score <= 5) {
++                insights.push(`<strong>🎯 Focus Area: ${lowest.name}</strong><br>Your ${lowest.name} score of ${lowest.score}/10 represents your biggest opportunity for transformation. Improving this artifact will create a ripple effect across your entire life.`);
++            }
++            
++            if (highest.score >= 8) {
++                insights.push(`<strong>💪 Strength: ${highest.name}</strong><br>Your ${highest.name} score of ${highest.score}/10 is exceptional. This is your superpower - lean into it and use it to elevate your other areas.`);
++            }
++            
++            // Overall guidance
++            if (average < 60) {
++                insights.push(`<strong>🚀 Next Step:</strong><br>The Self Mastery Adventure will give you the structure, community, and accountability to dramatically increase your alignment across all 5 artifacts in just 5 days.`);
++            } else {
++                insights.push(`<strong>🚀 Next Step:</strong><br>You're ready to take your mastery to the next level. The Self Mastery Adventure will help you fine-tune your practice and achieve breakthrough clarity.`);
++            }
++            
++            // Display insights
++            const insightsHTML = insights.map(insight => `<div class="insight-box">${insight}</div>`).join('');
++            document.getElementById('insights-content').innerHTML = insightsHTML;
++            
++            // Show results
++            document.getElementById('results').classList.add('show');
++            document.getElementById('results').scrollIntoView({ behavior: 'smooth', block: 'nearest' });
++        }
++    </script>
++</body>
++</html>
+\ No newline at end of file
+diff --git a/bonuses/index.html b/bonuses/index.html
+new file mode 100644
+index 0000000..e1e9ecc
+--- /dev/null
++++ b/bonuses/index.html
+@@ -0,0 +1,384 @@
++<!DOCTYPE html>
++<html lang="en">
++<head>
++    <meta charset="UTF-8">
++    <meta name="viewport" content="width=device-width, initial-scale=1.0">
++    <title>Your Self Mastery Adventure Bonuses | Self Mastery Co</title>
++    <style>
++        * {
++            margin: 0;
++            padding: 0;
++            box-sizing: border-box;
++        }
++        
++        body {
++            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
++            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
++            min-height: 100vh;
++            padding: 40px 20px;
++            color: #333;
++        }
++        
++        .container {
++            max-width: 1000px;
++            margin: 0 auto;
++        }
++        
++        .header {
++            text-align: center;
++            color: white;
++            margin-bottom: 50px;
++        }
++        
++        .header h1 {
++            font-size: 3em;
++            margin-bottom: 15px;
++            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
++        }
++        
++        .header .tagline {
++            font-size: 1.4em;
++            opacity: 0.95;
++            font-weight: 300;
++            margin-bottom: 10px;
++        }
++        
++        .header .subtitle {
++            font-size: 1.1em;
++            opacity: 0.9;
++        }
++        
++        .intro-card {
++            background: white;
++            padding: 40px;
++            border-radius: 20px;
++            margin-bottom: 40px;
++            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
++            text-align: center;
++        }
++        
++        .intro-card h2 {
++            color: #667eea;
++            font-size: 2em;
++            margin-bottom: 20px;
++        }
++        
++        .intro-card p {
++            font-size: 1.2em;
++            line-height: 1.8;
++            color: #666;
++            margin-bottom: 15px;
++        }
++        
++        .intro-card .value-box {
++            display: inline-block;
++            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
++            color: white;
++            padding: 20px 40px;
++            border-radius: 15px;
++            margin-top: 20px;
++            font-size: 1.3em;
++            font-weight: bold;
++        }
++        
++        .bonuses-grid {
++            display: grid;
++            grid-template-columns: repeat(auto-fit, minmax(450px, 1fr));
++            gap: 30px;
++            margin-bottom: 50px;
++        }
++        
++        .bonus-card {
++            background: white;
++            border-radius: 20px;
++            overflow: hidden;
++            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
++            transition: transform 0.3s, box-shadow 0.3s;
++        }
++        
++        .bonus-card:hover {
++            transform: translateY(-10px);
++            box-shadow: 0 30px 70px rgba(0,0,0,0.4);
++        }
++        
++        .bonus-header {
++            padding: 30px;
++            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
++            color: white;
++            text-align: center;
++        }
++        
++        .bonus-header .icon {
++            font-size: 3em;
++            margin-bottom: 15px;
++        }
++        
++        .bonus-header h3 {
++            font-size: 1.8em;
++            margin-bottom: 10px;
++        }
++        
++        .bonus-header .artifact {
++            font-size: 0.95em;
++            opacity: 0.9;
++            text-transform: uppercase;
++            letter-spacing: 1px;
++        }
++        
++        .bonus-body {
++            padding: 30px;
++        }
++        
++        .bonus-body p {
++            color: #666;
++            line-height: 1.7;
++            margin-bottom: 20px;
++            font-size: 1.05em;
++        }
++        
++        .bonus-features {
++            list-style: none;
++            margin-bottom: 25px;
++        }
++        
++        .bonus-features li {
++            padding: 10px 0;
++            padding-left: 30px;
++            position: relative;
++            color: #555;
++        }
++        
++        .bonus-features li:before {
++            content: "✓";
++            position: absolute;
++            left: 0;
++            color: #667eea;
++            font-weight: bold;
++            font-size: 1.3em;
++        }
++        
++        .bonus-btn {
++            display: block;
++            width: 100%;
++            padding: 18px;
++            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
++            color: white;
++            text-align: center;
++            text-decoration: none;
++            border-radius: 12px;
++            font-weight: bold;
++            font-size: 1.2em;
++            transition: all 0.3s;
++        }
++        
++        .bonus-btn:hover {
++            transform: scale(1.02);
++            box-shadow: 0 10px 30px rgba(102, 126, 234, 0.4);
++        }
++        
++        .cta-section {
++            background: white;
++            padding: 50px;
++            border-radius: 20px;
++            text-align: center;
++            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
++            margin-top: 50px;
++        }
++        
++        .cta-section h2 {
++            color: #667eea;
++            font-size: 2.5em;
++            margin-bottom: 20px;
++        }
++        
++        .cta-section p {
++            font-size: 1.2em;
++            color: #666;
++            line-height: 1.8;
++            margin-bottom: 30px;
++        }
++        
++        .cta-btn {
++            display: inline-block;
++            padding: 25px 60px;
++            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
++            color: white;
++            text-decoration: none;
++            border-radius: 15px;
++            font-weight: bold;
++            font-size: 1.5em;
++            transition: all 0.3s;
++            box-shadow: 0 10px 30px rgba(102, 126, 234, 0.3);
++        }
++        
++        .cta-btn:hover {
++            transform: scale(1.05);
++            box-shadow: 0 15px 40px rgba(102, 126, 234, 0.5);
++        }
++        
++        .footer {
++            text-align: center;
++            color: white;
++            margin-top: 50px;
++            padding-top: 30px;
++            border-top: 1px solid rgba(255,255,255,0.2);
++            opacity: 0.9;
++        }
++        
++        @media (max-width: 768px) {
++            .header h1 {
++                font-size: 2.2em;
++            }
++            
++            .bonuses-grid {
++                grid-template-columns: 1fr;
++            }
++            
++            .intro-card, .cta-section {
++                padding: 30px 25px;
++            }
++            
++            .cta-btn {
++                padding: 20px 40px;
++                font-size: 1.3em;
++            }
++        }
++    </style>
++</head>
++<body>
++    <div class="container">
++        <div class="header">
++            <h1>🎁 Your Self Mastery Adventure Bonus Pack</h1>
++            <div class="tagline">5 Interactive Tools to Accelerate Your Transformation</div>
++            <div class="subtitle">The person you become determines the life you create.</div>
++        </div>
++        
++        <div class="intro-card">
++            <h2>Welcome to Your Transformation Toolkit</h2>
++            <p>You've taken the first step on your Self Mastery Adventure. These 5 interactive bonuses will help you gain clarity, build alignment, and create lasting transformation across the 5 Artifacts of Self Mastery.</p>
++            <p><strong>Click each bonus below to access your personalized experience.</strong></p>
++            <div class="value-box">Total Bonus Value: $305</div>
++        </div>
++        
++        <div class="bonuses-grid">
++            <!-- Bonus 1 -->
++            <div class="bonus-card">
++                <div class="bonus-header">
++                    <div class="icon">🎯</div>
++                    <h3>Life Alignment Calculator</h3>
++                    <div class="artifact">All 5 Artifacts</div>
++                </div>
++                <div class="bonus-body">
++                    <p>Discover how aligned you are with your highest self across Awareness, Alignment, Discipline, Connection, and Legacy.</p>
++                    <ul class="bonus-features">
++                        <li>Interactive slider assessment</li>
++                        <li>Instant alignment percentage</li>
++                        <li>Identifies your strongest & weakest areas</li>
++                        <li>Personalized insights & action steps</li>
++                    </ul>
++                    <a href="/alignment" class="bonus-btn" target="_blank">
++                        Access Calculator →
++                    </a>
++                </div>
++            </div>
++            
++            <!-- Bonus 2 -->
++            <div class="bonus-card">
++                <div class="bonus-header" style="background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);">
++                    <div class="icon">🧭</div>
++                    <h3>Purpose Discovery Quiz</h3>
++                    <div class="artifact">Alignment · Purpose</div>
++                </div>
++                <div class="bonus-body">
++                    <p>Take an 8-question quiz to discover your unique purpose archetype and generate your personalized purpose statement.</p>
++                    <ul class="bonus-features">
++                        <li>Identify your purpose type</li>
++                        <li>Get personalized purpose statement</li>
++                        <li>5 archetypes: Guide, Creator, Leader, Teacher, Builder</li>
++                        <li>Understand your unique strengths</li>
++                    </ul>
++                    <a href="/purpose" class="bonus-btn" target="_blank" style="background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);">
++                        Take Quiz →
++                    </a>
++                </div>
++            </div>
++            
++            <!-- Bonus 3 -->
++            <div class="bonus-card">
++                <div class="bonus-header" style="background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);">
++                    <div class="icon">🗺️</div>
++                    <h3>90-Day Transformation Roadmap</h3>
++                    <div class="artifact">Custom Action Plan</div>
++                </div>
++                <div class="bonus-body">
++                    <p>Build your personalized 90-day action plan with week-by-week milestones tailored to your chosen artifact focus.</p>
++                    <ul class="bonus-features">
++                        <li>Choose your primary focus area</li>
++                        <li>Month-by-month breakdown</li>
++                        <li>Weekly milestones & actions</li>
++                        <li>Turn vision into executable plan</li>
++                    </ul>
++                    <a href="/roadmap" class="bonus-btn" target="_blank" style="background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);">
++                        Build Roadmap →
++                    </a>
++                </div>
++            </div>
++            
++            <!-- Bonus 4 -->
++            <div class="bonus-card">
++                <div class="bonus-header" style="background: linear-gradient(135deg, #fa709a 0%, #fee140 100%);">
++                    <div class="icon">🌟</div>
++                    <h3>Legacy Impact Scorecard</h3>
++                    <div class="artifact">Legacy · Impact</div>
++                </div>
++                <div class="bonus-body">
++                    <p>Measure where you are vs. where you want to be across the 5 Pillars of Legacy and identify your biggest gaps.</p>
++                    <ul class="bonus-features">
++                        <li>Rate current vs desired state</li>
++                        <li>5 Legacy Pillars assessment</li>
++                        <li>Visual gap analysis</li>
++                        <li>Actionable insights to close gaps</li>
++                    </ul>
++                    <a href="/legacy" class="bonus-btn" target="_blank" style="background: linear-gradient(135deg, #fa709a 0%, #fee140 100%);">
++                        Access Scorecard →
++                    </a>
++                </div>
++            </div>
++            
++            <!-- Bonus 5 -->
++            <div class="bonus-card">
++                <div class="bonus-header" style="background: linear-gradient(135deg, #a8edea 0%, #fed6e3 100%);">
++                    <div class="icon">💎</div>
++                    <h3>Values Hierarchy Builder</h3>
++                    <div class="artifact">Alignment · Values</div>
++                </div>
++                <div class="bonus-body">
++                    <p>Discover and rank what matters most to you. Select your top 10 values and create your personalized values hierarchy.</p>
++                    <ul class="bonus-features">
++                        <li>Choose from 40 core values</li>
++                        <li>Drag-and-drop ranking interface</li>
++                        <li>Identify your north star value</li>
++                        <li>Get insights on living your values</li>
++                    </ul>
++                    <a href="/values" class="bonus-btn" target="_blank" style="background: linear-gradient(135deg, #a8edea 0%, #fed6e3 100%);">
++                        Build Hierarchy →
++                    </a>
++                </div>
++            </div>
++        </div>
++        
++        <div class="cta-section">
++            <h2>Ready to Transform Your Life?</h2>
++            <p>These bonuses give you the tools. The Self Mastery Adventure gives you the structure, community, and accountability to actually execute.</p>
++            <p style="font-size: 1.4em; margin-bottom: 30px;"><strong>The person you become determines the life you create.</strong></p>
++            <p style="margin-bottom: 40px;">You already know enough. Now it's time to <strong>become</strong>.</p>
++            <a href="#" class="cta-btn">🚀 Enroll in Self Mastery Adventure</a>
++        </div>
++        
++        <div class="footer">
++            <p>© 2026 Self Mastery Co. All rights reserved.</p>
++            <p style="margin-top: 10px; font-size: 0.9em;">The greatest adventure is the one within.</p>
++        </div>
++    </div>
++</body>
++</html>
+\ No newline at end of file
+diff --git a/legacy/index.html b/legacy/index.html
+new file mode 100644
+index 0000000..45ec956
+--- /dev/null
++++ b/legacy/index.html
+@@ -0,0 +1,632 @@
++<!DOCTYPE html>
++<html lang="en">
++<head>
++    <meta charset="UTF-8">
++    <meta name="viewport" content="width=device-width, initial-scale=1.0">
++    <title>Legacy Impact Scorecard | Self Mastery Co</title>
++    <style>
++        * {
++            margin: 0;
++            padding: 0;
++            box-sizing: border-box;
++        }
++        
++        body {
++            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
++            background: linear-gradient(135deg, #fa709a 0%, #fee140 100%);
++            min-height: 100vh;
++            padding: 20px;
++            color: #333;
++        }
++        
++        .container {
++            max-width: 800px;
++            margin: 0 auto;
++            background: white;
++            border-radius: 20px;
++            padding: 40px;
++            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
++        }
++        
++        h1 {
++            background: linear-gradient(135deg, #fa709a 0%, #fee140 100%);
++            -webkit-background-clip: text;
++            -webkit-text-fill-color: transparent;
++            font-size: 2.5em;
++            margin-bottom: 10px;
++            text-align: center;
++        }
++        
++        .subtitle {
++            text-align: center;
++            color: #666;
++            margin-bottom: 40px;
++            font-size: 1.1em;
++        }
++        
++        .pillar {
++            margin-bottom: 35px;
++            padding: 25px;
++            background: #f8f9fa;
++            border-radius: 15px;
++            border-left: 5px solid #fa709a;
++        }
++        
++        .pillar h3 {
++            color: #fa709a;
++            margin-bottom: 10px;
++            font-size: 1.4em;
++        }
++        
++        .pillar p {
++            color: #666;
++            margin-bottom: 20px;
++            font-size: 0.95em;
++        }
++        
++        .rating-section {
++            display: flex;
++            flex-direction: column;
++            gap: 15px;
++        }
++        
++        .rating-row {
++            display: flex;
++            justify-content: space-between;
++            align-items: center;
++            gap: 20px;
++        }
++        
++        .rating-label {
++            flex: 1;
++            font-weight: 600;
++            color: #333;
++        }
++        
++        .rating-scale {
++            flex: 2;
++            display: flex;
++            gap: 10px;
++            align-items: center;
++        }
++        
++        .rating-scale label {
++            font-size: 0.85em;
++            color: #999;
++            min-width: 60px;
++        }
++        
++        .rating-buttons {
++            display: flex;
++            gap: 8px;
++        }
++        
++        .rating-btn {
++            width: 40px;
++            height: 40px;
++            border: 2px solid #e0e0e0;
++            border-radius: 8px;
++            background: white;
++            cursor: pointer;
++            transition: all 0.2s;
++            font-weight: bold;
++            color: #666;
++        }
++        
++        .rating-btn:hover {
++            border-color: #fa709a;
++            transform: scale(1.1);
++        }
++        
++        .rating-btn.selected {
++            background: linear-gradient(135deg, #fa709a 0%, #fee140 100%);
++            color: white;
++            border-color: #fa709a;
++        }
++        
++        .calculate-btn {
++            display: block;
++            width: 100%;
++            padding: 20px;
++            background: linear-gradient(135deg, #fa709a 0%, #fee140 100%);
++            color: white;
++            border: none;
++            border-radius: 12px;
++            font-size: 1.3em;
++            font-weight: bold;
++            cursor: pointer;
++            margin-top: 30px;
++            transition: transform 0.2s;
++        }
++        
++        .calculate-btn:hover {
++            transform: translateY(-2px);
++            box-shadow: 0 10px 25px rgba(250, 112, 154, 0.4);
++        }
++        
++        .results {
++            display: none;
++            margin-top: 40px;
++        }
++        
++        .results.show {
++            display: block;
++            animation: fadeIn 0.5s ease-out;
++        }
++        
++        @keyframes fadeIn {
++            from { opacity: 0; transform: translateY(20px); }
++            to { opacity: 1; transform: translateY(0); }
++        }
++        
++        .score-header {
++            text-align: center;
++            padding: 40px;
++            background: linear-gradient(135deg, #fa709a 0%, #fee140 100%);
++            border-radius: 15px;
++            color: white;
++            margin-bottom: 30px;
++        }
++        
++        .score-header h2 {
++            font-size: 2em;
++            margin-bottom: 15px;
++        }
++        
++        .score-number {
++            font-size: 5em;
++            font-weight: bold;
++            text-shadow: 2px 2px 4px rgba(0,0,0,0.2);
++        }
++        
++        .gap-display {
++            font-size: 1.3em;
++            margin-top: 15px;
++            opacity: 0.95;
++        }
++        
++        .pillar-results {
++            margin-bottom: 30px;
++        }
++        
++        .pillar-result {
++            margin-bottom: 20px;
++            padding: 20px;
++            background: #f8f9fa;
++            border-radius: 12px;
++        }
++        
++        .pillar-result h4 {
++            color: #fa709a;
++            margin-bottom: 15px;
++            font-size: 1.2em;
++        }
++        
++        .comparison {
++            display: flex;
++            justify-content: space-between;
++            align-items: center;
++            margin-bottom: 15px;
++        }
++        
++        .comparison-item {
++            text-align: center;
++            flex: 1;
++        }
++        
++        .comparison-label {
++            font-size: 0.9em;
++            color: #999;
++            margin-bottom: 5px;
++        }
++        
++        .comparison-score {
++            font-size: 2em;
++            font-weight: bold;
++            color: #fa709a;
++        }
++        
++        .gap-indicator {
++            width: 100%;
++            height: 30px;
++            background: #e0e0e0;
++            border-radius: 15px;
++            overflow: hidden;
++            position: relative;
++        }
++        
++        .gap-fill {
++            height: 100%;
++            background: linear-gradient(135deg, #fa709a 0%, #fee140 100%);
++            border-radius: 15px;
++            transition: width 1s ease-out;
++            display: flex;
++            align-items: center;
++            justify-content: flex-end;
++            padding-right: 10px;
++            color: white;
++            font-weight: bold;
++            font-size: 0.9em;
++        }
++        
++        .insights {
++            margin-top: 30px;
++            padding: 25px;
++            background: #fff7e6;
++            border-radius: 12px;
++            border-left: 5px solid #fee140;
++        }
++        
++        .insights h3 {
++            color: #fa709a;
++            margin-bottom: 15px;
++        }
++        
++        .insight-item {
++            margin-bottom: 15px;
++            padding: 15px;
++            background: white;
++            border-radius: 8px;
++        }
++        
++        .cta {
++            text-align: center;
++            margin-top: 40px;
++            padding: 30px;
++            background: linear-gradient(135deg, #fa709a 0%, #fee140 100%);
++            border-radius: 15px;
++            color: white;
++        }
++        
++        .cta h3 {
++            margin-bottom: 15px;
++            font-size: 1.8em;
++        }
++        
++        .cta-btn {
++            display: inline-block;
++            padding: 18px 40px;
++            background: white;
++            color: #fa709a;
++            text-decoration: none;
++            border-radius: 10px;
++            font-weight: bold;
++            font-size: 1.2em;
++            margin-top: 15px;
++            transition: transform 0.2s;
++        }
++        
++        .cta-btn:hover {
++            transform: scale(1.05);
++        }
++        
++        @media (max-width: 600px) {
++            .container {
++                padding: 25px;
++            }
++            
++            h1 {
++                font-size: 2em;
++            }
++            
++            .rating-row {
++                flex-direction: column;
++                align-items: flex-start;
++            }
++            
++            .rating-scale {
++                width: 100%;
++            }
++            
++            .rating-btn {
++                width: 35px;
++                height: 35px;
++                font-size: 0.9em;
++            }
++            
++            .score-number {
++                font-size: 3.5em;
++            }
++        }
++    </style>
++</head>
++<body>
++    <div class="container">
++        <h1>🌟 Legacy Impact Scorecard</h1>
++        <p class="subtitle">Measure where you are vs. where you want to be across the 5 Pillars of Legacy</p>
++        
++        <div id="assessment">
++            <!-- Pillar 1: Purpose Driven -->
++            <div class="pillar">
++                <h3>1. Purpose Driven</h3>
++                <p>Living with meaning, intention, and clear direction</p>
++                <div class="rating-section">
++                    <div class="rating-row">
++                        <div class="rating-label">Current State:</div>
++                        <div class="rating-scale">
++                            <label>Low</label>
++                            <div class="rating-buttons" id="purpose-current">
++                                ${[1,2,3,4,5,6,7,8,9,10].map(n => `<button class="rating-btn" onclick="rate('purpose', 'current', ${n})">${n}</button>`).join('')}
++                            </div>
++                            <label>High</label>
++                        </div>
++                    </div>
++                    <div class="rating-row">
++                        <div class="rating-label">Desired State:</div>
++                        <div class="rating-scale">
++                            <label>Low</label>
++                            <div class="rating-buttons" id="purpose-desired">
++                                ${[1,2,3,4,5,6,7,8,9,10].map(n => `<button class="rating-btn" onclick="rate('purpose', 'desired', ${n})">${n}</button>`).join('')}
++                            </div>
++                            <label>High</label>
++                        </div>
++                    </div>
++                </div>
++            </div>
++            
++            <!-- Pillar 2: People Focused -->
++            <div class="pillar">
++                <h3>2. People Focused</h3>
++                <p>Investing in relationships and empowering others</p>
++                <div class="rating-section">
++                    <div class="rating-row">
++                        <div class="rating-label">Current State:</div>
++                        <div class="rating-scale">
++                            <label>Low</label>
++                            <div class="rating-buttons" id="people-current">
++                                ${[1,2,3,4,5,6,7,8,9,10].map(n => `<button class="rating-btn" onclick="rate('people', 'current', ${n})">${n}</button>`).join('')}
++                            </div>
++                            <label>High</label>
++                        </div>
++                    </div>
++                    <div class="rating-row">
++                        <div class="rating-label">Desired State:</div>
++                        <div class="rating-scale">
++                            <label>Low</label>
++                            <div class="rating-buttons" id="people-desired">
++                                ${[1,2,3,4,5,6,7,8,9,10].map(n => `<button class="rating-btn" onclick="rate('people', 'desired', ${n})">${n}</button>`).join('')}
++                            </div>
++                            <label>High</label>
++                        </div>
++                    </div>
++                </div>
++            </div>
++            
++            <!-- Pillar 3: Value Creator -->
++            <div class="pillar">
++                <h3>3. Value Creator</h3>
++                <p>Creating value that outlives your presence</p>
++                <div class="rating-section">
++                    <div class="rating-row">
++                        <div class="rating-label">Current State:</div>
++                        <div class="rating-scale">
++                            <label>Low</label>
++                            <div class="rating-buttons" id="value-current">
++                                ${[1,2,3,4,5,6,7,8,9,10].map(n => `<button class="rating-btn" onclick="rate('value', 'current', ${n})">${n}</button>`).join('')}
++                            </div>
++                            <label>High</label>
++                        </div>
++                    </div>
++                    <div class="rating-row">
++                        <div class="rating-label">Desired State:</div>
++                        <div class="rating-scale">
++                            <label>Low</label>
++                            <div class="rating-buttons" id="value-desired">
++                                ${[1,2,3,4,5,6,7,8,9,10].map(n => `<button class="rating-btn" onclick="rate('value', 'desired', ${n})">${n}</button>`).join('')}
++                            </div>
++                            <label>High</label>
++                        </div>
++                    </div>
++                </div>
++            </div>
++            
++            <!-- Pillar 4: Generations Minded -->
++            <div class="pillar">
++                <h3>4. Generations Minded</h3>
++                <p>Building a bridge to tomorrow and thinking long-term</p>
++                <div class="rating-section">
++                    <div class="rating-row">
++                        <div class="rating-label">Current State:</div>
++                        <div class="rating-scale">
++                            <label>Low</label>
++                            <div class="rating-buttons" id="generations-current">
++                                ${[1,2,3,4,5,6,7,8,9,10].map(n => `<button class="rating-btn" onclick="rate('generations', 'current', ${n})">${n}</button>`).join('')}
++                            </div>
++                            <label>High</label>
++                        </div>
++                    </div>
++                    <div class="rating-row">
++                        <div class="rating-label">Desired State:</div>
++                        <div class="rating-scale">
++                            <label>Low</label>
++                            <div class="rating-buttons" id="generations-desired">
++                                ${[1,2,3,4,5,6,7,8,9,10].map(n => `<button class="rating-btn" onclick="rate('generations', 'desired', ${n})">${n}</button>`).join('')}
++                            </div>
++                            <label>High</label>
++                        </div>
++                    </div>
++                </div>
++            </div>
++            
++            <!-- Pillar 5: Legacy of Service -->
++            <div class="pillar">
++                <h3>5. Legacy of Service</h3>
++                <p>Living a life of giving, contribution, and service</p>
++                <div class="rating-section">
++                    <div class="rating-row">
++                        <div class="rating-label">Current State:</div>
++                        <div class="rating-scale">
++                            <label>Low</label>
++                            <div class="rating-buttons" id="service-current">
++                                ${[1,2,3,4,5,6,7,8,9,10].map(n => `<button class="rating-btn" onclick="rate('service', 'current', ${n})">${n}</button>`).join('')}
++                            </div>
++                            <label>High</label>
++                        </div>
++                    </div>
++                    <div class="rating-row">
++                        <div class="rating-label">Desired State:</div>
++                        <div class="rating-scale">
++                            <label>Low</label>
++                            <div class="rating-buttons" id="service-desired">
++                                ${[1,2,3,4,5,6,7,8,9,10].map(n => `<button class="rating-btn" onclick="rate('service', 'desired', ${n})">${n}</button>`).join('')}
++                            </div>
++                            <label>High</label>
++                        </div>
++                    </div>
++                </div>
++            </div>
++            
++            <button class="calculate-btn" onclick="calculateLegacy()">📊 Calculate My Legacy Gap</button>
++        </div>
++        
++        <div class="results" id="results">
++            <!-- Results will be inserted here -->
++        </div>
++    </div>
++    
++    <script>
++        let scores = {
++            purpose: { current: 0, desired: 0 },
++            people: { current: 0, desired: 0 },
++            value: { current: 0, desired: 0 },
++            generations: { current: 0, desired: 0 },
++            service: { current: 0, desired: 0 }
++        };
++        
++        function rate(pillar, type, score) {
++            scores[pillar][type] = score;
++            
++            // Update UI
++            const container = document.getElementById(`${pillar}-${type}`);
++            container.querySelectorAll('.rating-btn').forEach(btn => {
++                btn.classList.remove('selected');
++            });
++            container.querySelectorAll('.rating-btn')[score - 1].classList.add('selected');
++        }
++        
++        function calculateLegacy() {
++            // Validate all scores
++            for (let pillar in scores) {
++                if (scores[pillar].current === 0 || scores[pillar].desired === 0) {
++                    alert('Please rate both current and desired state for all 5 pillars');
++                    return;
++                }
++            }
++            
++            let totalCurrent = 0;
++            let totalDesired = 0;
++            let resultsHTML = '';
++            
++            for (let pillar in scores) {
++                totalCurrent += scores[pillar].current;
++                totalDesired += scores[pillar].desired;
++            }
++            
++            const avgCurrent = (totalCurrent / 5).toFixed(1);
++            const avgDesired = (totalDesired / 5).toFixed(1);
++            const gap = (avgDesired - avgCurrent).toFixed(1);
++            const percentComplete = ((avgCurrent / avgDesired) * 100).toFixed(0);
++            
++            // Generate pillar-by-pillar results
++            const pillarNames = {
++                purpose: 'Purpose Driven',
++                people: 'People Focused',
++                value: 'Value Creator',
++                generations: 'Generations Minded',
++                service: 'Legacy of Service'
++            };
++            
++            let pillarResultsHTML = '';
++            let insights = [];
++            let biggestGap = { name: '', gap: 0 };
++            let strongest = { name: '', score: 0 };
++            
++            for (let pillar in scores) {
++                const current = scores[pillar].current;
++                const desired = scores[pillar].desired;
++                const pillarGap = desired - current;
++                const pillarPercent = ((current / desired) * 100).toFixed(0);
++                
++                if (pillarGap > biggestGap.gap) {
++                    biggestGap = { name: pillarNames[pillar], gap: pillarGap };
++                }
++                
++                if (current > strongest.score) {
++                    strongest = { name: pillarNames[pillar], score: current };
++                }
++                
++                pillarResultsHTML += `
++                    <div class="pillar-result">
++                        <h4>${pillarNames[pillar]}</h4>
++                        <div class="comparison">
++                            <div class="comparison-item">
++                                <div class="comparison-label">Current</div>
++                                <div class="comparison-score">${current}/10</div>
++                            </div>
++                            <div class="comparison-item">
++                                <div class="comparison-label">Gap</div>
++                                <div class="comparison-score" style="color: ${pillarGap > 3 ? '#e74c3c' : '#f39c12'};">${pillarGap}</div>
++                            </div>
++                            <div class="comparison-item">
++                                <div class="comparison-label">Desired</div>
++                                <div class="comparison-score">${desired}/10</div>
++                            </div>
++                        </div>
++                        <div class="gap-indicator">
++                            <div class="gap-fill" style="width: ${pillarPercent}%">${pillarPercent}%</div>
++                        </div>
++                    </div>
++                `;
++            }
++            
++            // Generate insights
++            if (percentComplete < 60) {
++                insights.push('<strong>🎯 Opportunity Zone:</strong> You have significant room for legacy growth. This is your chance to make transformational shifts.');
++            } else if (percentComplete < 80) {
++                insights.push('<strong>📈 Growth Zone:</strong> You\'re making progress but haven\'t reached your full legacy potential yet.');
++            } else {
++                insights.push('<strong>🌟 Mastery Zone:</strong> You\'re close to your desired legacy impact. Fine-tuning will get you there.');
++            }
++            
++            insights.push(`<strong>💪 Biggest Opportunity:</strong> Focus on ${biggestGap.name} - closing this ${biggestGap.gap}-point gap will create the most dramatic transformation.`);
++            insights.push(`<strong>🏆 Your Strength:</strong> ${strongest.name} is your highest-rated pillar. Build on this strength to elevate other areas.`);
++            
++            if (gap > 3) {
++                insights.push('<strong>🚀 Action Required:</strong> The gap between where you are and where you want to be requires intentional action. The Self Mastery Adventure provides the structure to close this gap.');
++            }
++            
++            resultsHTML = `
++                <div class="score-header">
++                    <h2>Your Legacy Impact Score</h2>
++                    <div class="score-number">${percentComplete}%</div>
++                    <div class="gap-display">You're ${percentComplete}% of the way to your desired legacy impact</div>
++                    <div class="gap-display" style="font-size: 1.1em; margin-top: 10px;">Gap to close: ${gap} points</div>
++                </div>
++                
++                <div class="pillar-results">
++                    <h3 style="margin-bottom: 20px; color: #fa709a;">Pillar-by-Pillar Breakdown</h3>
++                    ${pillarResultsHTML}
++                </div>
++                
++                <div class="insights">
++                    <h3>💡 Your Legacy Insights</h3>
++                    ${insights.map(insight => `<div class="insight-item">${insight}</div>`).join('')}
++                </div>
++                
++                <div class="cta">
++                    <h3>Ready to Close the Gap?</h3>
++                    <p style="margin: 15px 0; font-size: 1.1em;">
++                        The Self Mastery Adventure is designed to help you bridge the gap between 
++                        where you are and the legacy you want to leave.
++                    </p>
++                    <a href="#" class="cta-btn">Join Self Mastery Adventure</a>
++                </div>
++            `;
++            
++            document.getElementById('results').innerHTML = resultsHTML;
++            document.getElementById('results').classList.add('show');
++            document.getElementById('results').scrollIntoView({ behavior: 'smooth', block: 'nearest' });
++        }
++    </script>
++</body>
++</html>
+\ No newline at end of file
+diff --git a/purpose/index.html b/purpose/index.html
+new file mode 100644
+index 0000000..10a621e
+--- /dev/null
++++ b/purpose/index.html
+@@ -0,0 +1,557 @@
++<!DOCTYPE html>
++<html lang="en">
++<head>
++    <meta charset="UTF-8">
++    <meta name="viewport" content="width=device-width, initial-scale=1.0">
++    <title>Purpose Discovery Quiz | Self Mastery Co</title>
++    <style>
++        * {
++            margin: 0;
++            padding: 0;
++            box-sizing: border-box;
++        }
++        
++        body {
++            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
++            background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
++            min-height: 100vh;
++            padding: 20px;
++            color: #333;
++        }
++        
++        .container {
++            max-width: 700px;
++            margin: 0 auto;
++            background: white;
++            border-radius: 20px;
++            padding: 40px;
++            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
++        }
++        
++        h1 {
++            background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
++            -webkit-background-clip: text;
++            -webkit-text-fill-color: transparent;
++            font-size: 2.5em;
++            margin-bottom: 10px;
++            text-align: center;
++        }
++        
++        .subtitle {
++            text-align: center;
++            color: #666;
++            margin-bottom: 40px;
++            font-size: 1.1em;
++        }
++        
++        .question {
++            display: none;
++            animation: fadeIn 0.5s ease-out;
++        }
++        
++        .question.active {
++            display: block;
++        }
++        
++        @keyframes fadeIn {
++            from {
++                opacity: 0;
++                transform: translateY(20px);
++            }
++            to {
++                opacity: 1;
++                transform: translateY(0);
++            }
++        }
++        
++        .progress-bar {
++            width: 100%;
++            height: 8px;
++            background: #f0f0f0;
++            border-radius: 10px;
++            margin-bottom: 30px;
++            overflow: hidden;
++        }
++        
++        .progress-fill {
++            height: 100%;
++            background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
++            width: 0%;
++            transition: width 0.3s ease;
++            border-radius: 10px;
++        }
++        
++        .question-number {
++            color: #f5576c;
++            font-weight: bold;
++            margin-bottom: 15px;
++            font-size: 0.9em;
++        }
++        
++        .question h2 {
++            color: #333;
++            margin-bottom: 25px;
++            font-size: 1.5em;
++            line-height: 1.4;
++        }
++        
++        .options {
++            display: flex;
++            flex-direction: column;
++            gap: 15px;
++        }
++        
++        .option {
++            padding: 20px;
++            background: #f8f9fa;
++            border: 2px solid #e0e0e0;
++            border-radius: 12px;
++            cursor: pointer;
++            transition: all 0.3s;
++            font-size: 1.05em;
++        }
++        
++        .option:hover {
++            background: #fff;
++            border-color: #f093fb;
++            transform: translateX(5px);
++        }
++        
++        .option.selected {
++            background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
++            color: white;
++            border-color: #f5576c;
++        }
++        
++        .nav-buttons {
++            display: flex;
++            justify-content: space-between;
++            margin-top: 30px;
++        }
++        
++        .btn {
++            padding: 15px 30px;
++            border: none;
++            border-radius: 10px;
++            font-size: 1.1em;
++            font-weight: bold;
++            cursor: pointer;
++            transition: all 0.3s;
++        }
++        
++        .btn-back {
++            background: #e0e0e0;
++            color: #666;
++        }
++        
++        .btn-back:hover {
++            background: #d0d0d0;
++        }
++        
++        .btn-next {
++            background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
++            color: white;
++        }
++        
++        .btn-next:hover {
++            transform: translateY(-2px);
++            box-shadow: 0 10px 25px rgba(245, 87, 108, 0.4);
++        }
++        
++        .btn-next:disabled {
++            opacity: 0.5;
++            cursor: not-allowed;
++        }
++        
++        .results {
++            display: none;
++            text-align: center;
++        }
++        
++        .results.show {
++            display: block;
++            animation: fadeIn 0.5s ease-out;
++        }
++        
++        .purpose-statement {
++            background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
++            color: white;
++            padding: 40px;
++            border-radius: 15px;
++            margin: 30px 0;
++            font-size: 1.3em;
++            line-height: 1.8;
++            box-shadow: 0 10px 30px rgba(245, 87, 108, 0.3);
++        }
++        
++        .purpose-type {
++            margin: 30px 0;
++            padding: 30px;
++            background: #f8f9fa;
++            border-radius: 15px;
++        }
++        
++        .purpose-type h3 {
++            color: #f5576c;
++            font-size: 1.8em;
++            margin-bottom: 15px;
++        }
++        
++        .characteristics {
++            text-align: left;
++            margin: 20px 0;
++        }
++        
++        .characteristics ul {
++            list-style: none;
++            padding: 0;
++        }
++        
++        .characteristics li {
++            padding: 10px 0;
++            padding-left: 30px;
++            position: relative;
++        }
++        
++        .characteristics li:before {
++            content: "✓";
++            position: absolute;
++            left: 0;
++            color: #f5576c;
++            font-weight: bold;
++            font-size: 1.2em;
++        }
++        
++        .cta {
++            margin-top: 40px;
++            padding-top: 30px;
++            border-top: 2px solid #e0e0e0;
++        }
++        
++        .cta h3 {
++            margin-bottom: 15px;
++            font-size: 1.8em;
++            color: #f5576c;
++        }
++        
++        .cta-btn {
++            display: inline-block;
++            padding: 20px 50px;
++            background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
++            color: white;
++            text-decoration: none;
++            border-radius: 12px;
++            font-weight: bold;
++            font-size: 1.3em;
++            margin-top: 20px;
++            transition: transform 0.2s;
++        }
++        
++        .cta-btn:hover {
++            transform: scale(1.05);
++        }
++        
++        @media (max-width: 600px) {
++            .container {
++                padding: 25px;
++            }
++            
++            h1 {
++                font-size: 2em;
++            }
++            
++            .purpose-statement {
++                font-size: 1.1em;
++                padding: 25px;
++            }
++        }
++    </style>
++</head>
++<body>
++    <div class="container">
++        <h1>🎯 Purpose Discovery Quiz</h1>
++        <p class="subtitle">Discover your unique purpose and create your personalized purpose statement</p>
++        
++        <div class="progress-bar">
++            <div class="progress-fill" id="progress"></div>
++        </div>
++        
++        <div id="quiz">
++            <!-- Questions will be inserted here -->
++        </div>
++        
++        <div class="results" id="results">
++            <!-- Results will be shown here -->
++        </div>
++    </div>
++    
++    <script>
++        const questions = [
++            {
++                q: "What energizes you most?",
++                options: [
++                    { text: "Helping others solve their problems", type: "guide" },
++                    { text: "Creating something new and innovative", type: "creator" },
++                    { text: "Leading teams to achieve big goals", type: "leader" },
++                    { text: "Teaching and sharing knowledge", type: "teacher" },
++                    { text: "Building systems that create impact", type: "builder" }
++                ]
++            },
++            {
++                q: "When you imagine your ideal day, you're...",
++                options: [
++                    { text: "Mentoring someone through a breakthrough", type: "guide" },
++                    { text: "Bringing a vision to life", type: "creator" },
++                    { text: "Rallying people around a mission", type: "leader" },
++                    { text: "Explaining complex ideas simply", type: "teacher" },
++                    { text: "Optimizing processes and systems", type: "builder" }
++                ]
++            },
++            {
++                q: "What do people most often ask you for?",
++                options: [
++                    { text: "Advice and guidance on their challenges", type: "guide" },
++                    { text: "Fresh ideas and creative solutions", type: "creator" },
++                    { text: "Direction and clarity on where to go", type: "leader" },
++                    { text: "Explanations and insights", type: "teacher" },
++                    { text: "Help organizing and structuring things", type: "builder" }
++                ]
++            },
++            {
++                q: "Your biggest frustration is when...",
++                options: [
++                    { text: "People struggle alone without support", type: "guide" },
++                    { text: "Potential goes unrealized", type: "creator" },
++                    { text: "Teams lack clear vision or leadership", type: "leader" },
++                    { text: "Knowledge isn't shared effectively", type: "teacher" },
++                    { text: "Chaos and disorder prevent progress", type: "builder" }
++                ]
++            },
++            {
++                q: "You feel most fulfilled when...",
++                options: [
++                    { text: "Someone has a breakthrough because of you", type: "guide" },
++                    { text: "Your idea becomes reality", type: "creator" },
++                    { text: "Your team achieves what seemed impossible", type: "leader" },
++                    { text: "Someone applies what you taught them", type: "teacher" },
++                    { text: "Your system runs smoothly and creates results", type: "builder" }
++                ]
++            },
++            {
++                q: "In 10 years, you want to be known for...",
++                options: [
++                    { text: "Transforming lives through guidance", type: "guide" },
++                    { text: "Creating something that didn't exist before", type: "creator" },
++                    { text: "Leading a movement that changed things", type: "leader" },
++                    { text: "Educating a generation", type: "teacher" },
++                    { text: "Building infrastructure that lasts", type: "builder" }
++                ]
++            },
++            {
++                q: "Your natural strength is...",
++                options: [
++                    { text: "Deep empathy and understanding", type: "guide" },
++                    { text: "Vision and imagination", type: "creator" },
++                    { text: "Decisiveness and conviction", type: "leader" },
++                    { text: "Clarity and communication", type: "teacher" },
++                    { text: "Strategy and execution", type: "builder" }
++                ]
++            },
++            {
++                q: "What legacy do you want to leave?",
++                options: [
++                    { text: "Lives transformed through my support", type: "guide" },
++                    { text: "Original work that inspires others", type: "creator" },
++                    { text: "A movement that outlives me", type: "leader" },
++                    { text: "Knowledge passed to future generations", type: "teacher" },
++                    { text: "Systems that continue creating value", type: "builder" }
++                ]
++            }
++        ];
++        
++        const purposeTypes = {
++            guide: {
++                title: "The Guide",
++                statement: "My purpose is to walk alongside others, helping them navigate challenges and discover their own path to breakthrough and growth.",
++                characteristics: [
++                    "You have deep empathy and emotional intelligence",
++                    "People naturally open up to you and trust your guidance",
++                    "You find fulfillment in others' success and transformation",
++                    "Your superpower is seeing potential in others before they see it themselves",
++                    "You create safe spaces for vulnerability and growth"
++                ]
++            },
++            creator: {
++                title: "The Creator",
++                statement: "My purpose is to bring new ideas into existence, creating original work that inspires, challenges, and expands what's possible.",
++                characteristics: [
++                    "You see possibilities others miss",
++                    "Innovation and originality energize you",
++                    "You're driven to make your vision tangible",
++                    "Your superpower is turning abstract ideas into concrete reality",
++                    "You push boundaries and redefine what's possible"
++                ]
++            },
++            leader: {
++                title: "The Leader",
++                statement: "My purpose is to rally people around a vision, create momentum toward meaningful goals, and inspire others to become their best.",
++                characteristics: [
++                    "You naturally step into leadership roles",
++                    "People follow your vision and conviction",
++                    "You thrive when coordinating teams toward big goals",
++                    "Your superpower is creating alignment and momentum",
++                    "You transform individual effort into collective impact"
++                ]
++            },
++            teacher: {
++                title: "The Teacher",
++                statement: "My purpose is to illuminate understanding, share knowledge generously, and empower others through education and insight.",
++                characteristics: [
++                    "You love breaking down complex ideas",
++                    "Clarity and communication come naturally to you",
++                    "You're energized by 'aha moments' in others",
++                    "Your superpower is making difficult concepts accessible",
++                    "You create ripple effects through shared wisdom"
++                ]
++            },
++            builder: {
++                title: "The Builder",
++                statement: "My purpose is to create systems, structures, and frameworks that turn vision into sustainable reality and chaos into order.",
++                characteristics: [
++                    "You see the architecture behind success",
++                    "Systems thinking is your natural lens",
++                    "You're driven to create lasting infrastructure",
++                    "Your superpower is turning ideas into executable plans",
++                    "You build foundations that others build upon"
++                ]
++            }
++        };
++        
++        let currentQuestion = 0;
++        let answers = { guide: 0, creator: 0, leader: 0, teacher: 0, builder: 0 };
++        let selectedOption = null;
++        
++        function renderQuestion() {
++            const quiz = document.getElementById('quiz');
++            const q = questions[currentQuestion];
++            
++            quiz.innerHTML = `
++                <div class="question active">
++                    <div class="question-number">Question ${currentQuestion + 1} of ${questions.length}</div>
++                    <h2>${q.q}</h2>
++                    <div class="options">
++                        ${q.options.map((opt, i) => `
++                            <div class="option" onclick="selectOption(${i})" data-index="${i}">
++                                ${opt.text}
++                            </div>
++                        `).join('')}
++                    </div>
++                    <div class="nav-buttons">
++                        <button class="btn btn-back" onclick="previousQuestion()" ${currentQuestion === 0 ? 'style="visibility:hidden"' : ''}>← Back</button>
++                        <button class="btn btn-next" onclick="nextQuestion()" disabled id="nextBtn">
++                            ${currentQuestion === questions.length - 1 ? 'See My Purpose →' : 'Next →'}
++                        </button>
++                    </div>
++                </div>
++            `;
++            
++            updateProgress();
++        }
++        
++        function selectOption(index) {
++            selectedOption = index;
++            
++            // Remove all selections
++            document.querySelectorAll('.option').forEach(opt => {
++                opt.classList.remove('selected');
++            });
++            
++            // Add selection to clicked option
++            document.querySelector(`.option[data-index="${index}"]`).classList.add('selected');
++            
++            // Enable next button
++            document.getElementById('nextBtn').disabled = false;
++        }
++        
++        function nextQuestion() {
++            if (selectedOption === null) return;
++            
++            // Record answer
++            const type = questions[currentQuestion].options[selectedOption].type;
++            answers[type]++;
++            
++            selectedOption = null;
++            
++            if (currentQuestion < questions.length - 1) {
++                currentQuestion++;
++                renderQuestion();
++            } else {
++                showResults();
++            }
++        }
++        
++        function previousQuestion() {
++            if (currentQuestion > 0) {
++                currentQuestion--;
++                selectedOption = null;
++                renderQuestion();
++            }
++        }
++        
++        function updateProgress() {
++            const progress = ((currentQuestion + 1) / questions.length) * 100;
++            document.getElementById('progress').style.width = progress + '%';
++        }
++        
++        function showResults() {
++            // Find dominant purpose type
++            let maxType = 'guide';
++            let maxScore = 0;
++            
++            for (let [type, score] of Object.entries(answers)) {
++                if (score > maxScore) {
++                    maxScore = score;
++                    maxType = type;
++                }
++            }
++            
++            const purpose = purposeTypes[maxType];
++            
++            const resultsHTML = `
++                <h1>✨ Your Purpose Revealed</h1>
++                
++                <div class="purpose-type">
++                    <h3>${purpose.title}</h3>
++                </div>
++                
++                <div class="purpose-statement">
++                    "${purpose.statement}"
++                </div>
++                
++                <div class="characteristics">
++                    <h3 style="color: #f5576c; margin-bottom: 20px;">What This Means For You:</h3>
++                    <ul>
++                        ${purpose.characteristics.map(char => `<li>${char}</li>`).join('')}
++                    </ul>
++                </div>
++                
++                <div class="cta">
++                    <h3>Ready to Live Your Purpose?</h3>
++                    <p style="color: #666; font-size: 1.1em; margin: 20px 0;">
++                        The Self Mastery Adventure will help you align your daily life with this purpose and turn it into lasting impact.
++                    </p>
++                    <a href="#" class="cta-btn">🚀 Join Self Mastery Adventure</a>
++                </div>
++            `;
++            
++            document.getElementById('quiz').style.display = 'none';
++            document.getElementById('results').innerHTML = resultsHTML;
++            document.getElementById('results').classList.add('show');
++            document.getElementById('progress').style.width = '100%';
++        }
++        
++        // Initialize
++        renderQuestion();
++    </script>
++</body>
++</html>
+\ No newline at end of file
+diff --git a/roadmap/index.html b/roadmap/index.html
+new file mode 100644
+index 0000000..5928b86
+--- /dev/null
++++ b/roadmap/index.html
+@@ -0,0 +1,585 @@
++<!DOCTYPE html>
++<html lang="en">
++<head>
++    <meta charset="UTF-8">
++    <meta name="viewport" content="width=device-width, initial-scale=1.0">
++    <title>90-Day Transformation Roadmap | Self Mastery Co</title>
++    <style>
++        * {
++            margin: 0;
++            padding: 0;
++            box-sizing: border-box;
++        }
++        
++        body {
++            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
++            background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
++            min-height: 100vh;
++            padding: 20px;
++            color: #333;
++        }
++        
++        .container {
++            max-width: 900px;
++            margin: 0 auto;
++            background: white;
++            border-radius: 20px;
++            padding: 40px;
++            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
++        }
++        
++        h1 {
++            background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
++            -webkit-background-clip: text;
++            -webkit-text-fill-color: transparent;
++            font-size: 2.5em;
++            margin-bottom: 10px;
++            text-align: center;
++        }
++        
++        .subtitle {
++            text-align: center;
++            color: #666;
++            margin-bottom: 40px;
++            font-size: 1.1em;
++        }
++        
++        .step {
++            display: none;
++        }
++        
++        .step.active {
++            display: block;
++            animation: fadeIn 0.5s ease-out;
++        }
++        
++        @keyframes fadeIn {
++            from { opacity: 0; transform: translateY(20px); }
++            to { opacity: 1; transform: translateY(0); }
++        }
++        
++        .artifact-selector {
++            display: grid;
++            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
++            gap: 15px;
++            margin: 30px 0;
++        }
++        
++        .artifact-card {
++            padding: 25px;
++            background: #f8f9fa;
++            border: 3px solid #e0e0e0;
++            border-radius: 15px;
++            cursor: pointer;
++            transition: all 0.3s;
++            text-align: center;
++        }
++        
++        .artifact-card:hover {
++            background: #fff;
++            border-color: #4facfe;
++            transform: translateY(-5px);
++            box-shadow: 0 10px 20px rgba(79, 172, 254, 0.2);
++        }
++        
++        .artifact-card.selected {
++            background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
++            color: white;
++            border-color: #00f2fe;
++        }
++        
++        .artifact-card h3 {
++            font-size: 1.3em;
++            margin-bottom: 10px;
++        }
++        
++        .artifact-card p {
++            font-size: 0.9em;
++            opacity: 0.8;
++        }
++        
++        .goal-input {
++            margin: 20px 0;
++        }
++        
++        .goal-input label {
++            display: block;
++            margin-bottom: 10px;
++            font-weight: bold;
++            color: #333;
++            font-size: 1.1em;
++        }
++        
++        .goal-input input,
++        .goal-input textarea {
++            width: 100%;
++            padding: 15px;
++            border: 2px solid #e0e0e0;
++            border-radius: 10px;
++            font-size: 1em;
++            font-family: inherit;
++            transition: border-color 0.3s;
++        }
++        
++        .goal-input input:focus,
++        .goal-input textarea:focus {
++            outline: none;
++            border-color: #4facfe;
++        }
++        
++        .goal-input textarea {
++            min-height: 100px;
++            resize: vertical;
++        }
++        
++        .btn-container {
++            display: flex;
++            justify-content: space-between;
++            margin-top: 30px;
++        }
++        
++        .btn {
++            padding: 15px 30px;
++            border: none;
++            border-radius: 10px;
++            font-size: 1.1em;
++            font-weight: bold;
++            cursor: pointer;
++            transition: all 0.3s;
++        }
++        
++        .btn-back {
++            background: #e0e0e0;
++            color: #666;
++        }
++        
++        .btn-next {
++            background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
++            color: white;
++        }
++        
++        .btn-next:hover {
++            transform: translateY(-2px);
++            box-shadow: 0 10px 25px rgba(79, 172, 254, 0.4);
++        }
++        
++        .roadmap {
++            margin-top: 30px;
++        }
++        
++        .month {
++            margin-bottom: 30px;
++            padding: 25px;
++            background: #f8f9fa;
++            border-radius: 15px;
++            border-left: 5px solid #4facfe;
++        }
++        
++        .month h3 {
++            color: #4facfe;
++            margin-bottom: 15px;
++            font-size: 1.5em;
++        }
++        
++        .milestone {
++            padding: 15px;
++            background: white;
++            border-radius: 10px;
++            margin-bottom: 10px;
++        }
++        
++        .milestone h4 {
++            color: #333;
++            margin-bottom: 8px;
++        }
++        
++        .milestone ul {
++            margin-left: 20px;
++            color: #666;
++        }
++        
++        .milestone li {
++            margin-bottom: 5px;
++        }
++        
++        .cta {
++            text-align: center;
++            margin-top: 40px;
++            padding: 30px;
++            background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
++            border-radius: 15px;
++            color: white;
++        }
++        
++        .cta h3 {
++            margin-bottom: 15px;
++            font-size: 1.8em;
++        }
++        
++        .cta-btn {
++            display: inline-block;
++            padding: 18px 40px;
++            background: white;
++            color: #4facfe;
++            text-decoration: none;
++            border-radius: 10px;
++            font-weight: bold;
++            font-size: 1.2em;
++            margin-top: 15px;
++            transition: transform 0.2s;
++        }
++        
++        .cta-btn:hover {
++            transform: scale(1.05);
++        }
++        
++        .progress-indicator {
++            display: flex;
++            justify-content: center;
++            gap: 10px;
++            margin-bottom: 30px;
++        }
++        
++        .progress-dot {
++            width: 12px;
++            height: 12px;
++            border-radius: 50%;
++            background: #e0e0e0;
++            transition: all 0.3s;
++        }
++        
++        .progress-dot.active {
++            background: #4facfe;
++            transform: scale(1.3);
++        }
++        
++        @media (max-width: 600px) {
++            .container {
++                padding: 25px;
++            }
++            
++            h1 {
++                font-size: 2em;
++            }
++            
++            .artifact-selector {
++                grid-template-columns: 1fr;
++            }
++        }
++    </style>
++</head>
++<body>
++    <div class="container">
++        <h1>🗺️ 90-Day Transformation Roadmap</h1>
++        <p class="subtitle">Design your personalized path to breakthrough across the 5 Artifacts</p>
++        
++        <div class="progress-indicator">
++            <div class="progress-dot active" id="dot1"></div>
++            <div class="progress-dot" id="dot2"></div>
++            <div class="progress-dot" id="dot3"></div>
++            <div class="progress-dot" id="dot4"></div>
++        </div>
++        
++        <!-- Step 1: Select Primary Artifact -->
++        <div class="step active" id="step1">
++            <h2 style="margin-bottom: 20px;">Step 1: Choose Your Primary Focus</h2>
++            <p style="margin-bottom: 20px; color: #666;">Which artifact needs your attention most right now?</p>
++            
++            <div class="artifact-selector">
++                <div class="artifact-card" onclick="selectArtifact('awareness')">
++                    <h3>🔍 Awareness</h3>
++                    <p>Master your self-knowledge</p>
++                </div>
++                <div class="artifact-card" onclick="selectArtifact('alignment')">
++                    <h3>🎯 Alignment</h3>
++                    <p>Align with your purpose</p>
++                </div>
++                <div class="artifact-card" onclick="selectArtifact('discipline')">
++                    <h3>💪 Discipline</h3>
++                    <p>Build unshakable habits</p>
++                </div>
++                <div class="artifact-card" onclick="selectArtifact('connection')">
++                    <h3>🤝 Connection</h3>
++                    <p>Deepen relationships</p>
++                </div>
++                <div class="artifact-card" onclick="selectArtifact('legacy')">
++                    <h3>🌟 Legacy</h3>
++                    <p>Create lasting impact</p>
++                </div>
++            </div>
++            
++            <div class="btn-container">
++                <div></div>
++                <button class="btn btn-next" onclick="nextStep()" id="step1Next" disabled>Next →</button>
++            </div>
++        </div>
++        
++        <!-- Step 2: Define 90-Day Goal -->
++        <div class="step" id="step2">
++            <h2 style="margin-bottom: 20px;">Step 2: Define Your 90-Day Goal</h2>
++            
++            <div class="goal-input">
++                <label>What specific transformation do you want in the next 90 days?</label>
++                <textarea id="mainGoal" placeholder="Example: I want to develop daily meditation practice and eliminate negative self-talk"></textarea>
++            </div>
++            
++            <div class="goal-input">
++                <label>Why is this important to you?</label>
++                <textarea id="whyGoal" placeholder="Example: Because I know inner peace will help me show up better for my family and business"></textarea>
++            </div>
++            
++            <div class="btn-container">
++                <button class="btn btn-back" onclick="prevStep()">← Back</button>
++                <button class="btn btn-next" onclick="nextStep()">Next →</button>
++            </div>
++        </div>
++        
++        <!-- Step 3: Identify Obstacles -->
++        <div class="step" id="step3">
++            <h2 style="margin-bottom: 20px;">Step 3: Identify Your Obstacles</h2>
++            
++            <div class="goal-input">
++                <label>What's been holding you back?</label>
++                <textarea id="obstacles" placeholder="Example: Lack of consistency, too busy, don't know where to start"></textarea>
++            </div>
++            
++            <div class="goal-input">
++                <label>What support do you need to succeed?</label>
++                <textarea id="support" placeholder="Example: Accountability, clear structure, community of like-minded people"></textarea>
++            </div>
++            
++            <div class="btn-container">
++                <button class="btn btn-back" onclick="prevStep()">← Back</button>
++                <button class="btn btn-next" onclick="generateRoadmap()">Generate My Roadmap →</button>
++            </div>
++        </div>
++        
++        <!-- Step 4: Your Roadmap -->
++        <div class="step" id="step4">
++            <h2 style="margin-bottom: 30px; text-align: center;">Your 90-Day Transformation Roadmap</h2>
++            <div id="roadmapContent"></div>
++        </div>
++    </div>
++    
++    <script>
++        let currentStep = 1;
++        let selectedArtifact = null;
++        let userData = {};
++        
++        const roadmapTemplates = {
++            awareness: {
++                month1: {
++                    title: "Foundation: Self-Discovery",
++                    milestones: [
++                        { title: "Week 1: Identify Patterns", actions: ["Daily journaling - track thoughts and emotions", "Notice recurring beliefs", "Identify 3 key triggers"] },
++                        { title: "Week 2: Shadow Work", actions: ["Explore limiting beliefs", "Question automatic thoughts", "Begin mindfulness practice"] },
++                        { title: "Week 3: Blind Spots", actions: ["Seek feedback from trusted people", "Notice what you avoid", "Document insights"] },
++                        { title: "Week 4: Integration", actions: ["Review patterns discovered", "Create awareness ritual", "Set Month 2 intentions"] }
++                    ]
++                },
++                month2: {
++                    title: "Deepening: Understanding & Insight",
++                    milestones: [
++                        { title: "Week 5-6: Root Causes", actions: ["Explore origin of beliefs", "Connect patterns to past", "Build self-compassion"] },
++                        { title: "Week 7-8: New Perspectives", actions: ["Challenge old narratives", "Reframe limiting beliefs", "Strengthen awareness muscle"] }
++                    ]
++                },
++                month3: {
++                    title: "Mastery: Living Consciously",
++                    milestones: [
++                        { title: "Week 9-10: Conscious Choice", actions: ["Practice pause before reacting", "Choose responses intentionally", "Track conscious choices"] },
++                        { title: "Week 11-12: Integration", actions: ["Solidify new awareness", "Celebrate transformation", "Design maintenance plan"] }
++                    ]
++                }
++            },
++            alignment: {
++                month1: {
++                    title: "Foundation: Clarity",
++                    milestones: [
++                        { title: "Week 1: Values Discovery", actions: ["Identify top 5 core values", "Define what each means", "Rate current alignment"] },
++                        { title: "Week 2: Vision Creation", actions: ["Write ideal life vision", "Create vision board", "Define 1-year goals"] },
++                        { title: "Week 3: Purpose Definition", actions: ["Clarify your 'why'", "Write purpose statement", "Connect daily work to purpose"] },
++                        { title: "Week 4: Gap Analysis", actions: ["Identify misalignments", "Prioritize changes needed", "Set Month 2 focus"] }
++                    ]
++                },
++                month2: {
++                    title: "Alignment: Action",
++                    milestones: [
++                        { title: "Week 5-6: Eliminate Misalignment", actions: ["Remove 1-2 non-aligned activities", "Set better boundaries", "Reclaim time for what matters"] },
++                        { title: "Week 7-8: Add Alignment", actions: ["Start 1-2 purpose-driven activities", "Build aligned routines", "Track alignment score"] }
++                    ]
++                },
++                month3: {
++                    title: "Mastery: Living Aligned",
++                    milestones: [
++                        { title: "Week 9-10: Optimization", actions: ["Fine-tune daily schedule", "Strengthen aligned habits", "Increase impact"] },
++                        { title: "Week 11-12: Sustainability", actions: ["Create alignment rituals", "Build support system", "Plan next 90 days"] }
++                    ]
++                }
++            },
++            discipline: {
++                month1: {
++                    title: "Foundation: Habit Building",
++                    milestones: [
++                        { title: "Week 1: Keystone Habit", actions: ["Choose 1 foundational habit", "Design morning routine", "Track daily completion"] },
++                        { title: "Week 2: Consistency", actions: ["30-day commitment to keystone", "Remove friction points", "Celebrate small wins"] },
++                        { title: "Week 3: Stack Habits", actions: ["Add complementary habit", "Link to existing routine", "Strengthen discipline muscle"] },
++                        { title: "Week 4: Resilience", actions: ["Bounce back from setbacks", "Strengthen commitment", "Review Month 1 progress"] }
++                    ]
++                },
++                month2: {
++                    title: "Expansion: Systems & Structure",
++                    milestones: [
++                        { title: "Week 5-6: Evening Routine", actions: ["Design end-of-day ritual", "Prepare for tomorrow", "Track sleep & recovery"] },
++                        { title: "Week 7-8: Eliminate Resistance", actions: ["Remove bad habits", "Replace with better options", "Build accountability"] }
++                    ]
++                },
++                month3: {
++                    title: "Mastery: Unshakable Standards",
++                    milestones: [
++                        { title: "Week 9-10: Advanced Practices", actions: ["Add challenging disciplines", "Push comfort zone", "Build mental toughness"] },
++                        { title: "Week 11-12: Lifestyle Integration", actions: ["Make discipline automatic", "Create identity shift", "Design long-term plan"] }
++                    ]
++                }
++            },
++            connection: {
++                month1: {
++                    title: "Foundation: Relationship Audit",
++                    milestones: [
++                        { title: "Week 1: Assess Connections", actions: ["List key relationships", "Rate quality & alignment", "Identify needs"] },
++                        { title: "Week 2: Deepen Key Bonds", actions: ["Schedule quality time", "Have meaningful conversations", "Show appreciation"] },
++                        { title: "Week 3: Communication Skills", actions: ["Practice active listening", "Express needs clearly", "Reduce reactivity"] },
++                        { title: "Week 4: Set Boundaries", actions: ["Identify boundary needs", "Communicate clearly", "Honor your limits"] }
++                    ]
++                },
++                month2: {
++                    title: "Expansion: New Connections",
++                    milestones: [
++                        { title: "Week 5-6: Expand Network", actions: ["Join aligned community", "Attend events/groups", "Make new connections"] },
++                        { title: "Week 7-8: Give Value", actions: ["Help others generously", "Share knowledge", "Build reciprocity"] }
++                    ]
++                },
++                month3: {
++                    title: "Mastery: Leadership & Influence",
++                    milestones: [
++                        { title: "Week 9-10: Lead Others", actions: ["Mentor someone", "Create group value", "Inspire action"] },
++                        { title: "Week 11-12: Legacy Relationships", actions: ["Strengthen key bonds", "Create traditions", "Build lasting impact"] }
++                    ]
++                }
++            },
++            legacy: {
++                month1: {
++                    title: "Foundation: Legacy Vision",
++                    milestones: [
++                        { title: "Week 1: Define Impact", actions: ["Write legacy statement", "Identify who you'll serve", "Clarify your contribution"] },
++                        { title: "Week 2: Current State", actions: ["Assess current impact", "Identify gaps", "Set legacy goals"] },
++                        { title: "Week 3: Values Alignment", actions: ["Define core principles", "Live by highest values", "Make aligned choices"] },
++                        { title: "Week 4: First Steps", actions: ["Take 1 legacy action", "Document journey", "Share your mission"] }
++                    ]
++                },
++                month2: {
++                    title: "Building: Create Value",
++                    milestones: [
++                        { title: "Week 5-6: Serve Others", actions: ["Start helping consistently", "Create valuable content", "Build your platform"] },
++                        { title: "Week 7-8: Systems", actions: ["Create sustainable structure", "Build for scale", "Document processes"] }
++                    ]
++                },
++                month3: {
++                    title: "Mastery: Lasting Impact",
++                    milestones: [
++                        { title: "Week 9-10: Amplify", actions: ["Reach more people", "Deepen impact", "Empower others to lead"] },
++                        { title: "Week 11-12: Sustainability", actions: ["Create enduring systems", "Train successors", "Plan next chapter"] }
++                    ]
++                }
++            }
++        };
++        
++        function selectArtifact(artifact) {
++            selectedArtifact = artifact;
++            document.querySelectorAll('.artifact-card').forEach(card => {
++                card.classList.remove('selected');
++            });
++            event.target.closest('.artifact-card').classList.add('selected');
++            document.getElementById('step1Next').disabled = false;
++        }
++        
++        function nextStep() {
++            if (currentStep < 4) {
++                document.getElementById(`step${currentStep}`).classList.remove('active');
++                document.getElementById(`dot${currentStep}`).classList.remove('active');
++                currentStep++;
++                document.getElementById(`step${currentStep}`).classList.add('active');
++                document.getElementById(`dot${currentStep}`).classList.add('active');
++            }
++        }
++        
++        function prevStep() {
++            if (currentStep > 1) {
++                document.getElementById(`step${currentStep}`).classList.remove('active');
++                document.getElementById(`dot${currentStep}`).classList.remove('active');
++                currentStep--;
++                document.getElementById(`step${currentStep}`).classList.add('active');
++                document.getElementById(`dot${currentStep}`).classList.add('active');
++            }
++        }
++        
++        function generateRoadmap() {
++            userData.mainGoal = document.getElementById('mainGoal').value;
++            userData.whyGoal = document.getElementById('whyGoal').value;
++            userData.obstacles = document.getElementById('obstacles').value;
++            userData.support = document.getElementById('support').value;
++            
++            const template = roadmapTemplates[selectedArtifact];
++            const artifactNames = {
++                awareness: 'Awareness',
++                alignment: 'Alignment',
++                discipline: 'Discipline',
++                connection: 'Connection',
++                legacy: 'Legacy'
++            };
++            
++            let roadmapHTML = `
++                <div style="background: #f8f9fa; padding: 25px; border-radius: 15px; margin-bottom: 30px;">
++                    <h3 style="color: #4facfe; margin-bottom: 15px;">Your Focus: ${artifactNames[selectedArtifact]}</h3>
++                    <p style="font-size: 1.1em; margin-bottom: 10px;"><strong>Goal:</strong> ${userData.mainGoal}</p>
++                    <p style="font-size: 1.1em;"><strong>Why:</strong> ${userData.whyGoal}</p>
++                </div>
++                
++                <div class="roadmap">
++                    ${generateMonth('Month 1 (Days 1-30)', template.month1)}
++                    ${generateMonth('Month 2 (Days 31-60)', template.month2)}
++                    ${generateMonth('Month 3 (Days 61-90)', template.month3)}
++                </div>
++                
++                <div class="cta">
++                    <h3>🚀 Ready to Make This Real?</h3>
++                    <p style="margin: 15px 0; font-size: 1.1em;">
++                        You have the roadmap. The Self Mastery Adventure gives you the structure, 
++                        accountability, and community to actually execute it.
++                    </p>
++                    <a href="#" class="cta-btn">Join Self Mastery Adventure</a>
++                </div>
++            `;
++            
++            document.getElementById('roadmapContent').innerHTML = roadmapHTML;
++            nextStep();
++        }
++        
++        function generateMonth(title, data) {
++            return `
++                <div class="month">
++                    <h3>${title}: ${data.title}</h3>
++                    ${data.milestones.map(milestone => `
++                        <div class="milestone">
++                            <h4>${milestone.title}</h4>
++                            <ul>
++                                ${milestone.actions.map(action => `<li>${action}</li>`).join('')}
++                            </ul>
++                        </div>
++                    `).join('')}
++                </div>
++            `;
++        }
++    </script>
++</body>
++</html>
+\ No newline at end of file
+diff --git a/values/index.html b/values/index.html
+new file mode 100644
+index 0000000..427633e
+--- /dev/null
++++ b/values/index.html
+@@ -0,0 +1,553 @@
++<!DOCTYPE html>
++<html lang="en">
++<head>
++    <meta charset="UTF-8">
++    <meta name="viewport" content="width=device-width, initial-scale=1.0">
++    <title>Values Hierarchy Builder | Self Mastery Co</title>
++    <style>
++        * {
++            margin: 0;
++            padding: 0;
++            box-sizing: border-box;
++        }
++        
++        body {
++            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
++            background: linear-gradient(135deg, #a8edea 0%, #fed6e3 100%);
++            min-height: 100vh;
++            padding: 20px;
++            color: #333;
++        }
++        
++        .container {
++            max-width: 900px;
++            margin: 0 auto;
++            background: white;
++            border-radius: 20px;
++            padding: 40px;
++            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
++        }
++        
++        h1 {
++            background: linear-gradient(135deg, #a8edea 0%, #fed6e3 100%);
++            -webkit-background-clip: text;
++            -webkit-text-fill-color: transparent;
++            font-size: 2.5em;
++            margin-bottom: 10px;
++            text-align: center;
++        }
++        
++        .subtitle {
++            text-align: center;
++            color: #666;
++            margin-bottom: 40px;
++            font-size: 1.1em;
++        }
++        
++        .section {
++            margin-bottom: 40px;
++        }
++        
++        .section h2 {
++            color: #5eaaa8;
++            margin-bottom: 20px;
++            font-size: 1.6em;
++        }
++        
++        .values-grid {
++            display: grid;
++            grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
++            gap: 12px;
++            margin-bottom: 30px;
++        }
++        
++        .value-card {
++            padding: 15px;
++            background: #f8f9fa;
++            border: 2px solid #e0e0e0;
++            border-radius: 10px;
++            cursor: pointer;
++            transition: all 0.3s;
++            text-align: center;
++            font-size: 0.95em;
++            user-select: none;
++        }
++        
++        .value-card:hover {
++            background: #fff;
++            border-color: #a8edea;
++            transform: translateY(-2px);
++        }
++        
++        .value-card.selected {
++            background: linear-gradient(135deg, #a8edea 0%, #fed6e3 100%);
++            color: white;
++            border-color: #a8edea;
++        }
++        
++        .selected-count {
++            text-align: center;
++            color: #666;
++            margin-bottom: 20px;
++            font-size: 1em;
++        }
++        
++        .selected-count strong {
++            color: #5eaaa8;
++            font-size: 1.2em;
++        }
++        
++        .rank-section {
++            display: none;
++        }
++        
++        .rank-section.active {
++            display: block;
++            animation: fadeIn 0.5s ease-out;
++        }
++        
++        @keyframes fadeIn {
++            from { opacity: 0; transform: translateY(20px); }
++            to { opacity: 1; transform: translateY(0); }
++        }
++        
++        .ranking-area {
++            background: #f8f9fa;
++            padding: 30px;
++            border-radius: 15px;
++            min-height: 400px;
++        }
++        
++        .rank-item {
++            display: flex;
++            align-items: center;
++            gap: 15px;
++            padding: 15px 20px;
++            background: white;
++            border: 2px solid #e0e0e0;
++            border-radius: 10px;
++            margin-bottom: 12px;
++            cursor: move;
++            transition: all 0.3s;
++        }
++        
++        .rank-item:hover {
++            border-color: #a8edea;
++            box-shadow: 0 5px 15px rgba(168, 237, 234, 0.2);
++        }
++        
++        .rank-item.dragging {
++            opacity: 0.5;
++        }
++        
++        .rank-number {
++            width: 40px;
++            height: 40px;
++            background: linear-gradient(135deg, #a8edea 0%, #fed6e3 100%);
++            color: white;
++            border-radius: 50%;
++            display: flex;
++            align-items: center;
++            justify-content: center;
++            font-weight: bold;
++            font-size: 1.1em;
++        }
++        
++        .rank-value {
++            flex: 1;
++            font-size: 1.1em;
++            font-weight: 600;
++        }
++        
++        .drag-handle {
++            color: #999;
++            cursor: move;
++        }
++        
++        .btn {
++            padding: 15px 30px;
++            border: none;
++            border-radius: 10px;
++            font-size: 1.1em;
++            font-weight: bold;
++            cursor: pointer;
++            transition: all 0.3s;
++        }
++        
++        .btn-primary {
++            background: linear-gradient(135deg, #a8edea 0%, #fed6e3 100%);
++            color: white;
++            display: block;
++            width: 100%;
++            margin-top: 20px;
++        }
++        
++        .btn-primary:hover {
++            transform: translateY(-2px);
++            box-shadow: 0 10px 25px rgba(168, 237, 234, 0.4);
++        }
++        
++        .results {
++            display: none;
++        }
++        
++        .results.active {
++            display: block;
++            animation: fadeIn 0.5s ease-out;
++        }
++        
++        .values-list {
++            background: linear-gradient(135deg, #a8edea 0%, #fed6e3 100%);
++            padding: 40px;
++            border-radius: 15px;
++            color: white;
++            margin-bottom: 30px;
++        }
++        
++        .values-list h2 {
++            margin-bottom: 25px;
++            font-size: 2em;
++            text-align: center;
++        }
++        
++        .value-item {
++            display: flex;
++            align-items: center;
++            gap: 20px;
++            padding: 15px;
++            margin-bottom: 10px;
++            background: rgba(255,255,255,0.2);
++            border-radius: 10px;
++        }
++        
++        .value-rank {
++            width: 45px;
++            height: 45px;
++            background: white;
++            color: #5eaaa8;
++            border-radius: 50%;
++            display: flex;
++            align-items: center;
++            justify-content: center;
++            font-weight: bold;
++            font-size: 1.2em;
++        }
++        
++        .value-name {
++            flex: 1;
++            font-size: 1.3em;
++            font-weight: 600;
++        }
++        
++        .insights-section {
++            background: #f8f9fa;
++            padding: 30px;
++            border-radius: 15px;
++            margin-bottom: 30px;
++        }
++        
++        .insights-section h3 {
++            color: #5eaaa8;
++            margin-bottom: 20px;
++            font-size: 1.5em;
++        }
++        
++        .insight {
++            padding: 20px;
++            background: white;
++            border-radius: 10px;
++            margin-bottom: 15px;
++            border-left: 4px solid #a8edea;
++        }
++        
++        .cta {
++            text-align: center;
++            padding: 40px;
++            background: linear-gradient(135deg, #a8edea 0%, #fed6e3 100%);
++            border-radius: 15px;
++            color: white;
++        }
++        
++        .cta h3 {
++            margin-bottom: 15px;
++            font-size: 2em;
++        }
++        
++        .cta-btn {
++            display: inline-block;
++            padding: 20px 50px;
++            background: white;
++            color: #5eaaa8;
++            text-decoration: none;
++            border-radius: 12px;
++            font-weight: bold;
++            font-size: 1.3em;
++            margin-top: 20px;
++            transition: transform 0.2s;
++        }
++        
++        .cta-btn:hover {
++            transform: scale(1.05);
++        }
++        
++        @media (max-width: 600px) {
++            .container {
++                padding: 25px;
++            }
++            
++            h1 {
++                font-size: 2em;
++            }
++            
++            .values-grid {
++                grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
++            }
++        }
++    </style>
++</head>
++<body>
++    <div class="container">
++        <h1>💎 Values Hierarchy Builder</h1>
++        <p class="subtitle">Discover and rank what matters most to you</p>
++        
++        <!-- Step 1: Select Values -->
++        <div class="section" id="selection-section">
++            <h2>Step 1: Choose Your Top 10 Values</h2>
++            <p style="color: #666; margin-bottom: 20px;">Click to select the values that resonate most with you. Choose exactly 10.</p>
++            
++            <div class="selected-count" id="count">
++                Selected: <strong>0</strong> / 10
++            </div>
++            
++            <div class="values-grid" id="values-grid">
++                <!-- Values will be populated here -->
++            </div>
++            
++            <button class="btn btn-primary" onclick="startRanking()" id="rank-btn" disabled>
++                Continue to Ranking →
++            </button>
++        </div>
++        
++        <!-- Step 2: Rank Values -->
++        <div class="section rank-section" id="ranking-section">
++            <h2>Step 2: Rank Your Values</h2>
++            <p style="color: #666; margin-bottom: 20px;">Drag and drop to arrange your values from most to least important</p>
++            
++            <div class="ranking-area" id="ranking-area">
++                <!-- Ranking items will be added here -->
++            </div>
++            
++            <button class="btn btn-primary" onclick="showResults()">
++                See My Values Hierarchy →
++            </button>
++        </div>
++        
++        <!-- Results -->
++        <div class="section results" id="results-section">
++            <div class="values-list" id="final-values">
++                <!-- Final ranked values -->
++            </div>
++            
++            <div class="insights-section">
++                <h3>💡 What Your Values Say About You</h3>
++                <div id="insights">
++                    <!-- Insights will be generated -->
++                </div>
++            </div>
++            
++            <div class="cta">
++                <h3>Live Your Values With Purpose</h3>
++                <p style="margin: 15px 0; font-size: 1.1em;">
++                    Knowing your values is the first step. The Self Mastery Adventure helps you 
++                    align your daily life with what matters most.
++                </p>
++                <a href="#" class="cta-btn">Join Self Mastery Adventure</a>
++            </div>
++        </div>
++    </div>
++    
++    <script>
++        const allValues = [
++            'Authenticity', 'Growth', 'Freedom', 'Family', 'Love',
++            'Impact', 'Integrity', 'Creativity', 'Adventure', 'Health',
++            'Wisdom', 'Courage', 'Service', 'Excellence', 'Connection',
++            'Purpose', 'Peace', 'Abundance', 'Joy', 'Leadership',
++            'Learning', 'Balance', 'Contribution', 'Innovation', 'Faith',
++            'Compassion', 'Achievement', 'Security', 'Fun', 'Justice',
++            'Community', 'Harmony', 'Resilience', 'Gratitude', 'Discipline',
++            'Respect', 'Generosity', 'Honesty', 'Kindness', 'Passion'
++        ];
++        
++        let selectedValues = [];
++        let rankedValues = [];
++        
++        // Populate values grid
++        const grid = document.getElementById('values-grid');
++        allValues.forEach(value => {
++            const card = document.createElement('div');
++            card.className = 'value-card';
++            card.textContent = value;
++            card.onclick = () => toggleValue(value, card);
++            grid.appendChild(card);
++        });
++        
++        function toggleValue(value, element) {
++            if (selectedValues.includes(value)) {
++                // Deselect
++                selectedValues = selectedValues.filter(v => v !== value);
++                element.classList.remove('selected');
++            } else {
++                // Select (if under 10)
++                if (selectedValues.length < 10) {
++                    selectedValues.push(value);
++                    element.classList.add('selected');
++                }
++            }
++            
++            updateCount();
++        }
++        
++        function updateCount() {
++            const count = selectedValues.length;
++            document.getElementById('count').innerHTML = `Selected: <strong>${count}</strong> / 10`;
++            document.getElementById('rank-btn').disabled = count !== 10;
++        }
++        
++        function startRanking() {
++            document.getElementById('selection-section').style.display = 'none';
++            document.getElementById('ranking-section').classList.add('active');
++            
++            rankedValues = [...selectedValues];
++            renderRanking();
++        }
++        
++        function renderRanking() {
++            const area = document.getElementById('ranking-area');
++            area.innerHTML = '';
++            
++            rankedValues.forEach((value, index) => {
++                const item = document.createElement('div');
++                item.className = 'rank-item';
++                item.draggable = true;
++                item.dataset.index = index;
++                
++                item.innerHTML = `
++                    <div class="rank-number">${index + 1}</div>
++                    <div class="rank-value">${value}</div>
++                    <div class="drag-handle">☰</div>
++                `;
++                
++                item.addEventListener('dragstart', handleDragStart);
++                item.addEventListener('dragover', handleDragOver);
++                item.addEventListener('drop', handleDrop);
++                item.addEventListener('dragend', handleDragEnd);
++                
++                area.appendChild(item);
++            });
++        }
++        
++        let draggedElement = null;
++        
++        function handleDragStart(e) {
++            draggedElement = this;
++            this.classList.add('dragging');
++            e.dataTransfer.effectAllowed = 'move';
++        }
++        
++        function handleDragOver(e) {
++            if (e.preventDefault) {
++                e.preventDefault();
++            }
++            e.dataTransfer.dropEffect = 'move';
++            return false;
++        }
++        
++        function handleDrop(e) {
++            if (e.stopPropagation) {
++                e.stopPropagation();
++            }
++            
++            if (draggedElement !== this) {
++                const draggedIndex = parseInt(draggedElement.dataset.index);
++                const targetIndex = parseInt(this.dataset.index);
++                
++                // Swap in array
++                const temp = rankedValues[draggedIndex];
++                rankedValues[draggedIndex] = rankedValues[targetIndex];
++                rankedValues[targetIndex] = temp;
++                
++                renderRanking();
++            }
++            
++            return false;
++        }
++        
++        function handleDragEnd(e) {
++            this.classList.remove('dragging');
++        }
++        
++        function showResults() {
++            document.getElementById('ranking-section').style.display = 'none';
++            document.getElementById('results-section').classList.add('active');
++            
++            // Display final values
++            let valuesHTML = '<h2>Your Values Hierarchy</h2>';
++            rankedValues.forEach((value, index) => {
++                valuesHTML += `
++                    <div class="value-item">
++                        <div class="value-rank">${index + 1}</div>
++                        <div class="value-name">${value}</div>
++                    </div>
++                `;
++            });
++            
++            document.getElementById('final-values').innerHTML = valuesHTML;
++            
++            // Generate insights
++            generateInsights();
++        }
++        
++        function generateInsights() {
++            const insights = [];
++            const top3 = rankedValues.slice(0, 3);
++            const bottom3 = rankedValues.slice(-3);
++            
++            // Top value insight
++            insights.push({
++                title: `🥇 Your North Star: ${top3[0]}`,
++                text: `${top3[0]} is your #1 value. This should guide your biggest decisions and define your highest priorities. When facing tough choices, ask: "Which option honors ${top3[0]} most?"`
++            });
++            
++            // Top 3 pattern
++            insights.push({
++                title: '🎯 Your Core Values',
++                text: `Your top 3 values - ${top3.join(', ')} - form your core identity. These define who you are at your best. Alignment means living these daily, not just occasionally.`
++            });
++            
++            // Practical application
++            insights.push({
++                title: '⚡ Put Them Into Practice',
++                text: `Look at your calendar and commitments. Do they reflect these values? If not, you've found your misalignment. The gap between knowing your values and living them is where transformation happens.`
++            });
++            
++            // Warning sign
++            insights.push({
++                title: '⚠️ Watch for Violations',
++                text: `When you feel drained, frustrated, or unfulfilled, check: are you violating one of your top values? That feeling is your internal compass telling you you're off course.`
++            });
++            
++            let insightsHTML = '';
++            insights.forEach(insight => {
++                insightsHTML += `
++                    <div class="insight">
++                        <h4 style="color: #5eaaa8; margin-bottom: 10px; font-size: 1.2em;">${insight.title}</h4>
++                        <p style="color: #666; line-height: 1.6;">${insight.text}</p>
++                    </div>
++                `;
++            });
++            
++            document.getElementById('insights').innerHTML = insightsHTML;
++        }
++    </script>
++</body>
++</html>
+\ No newline at end of file
+-- 
+2.39.5
+
